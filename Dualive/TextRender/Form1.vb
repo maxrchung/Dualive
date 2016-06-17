@@ -47,23 +47,22 @@ Public Class Form1
         Dim lines As String() = RichTextBox1.Text.Split(New String() {vbLf}, StringSplitOptions.RemoveEmptyEntries)
         ' Handles exception with nothing on screen
         If lines.Length > 0 Then
-            For Each line In lines
-                Dim size As Size = TextRenderer.MeasureText(line, RichTextBox1.Font)
-                Dim bitmap As New Bitmap(size.Width, size.Height)
-                Dim graphics As Graphics = graphics.FromImage(bitmap)
-                ' Otherwise really jaggedy
-                graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-                graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
-                Dim foreColor As New SolidBrush(Color.White)
-                Dim point As New PointF(0.0F, 0.0F)
-                graphics.DrawString(RichTextBox1.Text, RichTextBox1.Font, foreColor, point)
-                Dim filePath = line + ".png"
-                bitmap.Save(filePath, ImageFormat.Png)
-            Next
+            If FolderBrowserDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
+                Dim filePath = FolderBrowserDialog1.SelectedPath
+                For Each line In lines
+                    Dim size As Size = TextRenderer.MeasureText(line, RichTextBox1.Font)
+                    Dim bitmap As New Bitmap(size.Width, size.Height)
+                    Dim graphics As Graphics = graphics.FromImage(bitmap)
+                    ' Otherwise really jaggedy
+                    graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+                    graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+                    Dim foreColor As New SolidBrush(Color.White)
+                    Dim point As New PointF(0.0F, 0.0F)
+                    graphics.DrawString(line, RichTextBox1.Font, foreColor, point)
+                    Dim fullPath As String = Path.Combine(filePath, line + ".png")
+                    bitmap.Save(fullPath, ImageFormat.Png)
+                Next
+            End If
         End If
-    End Sub
-
-    Private Sub RichTextBox1_TextChanged(sender As Object, e As EventArgs) Handles RichTextBox1.TextChanged
-
     End Sub
 End Class
