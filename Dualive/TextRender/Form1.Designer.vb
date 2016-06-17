@@ -80,15 +80,13 @@ Partial Class Form1
         '
         'RichTextBox1
         '
-        Me.RichTextBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RichTextBox1.BackColor = System.Drawing.SystemColors.MenuText
+        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RichTextBox1.Font = New System.Drawing.Font("Aroly", 99.74999!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RichTextBox1.ForeColor = System.Drawing.SystemColors.Window
-        Me.RichTextBox1.Location = New System.Drawing.Point(0, 27)
+        Me.RichTextBox1.Location = New System.Drawing.Point(0, 24)
         Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.Size = New System.Drawing.Size(784, 534)
+        Me.RichTextBox1.Size = New System.Drawing.Size(784, 537)
         Me.RichTextBox1.TabIndex = 1
         Me.RichTextBox1.Text = ""
         '
