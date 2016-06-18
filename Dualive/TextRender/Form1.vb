@@ -1,20 +1,18 @@
 ﻿Imports System.IO
 Imports System.Drawing.Imaging
-Imports System.Runtime.InteropServices
 
 Public Class Form1
-    <DllImport("user32.dll", SetLastError:=True)> _
-    Public Shared Function CreateCaret(ByVal hWnd As IntPtr, ByVal hBitmap As IntPtr, ByVal nWidth As Integer, ByVal nHeight As Integer) As Boolean
-    End Function
-
-    <DllImport("user32.dll", SetLastError:=True)> _
-    Public Shared Function ShowCaret(ByVal hWnd As IntPtr) As Boolean
-    End Function
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        FontDialog1.Font = RichTextBox1.Font
-        CreateCaret(RichTextBox1.Handle, IntPtr.Zero, 500, RichTextBox1.Height)
-        ShowCaret(RichTextBox1.Handle)
+        My.Settings.Reload()
+        If My.Settings.LastFolder IsNot Nothing Then
+            FolderBrowserDialog1.SelectedPath = My.Settings.LastFolder
+        End If
+        If My.Settings.LastFont IsNot Nothing Then
+            RichTextBox1.Font = My.Settings.LastFont
+            FontDialog1.Font = My.Settings.LastFont
+        Else
+            FontDialog1.Font = RichTextBox1.Font
+        End If
     End Sub
 
     Private Sub FontToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
@@ -27,9 +25,8 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub LoadToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-        Handles LoadToolStripMenuItem.Click
-
+    Private Sub OpenToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles OpenToolStripMenuItem.Click
         If OpenFileDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
             Dim fileName = OpenFileDialog1.FileName
             RichTextBox1.Text = File.ReadAllText(fileName)
@@ -38,6 +35,7 @@ Public Class Form1
 
     Private Sub FontDialog_Apply(sender As Object, e As EventArgs) Handles FontDialog1.Apply
         RichTextBox1.Font = FontDialog1.Font
+        My.Settings.LastFont = FontDialog1.Font
     End Sub
 
     Private Sub RenderToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
@@ -48,9 +46,12 @@ Public Class Form1
         ' Handles exception with nothing on screen
         If lines.Length > 0 Then
             If FolderBrowserDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
-                Dim filePath = FolderBrowserDialog1.SelectedPath
-                For Each line In lines
-                    Dim size As Size = TextRenderer.MeasureText(line, RichTextBox1.Font)
+                Dim folderPath = FolderBrowserDialog1.SelectedPath
+                My.Settings.LastFolder = folderPath
+                ProgressBar1.Visible = True
+                ProgressBar1.Maximum = lines.Length
+                For index As Integer = 0 To lines.Length - 1
+                    Dim size As Size = TextRenderer.MeasureText(lines(index), RichTextBox1.Font)
                     Dim bitmap As New Bitmap(size.Width, size.Height)
                     Dim graphics As Graphics = graphics.FromImage(bitmap)
                     ' Otherwise really jaggedy
@@ -58,11 +59,33 @@ Public Class Form1
                     graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
                     Dim foreColor As New SolidBrush(Color.White)
                     Dim point As New PointF(0.0F, 0.0F)
-                    graphics.DrawString(line, RichTextBox1.Font, foreColor, point)
-                    Dim fullPath As String = Path.Combine(filePath, line + ".png")
+                    graphics.DrawString(lines(index), RichTextBox1.Font, foreColor, point)
+                    Dim fullPath As String = Path.Combine(folderPath, CStr(index) + ".png")
                     bitmap.Save(fullPath, ImageFormat.Png)
+                    ProgressBar1.Increment(1)
                 Next
+                ProgressBar1.Value = 0
+                ProgressBar1.Visible = False
+                ProgressBar1.Enabled = False
             End If
         End If
     End Sub
+
+    Private Sub NewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewToolStripMenuItem.Click
+        If RichTextBox1.TextLength > 0 Then
+            If MessageBox.Show("Are you sure you want to clear the form?", "Confirmation", MessageBoxButtons.OKCancel) <> Windows.Forms.DialogResult.Cancel Then
+                RichTextBox1.Clear()
+            End If
+        End If
+    End Sub
+
+    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
+        If RichTextBox1.TextLength > 0 Then
+            If SaveFileDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
+                My.Computer.FileSystem.WriteAllText(SaveFileDialog1.FileName, RichTextBox1.Text, False)
+            End If
+        End If
+    End Sub
+
+
 End Class

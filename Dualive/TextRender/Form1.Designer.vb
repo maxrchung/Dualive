@@ -24,7 +24,7 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LoadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FontToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RenderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -32,12 +32,15 @@ Partial Class Form1
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
+        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.LoadToolStripMenuItem, Me.SaveToolStripMenuItem, Me.FontToolStripMenuItem, Me.RenderToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.OpenToolStripMenuItem, Me.SaveToolStripMenuItem, Me.FontToolStripMenuItem, Me.RenderToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(784, 24)
@@ -51,12 +54,12 @@ Partial Class Form1
         Me.NewToolStripMenuItem.Size = New System.Drawing.Size(66, 20)
         Me.NewToolStripMenuItem.Text = "New (F1)"
         '
-        'LoadToolStripMenuItem
+        'OpenToolStripMenuItem
         '
-        Me.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem"
-        Me.LoadToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2
-        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(68, 20)
-        Me.LoadToolStripMenuItem.Text = "Load (F2)"
+        Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
+        Me.OpenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2
+        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(71, 20)
+        Me.OpenToolStripMenuItem.Text = "Open (F2)"
         '
         'SaveToolStripMenuItem
         '
@@ -83,7 +86,7 @@ Partial Class Form1
         '
         Me.RichTextBox1.BackColor = System.Drawing.SystemColors.MenuText
         Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RichTextBox1.Font = New System.Drawing.Font("Aroly", 99.74999!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RichTextBox1.Font = New System.Drawing.Font("Aroly", 50.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RichTextBox1.ForeColor = System.Drawing.SystemColors.Window
         Me.RichTextBox1.Location = New System.Drawing.Point(0, 24)
         Me.RichTextBox1.Name = "RichTextBox1"
@@ -99,12 +102,29 @@ Partial Class Form1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.DefaultExt = "txt"
+        Me.SaveFileDialog1.Filter = "Text files|*.txt|All files|*.*"
+        '
+        'ProgressBar1
+        '
+        Me.ProgressBar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ProgressBar1.Location = New System.Drawing.Point(0, 24)
+        Me.ProgressBar1.Maximum = 1
+        Me.ProgressBar1.Name = "ProgressBar1"
+        Me.ProgressBar1.Size = New System.Drawing.Size(784, 23)
+        Me.ProgressBar1.TabIndex = 2
+        Me.ProgressBar1.Visible = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.ClientSize = New System.Drawing.Size(784, 561)
+        Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.ForeColor = System.Drawing.SystemColors.ControlLightLight
@@ -119,7 +139,7 @@ Partial Class Form1
     End Sub
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents NewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents LoadToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents OpenToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FontToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
@@ -127,5 +147,8 @@ Partial Class Form1
     Friend WithEvents FontDialog1 As System.Windows.Forms.FontDialog
     Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents ColorDialog1 As System.Windows.Forms.ColorDialog
+    Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
 
 End Class
