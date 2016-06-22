@@ -15,6 +15,20 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles RichTextBox1.KeyDown
+        If e.Control AndAlso e.KeyCode = Keys.N Then
+            NewToolStripMenuItem_Click(sender, e)
+        ElseIf e.Control AndAlso e.KeyCode = Keys.O Then
+            OpenToolStripMenuItem_Click(sender, e)
+        ElseIf e.Control AndAlso e.KeyCode = Keys.S Then
+            SaveToolStripMenuItem_Click(sender, e)
+        ElseIf e.Control AndAlso e.KeyCode = Keys.F Then
+            FontToolStripMenuItem_Click(sender, e)
+        ElseIf e.Control AndAlso e.KeyCode = Keys.R Then
+            RenderToolStripMenuItem_Click(sender, e)
+        End If
+    End Sub
+
     Private Sub FontToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles FontToolStripMenuItem.Click
         Dim prevFont As Font = RichTextBox1.Font
@@ -38,13 +52,11 @@ Public Class Form1
         My.Settings.LastFont = FontDialog1.Font
     End Sub
 
-    Private Sub RenderToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-        Handles RenderToolStripMenuItem.Click
-        ' vbLf equivalent(?) to \n
-        ' StringSplitOptions to remove any errors with trying to process empty lines
-        Dim lines As String() = RichTextBox1.Text.Split(New String() {vbLf}, StringSplitOptions.RemoveEmptyEntries)
-        ' Handles exception with nothing on screen
-        If lines.Length > 0 Then
+    Private Sub RenderToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RenderToolStripMenuItem.Click
+        If RichTextBox1.TextLength > 0 Then
+            ' vbLf equivalent(?) to \n
+            ' StringSplitOptions to remove any errors with trying to process empty lines
+            Dim lines As String() = RichTextBox1.Text.Split(New String() {vbLf}, StringSplitOptions.RemoveEmptyEntries)
             If FolderBrowserDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
                 Dim folderPath = FolderBrowserDialog1.SelectedPath
                 My.Settings.LastFolder = folderPath
@@ -82,7 +94,12 @@ Public Class Form1
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
         If RichTextBox1.TextLength > 0 Then
             If SaveFileDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
-                My.Computer.FileSystem.WriteAllText(SaveFileDialog1.FileName, RichTextBox1.Text, False)
+                Using writer As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(SaveFileDialog1.FileName, False)
+                    Dim lines As String() = RichTextBox1.Text.Split(New String() {vbLf}, StringSplitOptions.RemoveEmptyEntries)
+                    For Each line As String In lines
+                        writer.WriteLine(line)
+                    Next
+                End Using
             End If
         End If
     End Sub

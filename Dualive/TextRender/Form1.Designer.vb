@@ -50,37 +50,37 @@ Partial Class Form1
         'NewToolStripMenuItem
         '
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
-        Me.NewToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1
-        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(66, 20)
-        Me.NewToolStripMenuItem.Text = "New (F1)"
+        Me.NewToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(90, 20)
+        Me.NewToolStripMenuItem.Text = "New (Ctrl+N)"
         '
         'OpenToolStripMenuItem
         '
         Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
-        Me.OpenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2
-        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(71, 20)
-        Me.OpenToolStripMenuItem.Text = "Open (F2)"
+        Me.OpenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(95, 20)
+        Me.OpenToolStripMenuItem.Text = "Open (Ctrl+O)"
         '
         'SaveToolStripMenuItem
         '
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(66, 20)
-        Me.SaveToolStripMenuItem.Text = "Save (F3)"
+        Me.SaveToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(87, 20)
+        Me.SaveToolStripMenuItem.Text = "Save (Ctrl+S)"
         '
         'FontToolStripMenuItem
         '
         Me.FontToolStripMenuItem.Name = "FontToolStripMenuItem"
-        Me.FontToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4
-        Me.FontToolStripMenuItem.Size = New System.Drawing.Size(66, 20)
-        Me.FontToolStripMenuItem.Text = "Font (F4)"
+        Me.FontToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F), System.Windows.Forms.Keys)
+        Me.FontToolStripMenuItem.Size = New System.Drawing.Size(87, 20)
+        Me.FontToolStripMenuItem.Text = "Font (Ctrl+F)"
         '
         'RenderToolStripMenuItem
         '
         Me.RenderToolStripMenuItem.Name = "RenderToolStripMenuItem"
-        Me.RenderToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.RenderToolStripMenuItem.Size = New System.Drawing.Size(79, 20)
-        Me.RenderToolStripMenuItem.Text = "Render (F5)"
+        Me.RenderToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
+        Me.RenderToolStripMenuItem.Size = New System.Drawing.Size(101, 20)
+        Me.RenderToolStripMenuItem.Text = "Render (Ctrl+R)"
         '
         'RichTextBox1
         '
@@ -128,6 +128,7 @@ Partial Class Form1
         Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.KeyPreview = True
         Me.MinimumSize = New System.Drawing.Size(800, 600)
         Me.Name = "Form1"
         Me.Text = "TextRender"
