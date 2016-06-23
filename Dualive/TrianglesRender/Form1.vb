@@ -10,7 +10,15 @@
     Sub DrawTriangles(g As Graphics)
         Dim brush As New SolidBrush(Color.White)
         Dim center As New Point(ClientSize.Width / 2, ClientSize.Height / 2)
-        Dim bounds = ClientRectangle
+        Dim bounds As Rectangle
+        Dim startpos As Point
+        If (ClientSize.Width > ClientSize.Height) Then
+            startpos = New Point(0, center.Y - ClientSize.Width / 2)
+            bounds = New Rectangle(startpos, New Size(ClientSize.Width, ClientSize.Width))
+        Else
+            startpos = New Point(center.X - ClientSize.Height / 2, 0)
+            bounds = New Rectangle(startpos, New Size(ClientSize.Height, ClientSize.Height))
+        End If
 
         Dim scale = NumericUpDown4.Value
         Dim size = NumericUpDown3.Value * scale
@@ -97,5 +105,17 @@ end_of_for:
 
     Private Sub NumericUpDown2_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown2.ValueChanged
         Me.Invalidate()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If FolderBrowserDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
+
+        End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If FolderBrowserDialog2.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
+
+        End If
     End Sub
 End Class

@@ -46,6 +46,7 @@ Partial Class Form1
         '
         'Button1
         '
+        Me.Button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.Button1.Location = New System.Drawing.Point(268, 5)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 24)
@@ -73,6 +74,7 @@ Partial Class Form1
         '
         'Button2
         '
+        Me.Button2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.Button2.Location = New System.Drawing.Point(268, 35)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 24)
