@@ -22,32 +22,32 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
         Me.NumericUpDown2 = New System.Windows.Forms.NumericUpDown()
-        Me.FolderBrowserDialog2 = New System.Windows.Forms.FolderBrowserDialog()
         Me.NumericUpDown3 = New System.Windows.Forms.NumericUpDown()
         Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.ProgressBar2 = New System.Windows.Forms.ProgressBar()
-        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.NumericUpDown5 = New System.Windows.Forms.NumericUpDown()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Button1
         '
         Me.Button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Button1.Location = New System.Drawing.Point(268, 5)
+        Me.Button1.Location = New System.Drawing.Point(373, 7)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 24)
         Me.Button1.TabIndex = 2
@@ -75,7 +75,7 @@ Partial Class Form1
         'Button2
         '
         Me.Button2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Button2.Location = New System.Drawing.Point(268, 35)
+        Me.Button2.Location = New System.Drawing.Point(373, 33)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 24)
         Me.Button2.TabIndex = 4
@@ -158,19 +158,29 @@ Partial Class Form1
         Me.Label6.TabIndex = 12
         Me.Label6.Text = "Scale"
         '
-        'ProgressBar2
+        'Label7
         '
-        Me.ProgressBar2.Location = New System.Drawing.Point(349, 35)
-        Me.ProgressBar2.Name = "ProgressBar2"
-        Me.ProgressBar2.Size = New System.Drawing.Size(903, 24)
-        Me.ProgressBar2.TabIndex = 14
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(268, 39)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(43, 13)
+        Me.Label7.TabIndex = 13
+        Me.Label7.Text = "Bounds"
         '
-        'ProgressBar1
+        'NumericUpDown5
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(349, 5)
-        Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(903, 24)
-        Me.ProgressBar1.TabIndex = 13
+        Me.NumericUpDown5.Location = New System.Drawing.Point(317, 37)
+        Me.NumericUpDown5.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.NumericUpDown5.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumericUpDown5.Name = "NumericUpDown5"
+        Me.NumericUpDown5.Size = New System.Drawing.Size(50, 20)
+        Me.NumericUpDown5.TabIndex = 15
+        Me.NumericUpDown5.Value = New Decimal(New Integer() {3000, 0, 0, 0})
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.DefaultExt = "png"
+        Me.SaveFileDialog1.Filter = "PNG|*.png"
         '
         'Form1
         '
@@ -178,8 +188,8 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.ClientSize = New System.Drawing.Size(1264, 681)
-        Me.Controls.Add(Me.ProgressBar2)
-        Me.Controls.Add(Me.ProgressBar1)
+        Me.Controls.Add(Me.NumericUpDown5)
+        Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
@@ -200,25 +210,25 @@ Partial Class Form1
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents NumericUpDown1 As System.Windows.Forms.NumericUpDown
     Friend WithEvents NumericUpDown2 As System.Windows.Forms.NumericUpDown
-    Friend WithEvents FolderBrowserDialog2 As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents NumericUpDown3 As System.Windows.Forms.NumericUpDown
     Friend WithEvents NumericUpDown4 As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents ProgressBar2 As System.Windows.Forms.ProgressBar
-    Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents NumericUpDown5 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
 
 End Class

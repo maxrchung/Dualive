@@ -1,4 +1,7 @@
-﻿Public Class Form1
+﻿Imports System.IO
+Imports System.Drawing.Imaging
+
+Public Class Form1
     ' Distance between right progress edge and form edge
     ' Not sure how to get it programmatically, so it's hardcoded
     Dim ProgressBarOffset = 28
@@ -7,22 +10,23 @@
         DrawTriangles(e.Graphics)
     End Sub
 
-    Sub DrawTriangles(g As Graphics)
-        Dim brush As New SolidBrush(Color.White)
-        Dim center As New Point(ClientSize.Width / 2, ClientSize.Height / 2)
-        Dim bounds As Rectangle
-        Dim startpos As Point
-        If (ClientSize.Width > ClientSize.Height) Then
-            startpos = New Point(0, center.Y - ClientSize.Width / 2)
-            bounds = New Rectangle(startpos, New Size(ClientSize.Width, ClientSize.Width))
-        Else
-            startpos = New Point(center.X - ClientSize.Height / 2, 0)
-            bounds = New Rectangle(startpos, New Size(ClientSize.Height, ClientSize.Height))
-        End If
-
-        Dim scale = NumericUpDown4.Value
+    Sub DrawBackground(g As Graphics, bounds As Size, scale As Single)
+        Dim brush As New SolidBrush(Color.DimGray)
         Dim size = NumericUpDown3.Value * scale
         Dim hs = size / 2
+        Dim center As New Point(bounds.Width / 2, bounds.Height / 2)
+
+        Dim expand As Rectangle
+        Dim startpos As Point = New Point(0, 0)
+        Dim boundValue = NumericUpDown5.Value
+        If (bounds.Width > bounds.Height) Then
+            startpos = New Point(0, center.Y - boundValue / 2)
+            expand = New Rectangle(startpos, New Size(boundValue, boundValue))
+        ElseIf (bounds.Width < bounds.Height) Then
+            startpos = New Point(center.X - bounds.Height / 2, 0)
+        End If
+
+        expand = New Rectangle(startpos, New Size(boundValue, boundValue))
 
         Dim twosCounter = 2
         Dim placeCounter = 1
@@ -40,7 +44,7 @@
             g.FillPolygon(brush, bgtri)
 
             For Each p In bgtri
-                If bounds.Contains(p) Then
+                If expand.Contains(p) Then
                     outsideBorder = False
                     GoTo end_of_for
                 End If
@@ -57,11 +61,22 @@ end_of_for:
                 placeCounter = placeCounterMax
             End If
         End While
+    End Sub
 
-        scale = NumericUpDown2.Value
-        size = NumericUpDown1.Value * scale
-        hs = size / 2
+    Sub DrawCenterpiece(g As Graphics, bounds As Size, scale As Single)
+        Dim brush As New SolidBrush(Color.Gray)
+        Dim center As New Point(bounds.Width / 2, bounds.Height / 2)
+        Dim size = NumericUpDown1.Value * scale
+        Dim hs = size / 2
         g.FillPolygon(brush, GetBackgroundTriangle(center, hs))
+    End Sub
+
+    Sub DrawTriangles(g As Graphics)
+        Dim bgScale = NumericUpDown4.Value
+        DrawBackground(g, ClientSize, bgScale)
+
+        Dim centerpieceScale = NumericUpDown2.Value
+        DrawCenterpiece(g, ClientSize, centerpieceScale)
     End Sub
 
     Function GetBackgroundTriangle(ByRef pos As Point, ByRef hs As Integer) As Point()
@@ -85,17 +100,7 @@ end_of_for:
         End Select
     End Sub
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        My.Settings.Reload()
-        If My.Settings.LastFolder IsNot Nothing Then
-            FolderBrowserDialog1.SelectedPath = My.Settings.LastFolder
-            FolderBrowserDialog2.SelectedPath = My.Settings.LastFolder
-        End If
-    End Sub
-
-    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-        ProgressBar1.Width = Me.Width - ProgressBarOffset - ProgressBar1.Left
-        ProgressBar2.Width = ProgressBar1.Width
+    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         Me.Invalidate()
     End Sub
 
@@ -108,14 +113,33 @@ end_of_for:
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If FolderBrowserDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
+        If SaveFileDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
+            Dim path = SaveFileDialog1.FileName
+            Dim size = CInt(NumericUpDown1.Value)
+            Dim bitmap As New Bitmap(size, size)
+            Dim graphics As Graphics = graphics.FromImage(bitmap)
 
+            Dim foreColor As New SolidBrush(Color.White)
+            Dim point As New PointF(0.0F, 0.0F)
+            DrawCenterpiece(graphics, New Size(size, size), 1.0F)
+            bitmap.Save(Path, ImageFormat.Png)
         End If
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        If FolderBrowserDialog2.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
+        If SaveFileDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
+            Dim path = SaveFileDialog1.FileName
+            Dim size = CInt(NumericUpDown5.Value)
+            Dim bitmap As New Bitmap(size, size)
+            Dim graphics As Graphics = graphics.FromImage(bitmap)
 
+            graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+            graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+
+            Dim foreColor As New SolidBrush(Color.White)
+            Dim point As New PointF(0.0F, 0.0F)
+            DrawBackground(graphics, New Size(size, size), 1.0F)
+            bitmap.Save(path, ImageFormat.Png)
         End If
     End Sub
 End Class
