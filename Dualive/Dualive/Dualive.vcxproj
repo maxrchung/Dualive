@@ -59,7 +59,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\Wax Chug da Gwad\Desktop\OsuukiSB\OsuukiSB\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OsuukiSB.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OsuukiSB.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -81,11 +81,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Config.cpp" />
     <ClCompile Include="Dualive.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.hpp" />
+    <ClInclude Include="Phase.hpp" />
+    <ClInclude Include="PhaseTitle.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
