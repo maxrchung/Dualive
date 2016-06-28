@@ -11,7 +11,7 @@ Public Class Form1
     End Sub
 
     Sub DrawBackground(g As Graphics, bounds As Size, scale As Single)
-        Dim brush As New SolidBrush(Color.DimGray)
+        Dim brush As New SolidBrush(Color.White)
         Dim size = NumericUpDown3.Value * scale
         Dim hs = size / 2
         Dim center As New Point(bounds.Width / 2, bounds.Height / 2)
@@ -64,7 +64,7 @@ end_of_for:
     End Sub
 
     Sub DrawCenterpiece(g As Graphics, bounds As Size, scale As Single)
-        Dim brush As New SolidBrush(Color.Gray)
+        Dim brush As New SolidBrush(Color.White)
         Dim center As New Point(bounds.Width / 2, bounds.Height / 2)
         Dim size = NumericUpDown1.Value * scale
         Dim hs = size / 2
@@ -119,8 +119,6 @@ end_of_for:
             Dim bitmap As New Bitmap(size, size)
             Dim graphics As Graphics = graphics.FromImage(bitmap)
 
-            Dim foreColor As New SolidBrush(Color.White)
-            Dim point As New PointF(0.0F, 0.0F)
             DrawCenterpiece(graphics, New Size(size, size), 1.0F)
             bitmap.Save(Path, ImageFormat.Png)
         End If
@@ -136,8 +134,6 @@ end_of_for:
             graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
             graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
 
-            Dim foreColor As New SolidBrush(Color.White)
-            Dim point As New PointF(0.0F, 0.0F)
             DrawBackground(graphics, New Size(size, size), 1.0F)
             bitmap.Save(path, ImageFormat.Png)
         End If

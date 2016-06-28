@@ -3,7 +3,7 @@
 
 #include "Phase.hpp"
 
-class PhaseTitle : Phase {
+class PhaseTitle : public Phase {
 public:
 	PhaseTitle() {
 		Time startMove("00:01:756");
@@ -17,15 +17,14 @@ public:
 		float endExpandScale = 0.5f;
 		float titleSpacing = 50.0f;
 
-		std::string titleDirectory(Config::I()->storyboardDirectory + "\\Title\\");
+		std::string titleDirectory("Storyboard\\Title\\");
 		std::string title("quarksdualive");
 		int splitPoint = title.find('s');
 
-		std::vector<Sprite*> sprites;
 		for (int i = 0; i < 2; i++) {
 			std::string path = titleDirectory + std::to_string(i) + ".png";
 			Sprite* sprite = new Sprite(path);
-			Vector2 size = Config::I()->GetImageSize(path) * endScale;
+			Vector2 size = Config::I()->GetImageSize(Config::I()->beatmapDirectory + path) * endScale;
 
 			// Scale to expand
 			sprite->Scale(startMove.ms,
