@@ -13,8 +13,8 @@ public:
 		Time endExpand("00:02:387");
 		Time endShrink("00:02:703");
 
-		float cpExpandScale = 0.2f;
-		float cpShrinkScale = 0.1f;
+		float cpExpandScale = 0.15f;
+		float cpShrinkScale = 0.075f;
 
 		Sprite* centerpiece = new Sprite(cpPath);
 		centerpiece->Scale(startExpand.ms,
