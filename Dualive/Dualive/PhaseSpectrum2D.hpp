@@ -36,6 +36,9 @@ public:
 			Config::I()->songEnd.ms,
 			1.0f,
 			1.0f);
+
+		
+
 	}
 };
 
