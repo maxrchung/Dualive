@@ -12,5 +12,5 @@ int main() {
 	config.snapshotRate = 100;
 
 	MusicAnalysis anal(config);
-	std::cin.get();
+	// std::cin.get();
 }

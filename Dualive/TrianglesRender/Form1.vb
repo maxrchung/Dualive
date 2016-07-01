@@ -39,7 +39,8 @@ Public Class Form1
 
         While Not outsideBorder
             outsideBorder = True
-            pos += New Point(direction.X * size, direction.Y * size)
+            Dim height = GetEquilateralTriangleHeight(size)
+            pos += New Point(direction.X * size, direction.Y * height)
             Dim bgtri = GetBackgroundTriangle(pos, hs)
             g.FillPolygon(brush, bgtri)
 
@@ -79,11 +80,18 @@ end_of_for:
         DrawCenterpiece(g, ClientSize, centerpieceScale)
     End Sub
 
+    Function GetEquilateralTriangleHeight(ByVal base) As Single
+        Dim height = Math.Sin(Math.PI / 3) * base
+        Return height
+    End Function
+
     Function GetBackgroundTriangle(ByRef pos As Point, ByRef hs As Integer) As Point()
         Dim bgtri(2) As Point
-        bgtri(0) = New Point(pos.X, pos.Y - hs)
-        bgtri(1) = New Point(pos.X - hs, pos.Y + hs)
-        bgtri(2) = New Point(pos.X + hs, pos.Y + hs)
+        Dim height = GetEquilateralTriangleHeight(hs * 2)
+        Dim halfHeight = height / 2
+        bgtri(0) = New Point(pos.X, pos.Y - halfHeight)
+        bgtri(1) = New Point(pos.X - hs, pos.Y + halfHeight)
+        bgtri(2) = New Point(pos.X + hs, pos.Y + halfHeight)
         Return bgtri
     End Function
 
@@ -116,10 +124,13 @@ end_of_for:
         If SaveFileDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
             Dim path = SaveFileDialog1.FileName
             Dim size = CInt(NumericUpDown1.Value)
-            Dim bitmap As New Bitmap(size, size)
+            Dim height = GetEquilateralTriangleHeight(size)
+            Dim botHeight = Math.Tan(Math.PI / 6) * (size / 2)
+            Dim imageHeight = (height - botHeight) * 2
+            Dim bitmap As New Bitmap(size, CInt(Math.Ceiling(imageHeight)))
             Dim graphics As Graphics = graphics.FromImage(bitmap)
 
-            DrawCenterpiece(graphics, New Size(size, size), 1.0F)
+            DrawCenterpiece(graphics, New Size(size, height), 1.0F)
             bitmap.Save(Path, ImageFormat.Png)
         End If
     End Sub

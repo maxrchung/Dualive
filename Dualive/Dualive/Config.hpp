@@ -45,13 +45,13 @@ public:
 	float mspb = 1000 * spb;
 	float offset = mspb / 4;
 
-	// MusicAnalysisData
-	MusicAnalysisData data = MusicAnalysis::LoadData(Config::I()->dataPath);
-
 	// Paths
 	std::string beatmapDirectory = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\)";
 	std::string dataPath = R"(C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Debug\MusicAnalysisData.txt)";
 	std::string storyboardPath = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Quarks - Dualive (Osuuki).osb)";
+
+	// MusicAnalysisData
+	MusicAnalysisData data = MusicAnalysis::LoadData(dataPath);
 
 	// Times
 	Time songStart = Time("00:00:000");

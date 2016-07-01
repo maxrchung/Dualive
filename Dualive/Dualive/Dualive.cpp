@@ -17,6 +17,19 @@ int main() {
 		Color(0),
 		Color(0));
 
+	Sprite* line = new Sprite("Storyboard\\Blank.png", Vector2::Midpoint, Layer::Background);
+	line->ScaleVector(Config::I()->songStart.ms,
+		Config::I()->songEnd.ms,
+		Vector2(0.002f, 0.768f),
+		Vector2(0.002f, 0.768f));
+
+	Sprite* line2 = new Sprite("Storyboard\\Blank.png", Vector2::Midpoint, Layer::Background);
+	line2->ScaleVector(Config::I()->songStart.ms,
+		Config::I()->songEnd.ms,
+		Vector2(1.366f, 0.002f),
+		Vector2(1.366f, 0.002f));
+
+
 	PhaseTitle phaseTitle;
 	PhaseSpectrum2D phaseSpectrum2D;
 

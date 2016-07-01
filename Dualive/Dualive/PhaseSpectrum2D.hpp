@@ -37,8 +37,54 @@ public:
 			1.0f,
 			1.0f);
 
-		
+		centerpiece->Rotate(endExpand.ms,
+			endExpand.ms + 10000,
+			centerpiece->rotation,
+			centerpiece->rotation + 2 * M_PI);
 
+		// Distance away from center
+		float spectrumSpacing = 60.0f;
+		Vector2 startPoint = Vector2::Midpoint - Vector2(spectrumSpacing, 0);
+		// Easier access
+		MusicAnalysisData data = Config::I()->data;
+		float barWidthScale = 0.015f;
+
+		Time startSpectrum("00:03:019");
+		Time maxFadeSpectrum("00:05:545");
+
+		std::vector<Sprite*> spectrum(data.bandCount);
+		for (int i = 0; i < data.bandCount; ++i) {
+			Sprite* bar = new Sprite(cpPath, Vector2::Midpoint, Layer::Foreground, Origin::BottomCentre);
+			spectrum[i] = bar;
+			float rotateAmount = 2 * M_PI * ((float) i / data.bandCount);
+			Vector2 specPos = startPoint.RotateAround(Vector2::Midpoint, rotateAmount);
+
+			bar->Move(startExpand.ms,
+				startSpectrum.ms,
+				Vector2::Midpoint,
+				specPos);
+
+			bar->Scale(startExpand.ms,
+				startSpectrum.ms,
+				barWidthScale,
+				barWidthScale);
+
+			float localRotation = (-M_PI / 2) + rotateAmount;
+			bar->Rotate(startExpand.ms,
+				startExpand.ms,
+				localRotation,
+				localRotation);
+
+			bar->Fade(startExpand.ms,
+				maxFadeSpectrum.ms,
+				0.0f,
+				1.0f);
+
+			bar->Fade(maxFadeSpectrum.ms,
+				Config::I()->songEnd.ms,
+				1.0f,
+				1.0f);
+		}
 	}
 };
 
