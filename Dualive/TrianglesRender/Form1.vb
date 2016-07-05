@@ -67,7 +67,7 @@ end_of_for:
     Sub DrawCenterpiece(g As Graphics, bounds As Size, scale As Single)
         Dim brush As New SolidBrush(Color.White)
         Dim center As New Point(bounds.Width / 2, bounds.Height / 2)
-        Dim size = NumericUpDown1.Value * scale
+        Dim size = bounds.Width * scale
         Dim hs = size / 2
         g.FillPolygon(brush, GetBackgroundTriangle(center, hs))
     End Sub
@@ -122,31 +122,48 @@ end_of_for:
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If SaveFileDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
-            Dim path = SaveFileDialog1.FileName
+            Dim path = SaveFileDialog1.FileName.Split(".png")(0)
             Dim size = CInt(NumericUpDown1.Value)
             Dim height = GetEquilateralTriangleHeight(size)
             Dim botHeight = Math.Tan(Math.PI / 6) * (size / 2)
             Dim imageHeight = (height - botHeight) * 2
             Dim bitmap As New Bitmap(size, CInt(Math.Ceiling(imageHeight)))
             Dim graphics As Graphics = graphics.FromImage(bitmap)
-
+            graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+            graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
             DrawCenterpiece(graphics, New Size(size, height), 1.0F)
-            bitmap.Save(Path, ImageFormat.Png)
+            bitmap.Save(path + ".png", ImageFormat.Png)
+
+            bitmap = New Bitmap(size, CInt(Math.Ceiling(height)))
+            graphics = graphics.FromImage(bitmap)
+            graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+            graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+            DrawCenterpiece(graphics, New Size(size, height), 1.0F)
+            Dim noSpacing = "NoSpacing"
+            bitmap.Save(path + noSpacing + ".png", ImageFormat.Png)
         End If
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If SaveFileDialog1.ShowDialog() <> Windows.Forms.DialogResult.Cancel Then
-            Dim path = SaveFileDialog1.FileName
+            Dim path = SaveFileDialog1.FileName.Split(".png")(0)
             Dim size = CInt(NumericUpDown5.Value)
             Dim bitmap As New Bitmap(size, size)
             Dim graphics As Graphics = graphics.FromImage(bitmap)
-
             graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
             graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
-
             DrawBackground(graphics, New Size(size, size), 1.0F)
-            bitmap.Save(path, ImageFormat.Png)
+            bitmap.Save(path + ".png", ImageFormat.Png)
+
+            Dim pieceSize = CInt(NumericUpDown3.Value)
+            Dim height = GetEquilateralTriangleHeight(pieceSize)
+            bitmap = New Bitmap(pieceSize, CInt(Math.Ceiling(height)))
+            graphics = graphics.FromImage(bitmap)
+            graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+            graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+            DrawCenterpiece(graphics, New Size(pieceSize, height), 1.0F)
+            Dim piece = "Piece"
+            bitmap.Save(path + piece + ".png", ImageFormat.Png)
         End If
     End Sub
 End Class

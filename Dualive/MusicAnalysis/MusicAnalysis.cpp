@@ -6,9 +6,9 @@ int main() {
 	std::string dataPath(R"(C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Debug\MusicAnalysisData.txt)");
 	config.musicPath = musicPath;
 	config.dataPath = dataPath;
-	config.divisions = 16;
+	config.divisions = 24;
 	config.freqBandStart = 50;
-	config.freqBandEnd = 18000;
+	config.freqBandEnd = 16000;
 	config.snapshotRate = 100;
 
 	MusicAnalysis anal(config);

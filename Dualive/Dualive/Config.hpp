@@ -37,6 +37,10 @@ public:
 		return Vector2(width, height);
 	}
 
+	static Time GetClosestTime(Time time) {
+		return Time(roundf(time.ms / 100.0f) * 100.0f);
+	}
+
 	// BPM
 	const float bpm = 190.0f;
 	float mpb = 1 / bpm;

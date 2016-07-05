@@ -12,10 +12,10 @@ public:
 		Time peakExpand("00:03:019");
 		Time endExpand("00:05:545");
 		float startScale = 0.0f;
-		float endScale = 0.3f;
+		float endScale = 0.25f;
 		float peakExpandScale = 1.2f;
 		float endExpandScale = 0.5f;
-		float titleSpacing = 50.0f;
+		float titleSpacing = 75.0f;
 
 		std::string titleDirectory("Storyboard\\Title\\");
 		std::string title("quarksdualive");

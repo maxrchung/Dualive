@@ -32,5 +32,8 @@
     <ClInclude Include="PhaseSpectrum2D.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PhaseTest.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

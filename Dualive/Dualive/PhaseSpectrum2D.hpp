@@ -6,15 +6,26 @@
 class PhaseSpectrum2D : public Phase {
 public:
 	PhaseSpectrum2D() {
-		std::string directory = "Storyboard\\Spectrum2D\\";
-		std::string cpPath = directory + "Centerpiece.png";
-
+		std::string cpPath = "Storyboard\\Spectrum2D\\Centerpiece.png";
 		Time startExpand("00:01:756");
 		Time endExpand("00:02:387");
 		Time endShrink("00:02:703");
+		Time startSpectrum("00:03:019");
+		Time startSpectrumRound(Config::I()->GetClosestTime(Time("00:03:019")));
+		Time startSpeedup("00:13:124");
+		Time startSpeedupRound(Config::I()->GetClosestTime(Time("00:13:124")));
+		Time endRotation("00:23:229");
+		Time endRotationRound(Config::I()->GetClosestTime(Time("00:23:229")));
+		Time secondSpeedup("00:18:177");
+		Time thirdSpeedup("00:20:703");
+		Time thirdSpeedupEnd("00:21:966");
 
 		float cpExpandScale = 0.15f;
 		float cpShrinkScale = 0.075f;
+		float cpMiniScale = 0.05f;
+		float rotAmount = 2 * M_PI;
+		// Not actually 4 times faster because of period lengths
+		float rotSpeedupAmount = 4 * M_PI;
 
 		Sprite* centerpiece = new Sprite(cpPath);
 		centerpiece->Scale(startExpand.ms,
@@ -37,53 +48,158 @@ public:
 			1.0f,
 			1.0f);
 
-		centerpiece->Rotate(endExpand.ms,
-			endExpand.ms + 10000,
+		centerpiece->Rotate(startSpectrumRound.ms,
+			startSpeedupRound.ms,
 			centerpiece->rotation,
-			centerpiece->rotation + 2 * M_PI);
+			centerpiece->rotation + rotAmount);
 
+		centerpiece->Rotate(startSpeedupRound.ms,
+			endRotationRound.ms,
+			centerpiece->rotation,
+			centerpiece->rotation + rotSpeedupAmount);
+
+		for (float startTime = startSpeedup.ms; startTime < secondSpeedup.ms; startTime += Config::I()->mspb * 2) {
+			centerpiece->Scale(startTime - Config::I()->offset * 2,
+				startTime,
+				cpShrinkScale,
+				cpMiniScale);
+
+			centerpiece->Scale(startTime,
+				startTime + Config::I()->offset * 2,
+				cpMiniScale,
+				cpShrinkScale);
+		}
+
+		for (float startTime = secondSpeedup.ms; startTime < thirdSpeedup.ms; startTime += Config::I()->mspb) {
+			centerpiece->Scale(startTime - Config::I()->offset,
+				startTime,
+				cpShrinkScale,
+				cpMiniScale);
+
+			centerpiece->Scale(startTime,
+				startTime + Config::I()->offset,
+				cpMiniScale,
+				cpShrinkScale);
+		}
+
+		for (float startTime = thirdSpeedup.ms; startTime < thirdSpeedupEnd.ms; startTime += Config::I()->mspb / 2) {
+			centerpiece->Scale(startTime - Config::I()->offset,
+				startTime,
+				cpShrinkScale,
+				cpMiniScale);
+
+			centerpiece->Scale(startTime,
+				startTime + Config::I()->offset,
+				cpMiniScale,
+				cpShrinkScale);
+		}
+
+		centerpiece->Scale(thirdSpeedupEnd.ms,
+			endRotationRound.ms,
+			centerpiece->scale,
+			0.0f);
+
+		std::string barPath("Storyboard\\Spectrum2D\\CenterpieceNoSpacing.png");
+		Time startMove("00:01:756");
+		Time maxFadeSpectrum("00:05:545");
 		// Distance away from center
 		float spectrumSpacing = 60.0f;
-		Vector2 startPoint = Vector2::Midpoint - Vector2(spectrumSpacing, 0);
+		Vector2 startPoint = Vector2::Midpoint - Vector2(0, spectrumSpacing);
 		// Easier access
 		MusicAnalysisData data = Config::I()->data;
-		float barWidthScale = 0.015f;
-
-		Time startSpectrum("00:03:019");
-		Time maxFadeSpectrum("00:05:545");
+		float barWidthScale = 0.01f;
+		float barLengthScale = 0.002f;
 
 		std::vector<Sprite*> spectrum(data.bandCount);
 		for (int i = 0; i < data.bandCount; ++i) {
-			Sprite* bar = new Sprite(cpPath, Vector2::Midpoint, Layer::Foreground, Origin::BottomCentre);
+			Sprite* bar = new Sprite(barPath, Vector2::Midpoint, Layer::Foreground, Origin::BottomCentre);
 			spectrum[i] = bar;
 			float rotateAmount = 2 * M_PI * ((float) i / data.bandCount);
 			Vector2 specPos = startPoint.RotateAround(Vector2::Midpoint, rotateAmount);
 
-			bar->Move(startExpand.ms,
-				startSpectrum.ms,
+			// Move to starting position
+			bar->Move(startMove.ms,
+				startSpectrumRound.ms,
 				Vector2::Midpoint,
 				specPos);
 
-			bar->Scale(startExpand.ms,
-				startSpectrum.ms,
-				barWidthScale,
-				barWidthScale);
-
-			float localRotation = (-M_PI / 2) + rotateAmount;
-			bar->Rotate(startExpand.ms,
-				startExpand.ms,
+			// Rotate into position
+			float localRotation = rotateAmount;
+			bar->Rotate(startMove.ms,
+				startMove.ms,
 				localRotation,
 				localRotation);
 
-			bar->Fade(startExpand.ms,
+			int startIndex = data.GetMeasureIndex(startSpectrumRound);
+			int speedupIndex = data.GetMeasureIndex(startSpeedupRound);
+			int endIndex = data.GetMeasureIndex(endRotationRound);
+			float discreteRotation = rotAmount / (speedupIndex - startIndex);
+			float speedupRotation = rotSpeedupAmount / (endIndex - speedupIndex);
+
+			float startScale = data.scaleData[i][startIndex] * barLengthScale;
+			bar->ScaleVector(startMove.ms,
+				startSpectrumRound.ms,
+				Vector2(0.0f, 0.0f),
+				Vector2(barWidthScale, startScale));
+
+			// Scale according to data
+			// Handle discrete movement/rotation
+			for (int j = startIndex; j < speedupIndex; ++j) {
+				// j + 1 because the first entry into ScaleData is not 0
+				// Kind of weird, will probably fix this probably maybeidk
+				int startTime = data.snapshotRate * (j + 1);
+				int endTime = startTime + data.snapshotRate;
+				float scaleAmount = data.scaleData[i][j] * barLengthScale;
+
+				bar->ScaleVector(startTime,
+					endTime,
+					bar->scaleVector,
+					Vector2(barWidthScale, scaleAmount));
+
+				Vector2 pos = bar->position.RotateAround(Vector2::Midpoint, discreteRotation);
+				bar->Move(startTime,
+					endTime,
+					bar->position,
+					pos);
+
+				bar->Rotate(startTime,
+					endTime,
+					bar->rotation,
+					bar->rotation + discreteRotation);
+			}
+
+			for (int j = speedupIndex; j < endIndex; ++j) {
+				int startTime = data.snapshotRate * (j + 1);
+				int endTime = startTime + data.snapshotRate;
+				float scaleAmount = data.scaleData[i][j] * barLengthScale;
+
+				bar->ScaleVector(startTime,
+					endTime,
+					bar->scaleVector,
+					Vector2(barWidthScale, scaleAmount));
+
+				Vector2 pos = bar->position.RotateAround(Vector2::Midpoint, speedupRotation);
+				bar->Move(startTime,
+					endTime,
+					bar->position,
+					pos);
+
+				bar->Rotate(startTime,
+					endTime,
+					bar->rotation,
+					bar->rotation + speedupRotation);
+			}
+
+			float fadeAmount = (1 - (float) i / data.bandCount) * 0.75f + 0.25f;
+			bar->Fade(startMove.ms,
 				maxFadeSpectrum.ms,
 				0.0f,
-				1.0f);
+				fadeAmount);
 
-			bar->Fade(maxFadeSpectrum.ms,
-				Config::I()->songEnd.ms,
-				1.0f,
-				1.0f);
+			bar->Fade(thirdSpeedupEnd.ms,
+				endRotationRound.ms,
+				bar->fade,
+				0.0f);
 		}
 	}
 };
