@@ -4,6 +4,7 @@
 #define CONFIGPATH R"(C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Dualive\config.txt)"
 
 #include "MusicAnalysis.hpp"
+#include "Sprite.hpp"
 #include "Time.hpp"
 #include "Vector2.hpp"
 #include <map>
@@ -16,20 +17,21 @@
 
 class Config {
 public:
-	static Config* I() {
+	const static Config* I() {
 		if (instance == NULL) {
 			instance = new Config;
 		}
 		return instance;
 	}
 
-	static Vector2 GetImageSize(std::string path) {
+	static Vector2 GetImageSize(const std::string& path) {
 		std::ifstream in(path);
 		unsigned int width, height;
 
 		in.seekg(16);
 		in.read((char *)&width, 4);
 		in.read((char *)&height, 4);
+		in.close();
 
 		width = ntohl(width);
 		height = ntohl(height);
@@ -42,12 +44,15 @@ public:
 	}
 
 	// BPM
-	const float bpm = 190.0f;
+	float bpm = 190.0f;
 	float mpb = 1 / bpm;
 	float spb = mpb * 60;
 	// ~316 ms per beat
 	float mspb = 1000 * spb;
 	float offset = mspb / 4;
+
+	// Overall scaling
+	float patternScale = 0.5f;
 
 	// Paths
 	std::string beatmapDirectory = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\)";
@@ -63,10 +68,7 @@ public:
 
 private:
 	static Config* instance;
-	Config() {
-		// For random
-		srand(time(NULL));
-	};
+	Config() {};
 	Config(const Config&) {};
 	Config& operator=(const Config&) {};
 };

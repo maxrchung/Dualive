@@ -35,5 +35,8 @@
     <ClInclude Include="PhaseTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PhaseMoire.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

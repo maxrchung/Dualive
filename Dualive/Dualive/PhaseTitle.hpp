@@ -4,21 +4,22 @@
 #include "Phase.hpp"
 
 class PhaseTitle : public Phase {
+private:
+	float startScale = 0.0f;
+	float endScale = 0.25f;
+	float peakExpandScale = 1.2f;
+	float endExpandScale = 0.5f;
+	float titleSpacing = 75.0f;
+	std::string title = "quarksdualive";
+	std::string titleDirectory = "Storyboard\\Title\\";
+	Time startMove = Time("00:01:756");
+	Time endMove = Time("00:02:703");
+	Time startExpand = Time("00:02:940");
+	Time peakExpand = Time("00:03:019");
+	Time endExpand = Time("00:05:545");
+
 public:
 	PhaseTitle() {
-		Time startMove("00:01:756");
-		Time endMove("00:02:703");
-		Time startExpand("00:02:940");
-		Time peakExpand("00:03:019");
-		Time endExpand("00:05:545");
-		float startScale = 0.0f;
-		float endScale = 0.25f;
-		float peakExpandScale = 1.2f;
-		float endExpandScale = 0.5f;
-		float titleSpacing = 75.0f;
-
-		std::string titleDirectory("Storyboard\\Title\\");
-		std::string title("quarksdualive");
 		int splitPoint = title.find('s');
 
 		for (int i = 0; i < 2; i++) {

@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClInclude Include="Config.hpp" />
     <ClInclude Include="Phase.hpp" />
+    <ClInclude Include="PhaseMoire.hpp" />
     <ClInclude Include="PhaseSpectrum2D.hpp" />
     <ClInclude Include="PhaseTest.hpp" />
     <ClInclude Include="PhaseTitle.hpp" />
