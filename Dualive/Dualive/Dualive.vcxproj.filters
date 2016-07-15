@@ -35,7 +35,13 @@
     <ClInclude Include="PhaseTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PhaseMoire.hpp">
+    <ClInclude Include="PhaseMoireGeneration.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhaseMoireSpin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhaseLyricsTunnel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

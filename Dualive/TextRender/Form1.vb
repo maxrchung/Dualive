@@ -63,9 +63,10 @@ Public Class Form1
                 ProgressBar1.Visible = True
                 ProgressBar1.Maximum = lines.Length
                 For index As Integer = 0 To lines.Length - 1
-                    Dim size As Size = TextRenderer.MeasureText(lines(index), RichTextBox1.Font)
-                    Dim bitmap As New Bitmap(size.Width, size.Height)
-                    Dim graphics As Graphics = graphics.FromImage(bitmap)
+                    Dim graphics = Me.CreateGraphics()
+                    Dim size As SizeF = graphics.MeasureString(lines(index), RichTextBox1.Font)
+                    Dim bitmap As New Bitmap(CInt(size.Width), CInt(size.Height))
+                    graphics = graphics.FromImage(bitmap)
                     ' Otherwise really jaggedy
                     graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
                     graphics.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias

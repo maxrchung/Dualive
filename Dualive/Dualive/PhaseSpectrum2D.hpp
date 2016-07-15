@@ -14,15 +14,15 @@ private:
 			Vector2 specPos = startPoint.RotateAround(Vector2::Midpoint, rotateAmount);
 
 			// Move to starting position
-			bar->Move(startMove.ms,
+			bar->Move(startSpectrumExpand.ms,
 				startSpectrumRound.ms,
 				Vector2::Midpoint,
 				specPos);
 
 			// Rotate into position
 			float localRotation = rotateAmount;
-			bar->Rotate(startMove.ms,
-				startMove.ms,
+			bar->Rotate(startSpectrumExpand.ms,
+				startSpectrumExpand.ms,
 				localRotation,
 				localRotation);
 
@@ -33,7 +33,7 @@ private:
 			float speedupRotation = rotSpeedupAmount / (endIndex - speedupIndex);
 
 			float startScale = data.scaleData[i][startIndex] * barLengthScale;
-			bar->ScaleVector(startMove.ms,
+			bar->ScaleVector(startSpectrumExpand.ms,
 				startSpectrumRound.ms,
 				Vector2(0.0f, 0.0f),
 				Vector2(barWidthScale, startScale));
@@ -122,9 +122,14 @@ private:
 			cpShrinkScale);
 
 		centerpiece->Fade(endExpand.ms,
-			Config::I()->songEnd.ms,
+			thirdSpeedupEnd.ms,
 			1.0f,
 			1.0f);
+
+		centerpiece->Fade(thirdSpeedupEnd.ms,
+			endRotation.ms,
+			1.0f,
+			0.0f);
 
 		centerpiece->Rotate(startSpectrumRound.ms,
 			startSpeedupRound.ms,
@@ -136,7 +141,7 @@ private:
 			centerpiece->rotation,
 			centerpiece->rotation + rotSpeedupAmount);
 
-		for (float startTime = startSpeedup.ms; startTime < secondSpeedup.ms; startTime += Config::I()->mspb * 2) {
+		for (float startTime = startCpScale.ms; startTime < secondSpeedup.ms; startTime += Config::I()->mspb * 2) {
 			centerpiece->Scale(startTime - Config::I()->offset * 2,
 				startTime,
 				cpShrinkScale,
@@ -188,12 +193,14 @@ private:
 	// Not actually 4 times faster because of period lengths
 	float rotSpeedupAmount = 4 * M_PI;
 	std::string cpPath = "Storyboard\\Spectrum2D\\Centerpiece.png";
-
+	
 	Time startExpand = Time("00:01:756");
+	Time startSpectrumExpand = Time("00:02:387");
 	Time endExpand = Time("00:02:387");
 	Time endShrink = Time("00:02:703");
 	Time startSpectrum = Time("00:03:019");
 	Time startSpectrumRound = Config::I()->GetClosestTime(Time("00:03:019"));
+	Time startCpScale = Time("00:09:335");
 	Time startSpeedup = Time("00:13:124");
 	Time startSpeedupRound = Config::I()->GetClosestTime(Time("00:13:124"));
 	Time endRotation = Time("00:23:229");

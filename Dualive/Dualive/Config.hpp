@@ -52,7 +52,7 @@ public:
 	float offset = mspb / 4;
 
 	// Overall scaling
-	float patternScale = 0.5f;
+	float patternScale = 0.35f; 
 
 	// Paths
 	std::string beatmapDirectory = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\)";

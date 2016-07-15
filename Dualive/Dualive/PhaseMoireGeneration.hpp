@@ -1,9 +1,9 @@
-#ifndef PHASEMOIRE_HPP
-#define PHASEMOIRE_HPP
+#ifndef PHASEMOIREGENERATION_HPP
+#define PHASEMOIREGENERATION_HPP
 
 #include "Phase.hpp"
 
-class PhaseMoire : public Phase {
+class PhaseMoireGeneration : public Phase {
 private:
 	// Radix
 	std::vector<int> scrambleIndices(int size) {
@@ -26,27 +26,34 @@ private:
 		std::string trianglePath(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\Spectrum2D\PatternPiece.png)");
 		Vector2 imageSize(Config::I()->GetImageSize(trianglePath));
 		Vector2 scaledSize(imageSize * Config::I()->patternScale);
-		Vector2 bgSize(1366.0f, 768.0f);
+		Vector2 halfScaledSize = scaledSize / 2;
+		Vector2 bgSize(854.0f, 480.0f);
+		Vector2 halfBgSize = bgSize / 2;
 
 		// Calculate for width
 		// Subtract half of the center triangle
-		float halfWidth = (bgSize.x / 2) - (scaledSize.x / 2);
+		float halfWidth = halfBgSize.x - halfScaledSize.x;
+		int numHalfWidth = ceilf(halfWidth / scaledSize.x);
 		// Center + Number of triangles for each side
-		int numWidth = 1 + 2 * ceilf(halfWidth / scaledSize.x);
+		int numWidth = 1 + 2 * numHalfWidth;
+
 		// Repeat for length
-		float halfLength = (bgSize.y / 2) - (scaledSize.y / 2);
-		int numLength = 1 + 2 * ceilf(halfLength / scaledSize.y);
+		float halfLength = halfBgSize.y - halfScaledSize.y;
+		int numHalfLength = ceilf(halfLength / scaledSize.y);
+		int numLength = 1 + 2 * numHalfLength;
 
 		int totalTriangles = numWidth * numLength;
 		std::vector<Vector2> positions(totalTriangles);
-		Vector2 startPos(Vector2(Vector2::Midpoint.x - (bgSize.x / 2) - (scaledSize.x / 2),
-			Vector2::Midpoint.y - (bgSize.y / 2) - (scaledSize.y / 2)));
+		Vector2 startPos(Vector2::Midpoint.x - scaledSize.x * numHalfWidth,
+			Vector2::Midpoint.y - scaledSize.y * numHalfLength);
 
 		for (int i = 0; i < numLength; ++i) {
 			for (int j = 0; j < numWidth; ++j) {
 				int index = i * numWidth + j;
+				// HACKING bad
+				int offset = (i - numLength / 2) * -0.5f;
 				Vector2 pos = startPos + Vector2(j * scaledSize.x,
-					i * scaledSize.y);
+					i * scaledSize.y + offset);
 				positions[index] = pos;
 			}
 		}
@@ -79,15 +86,17 @@ private:
 				scrambledIndices.pop_back();
 				bgTri->Move(i, i + moveOffset, bgTri->position, pos);
 				bgTri->Scale(i, i, Config::I()->patternScale, Config::I()->patternScale);
-				//bgTri->Fade(i, i + moveOffset, 0.0f, bgFade);
-				//bgTri->Fade(i + moveOffset, endSpectrum.ms, bgFade, bgFade);
+
 				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f);
-				bgTri->Fade(i + moveOffset, endSpectrum.ms, 1.0f, 1.0f);
-				bgTri->Color(i, endSpectrum.ms, Color(100), Color(100));
+				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
+				bgTri->Fade(endThirdSpeedup.ms, endSpectrum.ms, 1.0f, 0.0f);
+				bgTri->Color(i, endThirdSpeedup.ms, patternColor, patternColor);
+				bgTri->Color(endThirdSpeedup.ms, endSpectrum.ms, bgTri->color, Color(255));
 			}
 		}
 	}
 
+	Color patternColor = Color(100);
 	std::vector<Vector2> positions = getPositions();
 	std::vector<int> scrambledIndices = scrambleIndices(positions.size());
 	std::string bgTriPath = "Storyboard\\Spectrum2D\\PatternPiece.png";
@@ -101,11 +110,11 @@ private:
 	Time endSpectrum = Time("00:23:229");
 
 public:
-	PhaseMoire() {
+	PhaseMoireGeneration() {
 		generateTriangles(startSpectrum, startSpeedup, 2 * Config::I()->mspb, 3);
 		generateTriangles(startSpeedup, secondSpeedup, 2 * Config::I()->mspb, 9);
 		generateTriangles(secondSpeedup, thirdSpeedup, Config::I()->mspb, 81);
 		generateTriangles(thirdSpeedup, endThirdSpeedup, Config::I()->mspb / 2, 243);
 	}
 };
-#endif//PHASEMOIRE_HPP
+#endif//PHASEMOIREGENERATION_HPP

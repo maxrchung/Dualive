@@ -1,5 +1,7 @@
 #include "Config.hpp"
-#include "PhaseMoire.hpp"
+#include "PhaseLyricsTunnel.hpp"
+#include "PhaseMoireGeneration.hpp"
+#include "PhaseMoireSpin.hpp"
 #include "PhaseSpectrum2D.hpp"
 #include "PhaseTest.hpp"
 #include "PhaseTitle.hpp"
@@ -25,7 +27,9 @@ int main() {
 	// PhaseTest phaseTest;
 	// PhaseTitle phaseTitle;
 	PhaseSpectrum2D phaseSpectrum2D;
-	PhaseMoire phaseMoire;
+	PhaseMoireGeneration phaseMoireGeneration;
+	PhaseMoireSpin phaseMoireSpin;
+	PhaseLyricsTunnel phaseLyricsTunnel;
 
 	Storyboard::Instance()->Write(Config::I()->storyboardPath);
 	//std::cin.get();
