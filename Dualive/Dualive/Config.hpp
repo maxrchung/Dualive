@@ -24,6 +24,11 @@ public:
 		return instance;
 	}
 
+	// Convert degrees to radians
+	static float DToR(int degrees) {
+		return degrees * M_PI / 180.0f;
+	}
+
 	static Vector2 GetImageSize(const std::string& path) {
 		std::ifstream in(path);
 		unsigned int width, height;

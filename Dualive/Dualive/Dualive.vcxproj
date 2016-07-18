@@ -93,6 +93,10 @@
     <ClInclude Include="PhaseTest.hpp" />
     <ClInclude Include="PhaseTitle.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Debug\LyricsTunnel.txt" />
+    <Text Include="..\Debug\LyricsTunnelKanji.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
