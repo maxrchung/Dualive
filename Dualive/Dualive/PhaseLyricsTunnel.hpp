@@ -9,9 +9,7 @@ private:
 		for (int i = 0; i < lyrics.size(); ++i) {
 			Sprite* sprite = lyrics[i];
 			
-			sprite->Scale(startTunnel.ms, startTunnel.ms, baseScale, baseScale);
-
-			// Fade section
+			 // Fade section
 			int fadeIndex = i - lyricsOnScreen;
 			if (fadeIndex < 0) {
 				fadeIndex = 0;
@@ -22,6 +20,11 @@ private:
 			sprite->Color(startTunnel.ms - offset, timings[fadeIndex].ms, Color(0.0f), Color(255) * startFade);
 			// Easiest way I can think of to keep track of fade value
 			sprite->fade = startFade;
+
+			float startScale = baseScale * 
+				pow(longScaleIncrement, (lyricsOnScreen - ((i - fadeIndex)))) *
+				pow(shortScaleIncrement, (lyricsOnScreen - ((i - fadeIndex))));
+			sprite->Scale(startTunnel.ms - offset, timings[fadeIndex].ms, 0.0f, startScale);
 
 			// Increment fade at each long step
 			for (int j = fadeIndex; j < lyrics.size(); ++j) {
@@ -34,6 +37,9 @@ private:
 					sprite->fade = fade;
 
 					sprite->Color(timings[j].ms, timings[j + 1].ms,	sprite->color, Color(255.0f) * fade);
+					sprite->Scale(timings[j].ms, timings[j + 1].ms - offset, sprite->scale, sprite->scale * longScaleIncrement);
+					sprite->Scale(timings[j + 1].ms - offset, timings[j + 1].ms, sprite->scale, sprite->scale * shortScaleIncrement);
+					
 				}
 				else {
 					break;
@@ -42,6 +48,7 @@ private:
 
 			// Fade out
 			sprite->Color(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->color, Color(0.0f));
+			sprite->Scale(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->scale, sprite->scale * shortScaleIncrement);
 
 			// Set starting rotation
 			float startRotation = i * rotationOffset + longRotation / 2;
@@ -131,7 +138,10 @@ private:
 	int lyricsOnScreen = 4;
 	float fadeIncrement = 1.0f / lyricsOnScreen;
 
-	float baseScale = 0.3f;
+	float baseScale = 0.05f;
+	float longScaleIncrement = 1.5f;
+	float shortScaleIncrement = 1.1f;
+
 	// Number of discrete sections for spinning
 	int discrete = 10;
 	// It's actually missing 1 because that one is present on the screen at 0 opacity

@@ -51,7 +51,7 @@ private:
 			for (int j = 0; j < numWidth; ++j) {
 				int index = i * numWidth + j;
 				// HACKING bad
-				int offset = (i - numLength / 2) * -0.5f;
+				int offset = (i - numLength / 2) * -0.4f;
 				Vector2 pos = startPos + Vector2(j * scaledSize.x,
 					i * scaledSize.y + offset);
 				positions[index] = pos;
@@ -89,7 +89,7 @@ private:
 
 				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f);
 				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
-				bgTri->Fade(endThirdSpeedup.ms, endSpectrum.ms, 1.0f, 0.0f);
+				bgTri->Fade(endSpectrum.ms - Config::I()->offset, endSpectrum.ms, 1.0f, 0.0f);
 				bgTri->Color(i, endThirdSpeedup.ms, patternColor, patternColor);
 				bgTri->Color(endThirdSpeedup.ms, endSpectrum.ms, bgTri->color, Color(255));
 			}
