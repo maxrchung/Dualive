@@ -14,7 +14,7 @@ int main() {
 	srand(time(NULL));
 
 	Vector2 maxBgSize(1.366f, 0.768f);
-	Sprite* background = new Sprite("Storyboard\\Blank.png", Vector2::Midpoint, Layer::Background);
+	Sprite* background = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Midpoint, Layer::Background);
 	background->ScaleVector(Config::I()->songStart.ms,
 		Config::I()->songEnd.ms,
 		maxBgSize,

@@ -38,7 +38,6 @@ private:
 
 public:
 	PhaseMoireSpin() {
-
 		Sprite* bg = new Sprite(bgPath, Vector2::Midpoint, Layer::Background);
 		SetupBackground(bg);
 

@@ -21,7 +21,8 @@ private:
 			// Easiest way I can think of to keep track of fade value
 			sprite->fade = startFade;
 
-			float startScale = baseScale * 
+			float startScale = sprite->scale * 
+				baseScale * 
 				pow(longScaleIncrement, (lyricsOnScreen - ((i - fadeIndex)))) *
 				pow(shortScaleIncrement, (lyricsOnScreen - ((i - fadeIndex))));
 			sprite->Scale(startTunnel.ms - offset, timings[fadeIndex].ms, 0.0f, startScale);
@@ -120,7 +121,18 @@ private:
 				origin = Origin::CentreRight;
 			}
 			Sprite* sprite = new Sprite(localDirectory + std::to_string(i) + ".png", Vector2::Midpoint, Layer::Foreground, origin);
-			// For conveniency sake, we reverse the order again
+			float width = Config::I()->GetImageSize(exactDirectory + std::to_string(i) + ".png").x;
+			float scale = Config::I()->bgDims.x / width;
+			if (scale < 1.0f) {
+				// Probably a bad idea to save temp variables like 
+				// this, but this won't mess up timings for scaling
+				sprite->scale = scale;
+			}
+			// Clamp so things don't get too big
+			else {
+				sprite->scale = 1.0f;
+			}
+
 			lyrics[i] = sprite;
 		}
 
@@ -177,8 +189,10 @@ private:
 		Time("00:58:598"),
 		//i will remove what you fear
 		Time("00:59:861"),
-		//muku datte koto ni
+		//muku datte
 		Time("01:01:124"),
+		//koto ni
+		Time("01:01:756"),
 		// This makes some calculations easier
 		endTunnel
 	});
@@ -189,6 +203,8 @@ public:
 		std::string lyricsLocalDirectory = R"(Storyboard\LyricsTunnel\)";
 		std::vector<Sprite*> lyrics = loadLyrics(lyricsExactDirectory, lyricsLocalDirectory);
 		setupLyrics(lyrics);
+
+		std::string linePath = R"(Storyboard\line.png)";
 	}
 };
 

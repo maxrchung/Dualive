@@ -82,6 +82,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dualive.cpp" />
+    <ClCompile Include="Tetrahedron.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.hpp" />
@@ -92,6 +93,9 @@
     <ClInclude Include="PhaseSpectrum2D.hpp" />
     <ClInclude Include="PhaseTest.hpp" />
     <ClInclude Include="PhaseTitle.hpp" />
+    <ClInclude Include="Tetrahedron.hpp" />
+    <ClInclude Include="TetPoints.hpp" />
+    <ClInclude Include="TetLines.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Debug\LyricsTunnel.txt" />

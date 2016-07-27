@@ -48,6 +48,9 @@ public:
 		return Time(roundf(time.ms / 100.0f) * 100.0f);
 	}
 
+	// Background dimensions
+	Vector2 bgDims = Vector2(853.0f, 480.0f);
+
 	// BPM
 	float bpm = 190.0f;
 	float mpb = 1 / bpm;
