@@ -2,6 +2,7 @@
 #define PHASELYRICSTUNNEL_HPP
 
 #include "Phase.hpp"
+#include "Tetrahedron.hpp"
 
 class PhaseLyricsTunnel : public Phase {
 private:
@@ -73,6 +74,21 @@ private:
 				}
 			}
 		}
+
+		Tetrahedron* tet = new Tetrahedron(tetRadius);
+		tet->RotateX(Range(startTunnel.ms, startTunnel.ms), M_PI / 2);
+
+		// Spin tetrahedron
+		for (int j = 0; j < lyrics.size(); ++j) {
+			Range longRotTime(timings[j].ms, timings[j + 1].ms - offset);
+			tet->RotateZ(longRotTime, -longRotation);
+
+			// Also don't spin Tetrahedron for last lyric
+			if (j != lyrics.size() - 1) {
+				Range shortRotTime(timings[j + 1].ms - offset, timings[j + 1].ms);
+				tet->RotateZ(shortRotTime, shortRotation);
+			}
+		}
 	}
 
 	void spin(Sprite* sprite, int startTime, int endTime, float rotation) {
@@ -138,6 +154,8 @@ private:
 
 		return lyrics;
 	}
+
+	float tetRadius = 25.0f;
 
 	// long and short in terms of time
 	// long: Display lyric

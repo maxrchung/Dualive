@@ -81,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="Dualive.cpp" />
     <ClCompile Include="Tetrahedron.cpp" />
   </ItemGroup>

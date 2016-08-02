@@ -1,19 +1,22 @@
 #ifndef TETLINES_HPP
 #define TETLINES_HPP
 
-enum TetLines {
-	// Top-Left
-	TL,
-	// Left-Right
-	LR,
-	// Right-Top
-	RT,
-	// Far-Top
-	FT,
-	// Far-Left
-	FL,
-	// Far-Right
-	FR
-};
+namespace TetLines {
+	enum TetLines {
+		// Top-Left
+		TL,
+		// Left-Right
+		LR,
+		// Right-Top
+		RT,
+		// Far-Top
+		FT,
+		// Far-Left
+		FL,
+		// Far-Right
+		FR,
+		Count
+	};
+}
 
 #endif//TETLINES_HPP

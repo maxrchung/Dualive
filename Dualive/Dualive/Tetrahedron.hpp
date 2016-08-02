@@ -16,8 +16,11 @@ public:
 	void RotateZ(Range time, float rotZ);
 	void Scale(Range time, float sca);
 
-	static float cameraZ;
-	static float projectionDistance;
+	// Color and Fade behave differently than the above functions
+	// because they affect the Sprite lines directly
+	void Fade(Range time, float startFloat, float endFloat);
+	void Color(Range time, Color startColor, Color endColor);
+
 	static std::string linePath;
 
 	std::vector<Vector3> points;
@@ -25,8 +28,10 @@ public:
 	float radius;
 
 private:
-	// Arranges line sprites according to points
-	std::vector<Vector2> repositionLines();
+	Vector2 applyPerspective(Vector3 vec);
+	// Rerranges sprites after a Move/Rotate/Scale command
+	void repositionLines(Range time);
+	void repositionLine(Range time, Sprite* line, Vector2 start, Vector2 end);
 };
 
 #endif//TETRAHEDRON_HPP

@@ -17,36 +17,14 @@
 
 class Config {
 public:
-	const static Config* I() {
-		if (instance == NULL) {
-			instance = new Config;
-		}
-		return instance;
-	}
+	static Config* I();
 
 	// Convert degrees to radians
-	static float DToR(int degrees) {
-		return degrees * M_PI / 180.0f;
-	}
+	float DToR(int degrees);
 
-	static Vector2 GetImageSize(const std::string& path) {
-		std::ifstream in(path);
-		unsigned int width, height;
+	Vector2 GetImageSize(const std::string& path);
 
-		in.seekg(16);
-		in.read((char *)&width, 4);
-		in.read((char *)&height, 4);
-		in.close();
-
-		width = ntohl(width);
-		height = ntohl(height);
-
-		return Vector2(width, height);
-	}
-
-	static Time GetClosestTime(Time time) {
-		return Time(roundf(time.ms / 100.0f) * 100.0f);
-	}
+	Time GetClosestTime(Time time);
 
 	// Background dimensions
 	Vector2 bgDims = Vector2(853.0f, 480.0f);
@@ -59,8 +37,14 @@ public:
 	float mspb = 1000 * spb;
 	float offset = mspb / 4;
 
-	// Overall scaling
-	float patternScale = 0.35f; 
+	// Camera
+	float cameraZ = 3.0f;
+	float projectionDistance = 3.0f;
+
+	// Scaling
+	float patternScale = 0.35f;
+	float lineWidth = 1000.0f;
+	float lineScaleHeight = 0.2f;
 
 	// Paths
 	std::string beatmapDirectory = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\)";
@@ -80,7 +64,5 @@ private:
 	Config(const Config&) {};
 	Config& operator=(const Config&) {};
 };
-
-Config* Config::instance = NULL;
 
 #endif//CONFIG_HPP
