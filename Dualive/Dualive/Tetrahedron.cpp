@@ -8,7 +8,7 @@ std::string Tetrahedron::linePath = R"(Storyboard\3D\line.png)";
 Tetrahedron::Tetrahedron(float radius, Vector3 midpoint)
 	: radius(radius),
 	  points(TetPoints::Count),
-	  lines(TetLines::Count, new Sprite(linePath, Vector2::Midpoint, Layer::Foreground, Origin::CentreLeft)) {
+	  lines(TetLines::Count) {
 	points[TetPoints::C] = midpoint;
 
 	// mfw I can't just use far because of Windows' header define
@@ -23,25 +23,31 @@ Tetrahedron::Tetrahedron(float radius, Vector3 midpoint)
 
 	Vector3 left = right.RotateY(Config::I()->DToR(120));
 	points[TetPoints::L] = left;
+
+	// I tried doing this in the vector constructor in the member initializer
+	// but then realized it had the same line Sprite pointer
+	for (int i = 0; i < TetLines::Count; ++i) {
+		lines[i] = new Sprite(linePath, Vector2::Midpoint, Layer::Foreground, Origin::CentreLeft);
+	}
 }
 
 void Tetrahedron::Move(Range time, Vector3 pos) {
 	Vector3 dist = pos - points[TetPoints::C];
-	for (auto point : points) {
+	for (auto& point : points) {
 		point += dist;
 	}
 }
 
 void Tetrahedron::RotateAround(Range time, Vector3 pivot, float rot) {
-	for (auto point : points) {
-		point.RotateAround(pivot, rot);
+	for (auto& point : points) {
+		point = point.RotateAround(pivot, rot);
 	}
 	repositionLines(time);
 }
 
 void Tetrahedron::Rotate(Range time, float rotX, float rotY, float rotZ) {
-	for (auto point : points) {
-		point.Rotate(rotX, rotY, rotZ);
+	for (auto& point : points) {
+		point = point.Rotate(rotX, rotY, rotZ);
 	}
 	repositionLines(time);
 }
@@ -72,13 +78,13 @@ void Tetrahedron::Scale(Range time, float sca) {
 }
 
 void Tetrahedron::Fade(Range time, float startFloat, float endFloat) {
-	for (auto line : lines) {
+	for (auto& line : lines) {
 		line->Fade(time.start, time.end, startFloat, endFloat);
 	}
 }
 
 void Tetrahedron::Color(Range time, ::Color startColor, ::Color endColor) {
-	for (auto line : lines) {
+	for (auto& line : lines) {
 		line->Color(time.start, time.end, startColor, endColor);
 	}
 }
@@ -105,11 +111,11 @@ Vector2 Tetrahedron::applyPerspective(Vector3 vec) {
 void Tetrahedron::repositionLine(Range time, Sprite* line, Vector2 left, Vector2 right) {
 	line->Move(time.start, time.end, line->position, left);
 
-	float rot = left.AngleBetween(right);
+	Vector2 between = right - left;
+	float rot = between.AngleBetween(Vector2(1, 0));
 	float totalRot = line->rotation + rot;
 	line->Rotate(time.start, time.end, line->rotation, totalRot);
 
-	Vector2 between = right - left;
 	float distance = between.Magnitude();
 	Vector2 scaleVector(distance / Config::I()->lineWidth, Config::I()->lineScaleHeight);
 	line->ScaleVector(time.start, time.end, line->scaleVector, scaleVector);

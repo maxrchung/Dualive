@@ -76,7 +76,7 @@ private:
 		}
 
 		Tetrahedron* tet = new Tetrahedron(tetRadius);
-		tet->RotateX(Range(startTunnel.ms, startTunnel.ms), M_PI / 2);
+		tet->RotateX(Range(startTunnel.ms, startTunnel.ms), -M_PI / 2);
 
 		// Spin tetrahedron
 		for (int j = 0; j < lyrics.size(); ++j) {

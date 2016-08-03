@@ -44,7 +44,7 @@ public:
 	// Scaling
 	float patternScale = 0.35f;
 	float lineWidth = 1000.0f;
-	float lineScaleHeight = 0.2f;
+	float lineScaleHeight = 0.1f;
 
 	// Paths
 	std::string beatmapDirectory = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\)";
