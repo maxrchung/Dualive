@@ -44,8 +44,8 @@ private:
 
 		int totalTriangles = numWidth * numLength;
 		std::vector<Vector2> positions(totalTriangles);
-		Vector2 startPos(Vector2::Midpoint.x - scaledSize.x * numHalfWidth,
-			Vector2::Midpoint.y - scaledSize.y * numHalfLength);
+		Vector2 startPos(-scaledSize.x * numHalfWidth,
+			-scaledSize.y * numHalfLength);
 
 		for (int i = 0; i < numLength; ++i) {
 			for (int j = 0; j < numWidth; ++j) {
@@ -53,7 +53,7 @@ private:
 				// HACKING bad
 				int offset = (i - numLength / 2) * -0.4f;
 				Vector2 pos = startPos + Vector2(j * scaledSize.x,
-					i * scaledSize.y + offset);
+					i * scaledSize.y - offset);
 				positions[index] = pos;
 			}
 		}
@@ -81,7 +81,7 @@ private:
 				if (scrambledIndices.empty()) {
 					break;
 				}
-				Sprite* bgTri = new Sprite(bgTriPath, Vector2::Midpoint, Layer::Background);
+				Sprite* bgTri = new Sprite(bgTriPath, Vector2::Zero, Layer::Background);
 				Vector2 pos = positions[scrambledIndices.back()];
 				scrambledIndices.pop_back();
 				bgTri->Move(i, i + moveOffset, bgTri->position, pos);

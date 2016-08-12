@@ -38,8 +38,8 @@ public:
 	float offset = mspb / 4;
 
 	// Camera
-	float cameraZ = 3.0f;
-	float projectionDistance = 3.0f;
+	float cameraZ = 500.0f;
+	float projectionDistance = 400.0f;
 
 	// Scaling
 	float patternScale = 0.35f;

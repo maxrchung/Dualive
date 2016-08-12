@@ -77,11 +77,11 @@ private:
 
 		Tetrahedron* tet = new Tetrahedron(tetRadius);
 		tet->RotateX(Range(startTunnel.ms, startTunnel.ms), -M_PI / 2);
-
+		
 		// Spin tetrahedron
 		for (int j = 0; j < lyrics.size(); ++j) {
 			Range longRotTime(timings[j].ms, timings[j + 1].ms - offset);
-			tet->RotateZ(longRotTime, -longRotation);
+			tet->RotateZ(longRotTime, longRotation);
 
 			// Also don't spin Tetrahedron for last lyric
 			if (j != lyrics.size() - 1) {
@@ -155,7 +155,7 @@ private:
 		return lyrics;
 	}
 
-	float tetRadius = 25.0f;
+	float tetRadius = 100.0f;
 
 	// long and short in terms of time
 	// long: Display lyric

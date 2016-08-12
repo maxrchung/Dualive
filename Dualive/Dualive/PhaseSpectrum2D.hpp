@@ -8,19 +8,19 @@ private:
 	void GenerateSpectrum() {
 		std::vector<Sprite*> spectrum(data.bandCount);
 		for (int i = 0; i < data.bandCount; ++i) {
-			Sprite* bar = new Sprite(barPath, Vector2::Midpoint, Layer::Foreground, Origin::BottomCentre);
+			Sprite* bar = new Sprite(barPath, Vector2::Zero, Layer::Foreground, Origin::BottomCentre);
 			spectrum[i] = bar;
 			float rotateAmount = 2 * M_PI * ((float)i / data.bandCount);
-			Vector2 specPos = startPoint.RotateAround(Vector2::Midpoint, rotateAmount);
+			Vector2 specPos = startPoint.Rotate(rotateAmount);
 
 			// Move to starting position
 			bar->Move(startSpectrumExpand.ms,
 				startSpectrumRound.ms,
-				Vector2::Midpoint,
+				Vector2::Zero,
 				specPos);
 
 			// Rotate into position
-			float localRotation = rotateAmount;
+			float localRotation = rotateAmount + M_PI;
 			bar->Rotate(startSpectrumExpand.ms,
 				startSpectrumExpand.ms,
 				localRotation,
@@ -52,7 +52,7 @@ private:
 					bar->scaleVector,
 					Vector2(barWidthScale, scaleAmount));
 
-				Vector2 pos = bar->position.RotateAround(Vector2::Midpoint, discreteRotation);
+				Vector2 pos = bar->position.Rotate(discreteRotation);
 				bar->Move(startTime,
 					endTime,
 					bar->position,
@@ -74,7 +74,7 @@ private:
 					bar->scaleVector,
 					Vector2(barWidthScale, scaleAmount));
 
-				Vector2 pos = bar->position.RotateAround(Vector2::Midpoint, speedupRotation);
+				Vector2 pos = bar->position.Rotate(speedupRotation);
 				bar->Move(startTime,
 					endTime,
 					bar->position,
@@ -213,7 +213,7 @@ private:
 	float spectrumSpacing = 60.0f;
 	float barWidthScale = 0.01f;
 	float barLengthScale = 0.002f;
-	Vector2 startPoint = Vector2::Midpoint - Vector2(0, spectrumSpacing);
+	Vector2 startPoint = Vector2(0, -spectrumSpacing);
 	std::string barPath = "Storyboard\\Spectrum2D\\CenterpieceNoSpacing.png";
 
 	Time startMove = "00:01:756";

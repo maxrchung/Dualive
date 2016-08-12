@@ -21,7 +21,7 @@ Tetrahedron::Tetrahedron(float radius, Vector3 midpoint)
 	Vector3 right = top.RotateY(Config::I()->DToR(120));
 	points[TetPoints::R] = right;
 
-	Vector3 left = right.RotateY(Config::I()->DToR(120));
+	Vector3 left = top.RotateY(Config::I()->DToR(-120));
 	points[TetPoints::L] = left;
 
 	// I tried doing this in the vector constructor in the member initializer
@@ -109,14 +109,15 @@ Vector2 Tetrahedron::applyPerspective(Vector3 vec) {
 }
 
 void Tetrahedron::repositionLine(Range time, Sprite* line, Vector2 left, Vector2 right) {
-	line->Move(time.start, time.end, line->position, left);
-
+	Vector2 prevRot = Vector2(line->rotation);
 	Vector2 between = right - left;
-	float rot = between.AngleBetween(Vector2(1, 0));
+	float rot = prevRot.AngleBetween(between);
 	float totalRot = line->rotation + rot;
 	line->Rotate(time.start, time.end, line->rotation, totalRot);
 
 	float distance = between.Magnitude();
 	Vector2 scaleVector(distance / Config::I()->lineWidth, Config::I()->lineScaleHeight);
 	line->ScaleVector(time.start, time.end, line->scaleVector, scaleVector);
+
+	line->Move(time.start, time.end, line->position, left);
 }

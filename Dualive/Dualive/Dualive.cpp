@@ -13,7 +13,7 @@ int main() {
 	// For random
 	srand(time(NULL));
 
-	Vector2 maxBgSize(1.366f, 0.768f);
+	Vector2 maxBgSize(Vector2::ScreenSize);
 	Sprite* background = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Midpoint, Layer::Background);
 	background->ScaleVector(Config::I()->songStart.ms,
 		Config::I()->songEnd.ms,
@@ -28,8 +28,8 @@ int main() {
 	// PhaseTitle phaseTitle;
 	PhaseSpectrum2D phaseSpectrum2D;
 	PhaseMoireGeneration phaseMoireGeneration;
-	PhaseMoireSpin phaseMoireSpin;
-	PhaseLyricsTunnel phaseLyricsTunnel;
+	//PhaseMoireSpin phaseMoireSpin;
+	//PhaseLyricsTunnel phaseLyricsTunnel;
 
 	Storyboard::Instance()->Write(Config::I()->storyboardPath);
 	//std::cin.get();
