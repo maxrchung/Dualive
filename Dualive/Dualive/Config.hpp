@@ -29,6 +29,9 @@ public:
 	// Background dimensions
 	Vector2 bgDims = Vector2(853.0f, 480.0f);
 
+	// Kappa
+	float reallySmallNumber = 0.00001f;
+
 	// BPM
 	float bpm = 190.0f;
 	float mpb = 1 / bpm;

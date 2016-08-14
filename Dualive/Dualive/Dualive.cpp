@@ -28,8 +28,8 @@ int main() {
 	// PhaseTitle phaseTitle;
 	PhaseSpectrum2D phaseSpectrum2D;
 	PhaseMoireGeneration phaseMoireGeneration;
-	//PhaseMoireSpin phaseMoireSpin;
-	//PhaseLyricsTunnel phaseLyricsTunnel;
+	PhaseMoireSpin phaseMoireSpin;
+	PhaseLyricsTunnel phaseLyricsTunnel;
 
 	Storyboard::Instance()->Write(Config::I()->storyboardPath);
 	//std::cin.get();

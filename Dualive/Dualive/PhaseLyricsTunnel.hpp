@@ -55,7 +55,7 @@ private:
 			// Set starting rotation
 			float startRotation = i * rotationOffset + longRotation / 2;
 
-			Vector2 startPos = Vector2::Midpoint + Vector2(cos(startRotation) * spacing, sin(startRotation) * spacing);
+			Vector2 startPos = Vector2(cos(startRotation) * spacing, -sin(startRotation) * spacing);
 			sprite->Move(startTunnel.ms, startTunnel.ms, startPos, startPos);
 
 			// Flip if origin on right
@@ -74,21 +74,38 @@ private:
 				}
 			}
 		}
+	}
 
+	void setupTet(std::vector<Sprite*> lyrics) {
 		Tetrahedron* tet = new Tetrahedron(tetRadius);
-		tet->RotateX(Range(startTunnel.ms, startTunnel.ms), -M_PI / 2);
-		
+		tet->RotateX(Range(0), -M_PI / 2);
+
+		tet->Scale(Range(0), 0.0f);
+		tet->Scale(Range(startTunnel.ms - offset, timings[0].ms), 1.0f);
+		tet->Fade(Range(startTunnel.ms - offset, timings[0].ms), 0.0f, 1.0f);
+
 		// Spin tetrahedron
 		for (int j = 0; j < lyrics.size(); ++j) {
 			Range longRotTime(timings[j].ms, timings[j + 1].ms - offset);
-			tet->RotateZ(longRotTime, longRotation);
+			spinTet(tet, longRotTime, longRotation);
 
-			// Also don't spin Tetrahedron for last lyric
+			// Don't fast spin Tetrahedron for lyric
 			if (j != lyrics.size() - 1) {
 				Range shortRotTime(timings[j + 1].ms - offset, timings[j + 1].ms);
-				tet->RotateZ(shortRotTime, shortRotation);
+				spinTet(tet, shortRotTime, shortRotation);
 			}
 		}
+
+		Range lastRotTime(timings[lyrics.size()].ms - offset, endTunnel.ms);
+		float lastRot = 2 * M_PI / 3 - longRotation;
+		spinTet(tet, lastRotTime, lastRot);
+
+		tet->Scale(Range(startShrink.ms - offset, startShrink.ms), 0.5f);
+		float endShrink = startShrink.ms + offset / 2;
+		tet->Scale(Range(startShrink.ms, endShrink), 1.0f);
+
+		// Keep in place till end
+		tet->Move(Range(endShrink, startMoire.ms), Vector3::Zero);
 	}
 
 	void spin(Sprite* sprite, int startTime, int endTime, float rotation) {
@@ -100,8 +117,18 @@ private:
 		for (int i = 0; i < discrete; ++i) {
 			float startDiscrete = startTime + discreteTime * i;
 			float endDiscrete = startTime + discreteTime * (i + 1);
-			Vector2 pos = sprite->position.RotateAround(Vector2::Midpoint, -discreteRotation);
+			Vector2 pos = sprite->position.Rotate(-discreteRotation);
 			sprite->Move(startDiscrete, endDiscrete, sprite->position, pos);
+		}
+	}
+
+	void spinTet(Tetrahedron* tet, Range time, float rotation) {
+		float discreteRotation = rotation / discrete;
+		float discreteTime = (time.end - time.start) / discrete;
+		for (int i = 0; i < discrete; ++i) {
+			float startDiscrete = time.start + discreteTime * i;
+			float endDiscrete = time.start + discreteTime * (i + 1);
+			tet->RotateZ(Range(startDiscrete, endDiscrete), discreteRotation);
 		}
 	}
 
@@ -136,7 +163,7 @@ private:
 			else {
 				origin = Origin::CentreRight;
 			}
-			Sprite* sprite = new Sprite(localDirectory + std::to_string(i) + ".png", Vector2::Midpoint, Layer::Foreground, origin);
+			Sprite* sprite = new Sprite(localDirectory + std::to_string(i) + ".png", Vector2::Zero, Layer::Foreground, origin);
 			float width = Config::I()->GetImageSize(exactDirectory + std::to_string(i) + ".png").x;
 			float scale = Config::I()->bgDims.x / width;
 			if (scale < 1.0f) {
@@ -151,7 +178,7 @@ private:
 
 			lyrics[i] = sprite;
 		}
-
+ 
 		return lyrics;
 	}
 
@@ -179,7 +206,10 @@ private:
 	float spacing = 50.0f;
 
 	Time startTunnel = Time("00:43:440");
+	Time endTet = Time("01:02:071");
 	Time endTunnel = Time("01:02:387");
+	Time startShrink = Time("01:03:019");
+	Time startMoire = Time("01:03:650");
 	std::vector<Time> timings = std::vector<Time>({
 		//sugao wo kakushita
 		Time("00:43:756"),
@@ -221,8 +251,7 @@ public:
 		std::string lyricsLocalDirectory = R"(Storyboard\LyricsTunnel\)";
 		std::vector<Sprite*> lyrics = loadLyrics(lyricsExactDirectory, lyricsLocalDirectory);
 		setupLyrics(lyrics);
-
-		std::string linePath = R"(Storyboard\line.png)";
+		setupTet(lyrics);
 	}
 };
 

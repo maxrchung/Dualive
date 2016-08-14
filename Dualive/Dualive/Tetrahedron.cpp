@@ -36,6 +36,7 @@ void Tetrahedron::Move(Range time, Vector3 pos) {
 	for (auto& point : points) {
 		point += dist;
 	}
+	repositionLines(time);
 }
 
 void Tetrahedron::RotateAround(Range time, Vector3 pivot, float rot) {
@@ -65,6 +66,18 @@ void Tetrahedron::RotateZ(Range time, float rotZ) {
 }
 
 void Tetrahedron::Scale(Range time, float sca) {
+	// Run into problems if sca is 0 because
+	// then all the points will be at center and
+	// we can no longer normalize and get directions.
+	
+	// Let's be honest this is pretty bad but
+	// this won't affect how this function looks outside.
+	// The better solution is probably adjusting scale
+	// inside of repositionLines or something. idc
+	if (sca == 0) {
+		sca = Config::I()->reallySmallNumber;
+	}
+
 	Vector3 distToCenter = points[TetPoints::C];
 	for (int i = 0; i < points.size(); ++i) {
 		if (i != TetPoints::C) {

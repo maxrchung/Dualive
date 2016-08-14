@@ -26,6 +26,15 @@ private:
 		std::string trianglePath(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\Spectrum2D\PatternPiece.png)");
 		Vector2 imageSize(Config::I()->GetImageSize(trianglePath));
 		Vector2 scaledSize(imageSize * Config::I()->patternScale);
+
+		// Ran into some offset problems that I dealt with
+		// (to a good enough degree) with flooring
+
+		// Weirdly enough it's only on the y, maybe it's a discrepancy
+		// between how my utility handles the file and how the GetImageSize
+		// function handles it
+		scaledSize.y = floorf(scaledSize.y);
+
 		Vector2 halfScaledSize = scaledSize / 2;
 		Vector2 bgSize(854.0f, 480.0f);
 		Vector2 halfBgSize = bgSize / 2;
@@ -50,10 +59,8 @@ private:
 		for (int i = 0; i < numLength; ++i) {
 			for (int j = 0; j < numWidth; ++j) {
 				int index = i * numWidth + j;
-				// HACKING bad
-				int offset = (i - numLength / 2) * -0.4f;
 				Vector2 pos = startPos + Vector2(j * scaledSize.x,
-					i * scaledSize.y - offset);
+					i * scaledSize.y);
 				positions[index] = pos;
 			}
 		}

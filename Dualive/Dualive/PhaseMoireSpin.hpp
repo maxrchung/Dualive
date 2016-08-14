@@ -38,10 +38,10 @@ private:
 
 public:
 	PhaseMoireSpin() {
-		Sprite* bg = new Sprite(bgPath, Vector2::Midpoint, Layer::Background);
+		Sprite* bg = new Sprite(bgPath, Vector2::Zero, Layer::Background);
 		SetupBackground(bg);
 
-		Sprite* pattern = new Sprite(bgPathSpacing, Vector2::Midpoint + moveOffset, Layer::Background);
+		Sprite* pattern = new Sprite(bgPathSpacing, Vector2::Zero - moveOffset, Layer::Background);
 		SetupBackground(pattern);
 
 		pattern->Rotate(startMoire.ms, 
