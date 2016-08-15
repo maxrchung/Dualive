@@ -1,9 +1,9 @@
 #ifndef PHASETITLE_HPP
 #define PHASETITLE_HPP
 
-#include "Phase.hpp"
+#include "Config.hpp"
 
-class PhaseTitle : public Phase {
+class PhaseTitle {
 private:
 	float startScale = 0.0f;
 	float endScale = 0.25f;

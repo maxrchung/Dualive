@@ -1,9 +1,9 @@
 #ifndef PHASEMOIRESPIN_HPP
 #define PHASEMOIRESPIN_HPP
 
-#include "Phase.hpp"
+#include "Config.hpp"
 
-class PhaseMoireSpin : public Phase {
+class PhaseMoireSpin {
 private:
 	void SetupBackground(Sprite* bg) {
 		bg->Scale(startMoire.ms, 
@@ -11,14 +11,14 @@ private:
 			Config::I()->patternScale, 
 			Config::I()->patternScale);
 
-		bg->Fade(endThirdSpeedup.ms, 
-			startMoire.ms, 
-			0.0f, 
-			1.0f);
+		bg->Color(0,
+			endThirdSpeedup.ms,
+			Color(25),
+			Color(25));
 
 		bg->Color(endThirdSpeedup.ms, 
 			startMoire.ms, 
-			Color(0), 
+			bg->color, 
 			Color(255));
 
 		bg->Color(startFadeEnd.ms, 

@@ -1,10 +1,9 @@
 #ifndef PHASELYRICSTUNNEL_HPP
 #define PHASELYRICSTUNNEL_HPP
 
-#include "Phase.hpp"
-#include "Tetrahedron.hpp"
+#include "Config.hpp"
 
-class PhaseLyricsTunnel : public Phase {
+class PhaseLyricsTunnel {
 private:
 	void setupLyrics(std::vector<Sprite*> lyrics) {
 		for (int i = 0; i < lyrics.size(); ++i) {
@@ -78,11 +77,14 @@ private:
 
 	void setupTet(std::vector<Sprite*> lyrics) {
 		Tetrahedron* tet = new Tetrahedron(tetRadius);
-		tet->RotateX(Range(0), -M_PI / 2);
+		tet->RotateX(-M_PI / 2);
+		tet->Scale(0.0f);
+		tet->RepositionLines(Range(startTunnel.ms - offset));
 
-		tet->Scale(Range(0), 0.0f);
-		tet->Scale(Range(startTunnel.ms - offset, timings[0].ms), 1.0f);
-		tet->Fade(Range(startTunnel.ms - offset, timings[0].ms), 0.0f, 1.0f);
+		Range fadeIn(startTunnel.ms - offset, timings[0].ms);
+		tet->Scale(1.0f);
+		tet->RepositionLines(fadeIn);
+		tet->Fade(fadeIn, 0.0f, 1.0f);
 
 		// Spin tetrahedron
 		for (int j = 0; j < lyrics.size(); ++j) {
@@ -100,12 +102,16 @@ private:
 		float lastRot = 2 * M_PI / 3 - longRotation;
 		spinTet(tet, lastRotTime, -lastRot);
 
-		tet->Scale(Range(startShrink.ms - offset, startShrink.ms), 2.0f);
-		float endShrink = startShrink.ms + offset / 2;
-		tet->Scale(Range(startShrink.ms, endShrink), 1.5f);
+		tet->Scale(2.5f);
+		tet->RepositionLines(Range(startExpand.ms - offset / 2, startExpand.ms));
+
+		float endExpand = startExpand.ms + offset / 2;
+		tet->Scale(2.0f);
+		tet->RepositionLines(Range(startExpand.ms, endExpand));
 
 		// Keep in place till end
-		tet->Move(Range(endShrink, startMoire.ms), Vector3::Zero);
+		tet->Move(Vector3::Zero);
+		tet->RepositionLines(Range(endExpand, startMoire.ms));
 	}
 
 	void spin(Sprite* sprite, int startTime, int endTime, float rotation) {
@@ -128,7 +134,8 @@ private:
 		for (int i = 0; i < discrete; ++i) {
 			float startDiscrete = time.start + discreteTime * i;
 			float endDiscrete = time.start + discreteTime * (i + 1);
-			tet->RotateZ(Range(startDiscrete, endDiscrete), discreteRotation);
+			tet->RotateZ(discreteRotation);
+			tet->RepositionLines(Range(startDiscrete, endDiscrete));
 		}
 	}
 
@@ -166,14 +173,14 @@ private:
 			Sprite* sprite = new Sprite(localDirectory + std::to_string(i) + ".png", Vector2::Zero, Layer::Foreground, origin);
 			float width = Config::I()->GetImageSize(exactDirectory + std::to_string(i) + ".png").x;
 			float scale = Config::I()->bgDims.x / width;
-			if (scale < 1.0f) {
+			if (scale < maxLyricScale) {
 				// Probably a bad idea to save temp variables like 
 				// this, but this won't mess up timings for scaling
 				sprite->scale = scale;
 			}
 			// Clamp so things don't get too big
 			else {
-				sprite->scale = 1.0f;
+				sprite->scale = maxLyricScale;
 			}
 
 			lyrics[i] = sprite;
@@ -181,7 +188,6 @@ private:
  
 		return lyrics;
 	}
-
 
 	// long and short in terms of time
 	// long: Display lyric
@@ -193,10 +199,11 @@ private:
 
 	int lyricsOnScreen = 4;
 	float fadeIncrement = 1.0f / lyricsOnScreen;
+	float maxLyricScale = 0.5f;
 
-	float baseScale = 0.016f;
-	float longScaleIncrement = 1.5f;
-	float shortScaleIncrement = 1.5f;
+	float baseScale = 0.05f;
+	float longScaleIncrement = 1.3f;
+	float shortScaleIncrement = 1.3f;
 
 	// Number of discrete sections for spinning
 	int discrete = 10;
@@ -208,7 +215,7 @@ private:
 	Time startTunnel = Time("00:43:440");
 	Time endTet = Time("01:02:071");
 	Time endTunnel = Time("01:02:387");
-	Time startShrink = Time("01:03:019");
+	Time startExpand = Time("01:03:019");
 	Time startMoire = Time("01:03:650");
 	std::vector<Time> timings = std::vector<Time>({
 		//sugao wo kakushita

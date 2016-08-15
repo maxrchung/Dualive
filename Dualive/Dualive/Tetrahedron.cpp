@@ -31,41 +31,38 @@ Tetrahedron::Tetrahedron(float radius, Vector3 midpoint)
 	}
 }
 
-void Tetrahedron::Move(Range time, Vector3 pos) {
+void Tetrahedron::Move(Vector3 pos) {
 	Vector3 dist = pos - points[TetPoints::C];
 	for (auto& point : points) {
 		point += dist;
 	}
-	repositionLines(time);
 }
 
-void Tetrahedron::RotateAround(Range time, Vector3 pivot, float rot) {
+void Tetrahedron::RotateAround(Vector3 pivot, float rot) {
 	for (auto& point : points) {
 		point = point.RotateAround(pivot, rot);
 	}
-	repositionLines(time);
 }
 
-void Tetrahedron::Rotate(Range time, float rotX, float rotY, float rotZ) {
+void Tetrahedron::Rotate(float rotX, float rotY, float rotZ) {
 	for (auto& point : points) {
 		point = point.Rotate(rotX, rotY, rotZ);
 	}
-	repositionLines(time);
 }
 
-void Tetrahedron::RotateX(Range time, float rotX) {
-	Rotate(time, rotX, 0.0f, 0.0f);
+void Tetrahedron::RotateX(float rotX) {
+	Rotate(rotX, 0.0f, 0.0f);
 }
 
-void Tetrahedron::RotateY(Range time, float rotY) {
-	Rotate(time, 0.0f, rotY, 0.0f);
+void Tetrahedron::RotateY(float rotY) {
+	Rotate(0.0f, rotY, 0.0f);
 }
 
-void Tetrahedron::RotateZ(Range time, float rotZ) {
-	Rotate(time, 0.0f, 0.0f, rotZ);
+void Tetrahedron::RotateZ(float rotZ) {
+	Rotate(0.0f, 0.0f, rotZ);
 }
 
-void Tetrahedron::Scale(Range time, float sca) {
+void Tetrahedron::Scale(float sca) {
 	// Run into problems if sca is 0 because
 	// then all the points will be at center and
 	// we can no longer normalize and get directions.
@@ -87,7 +84,6 @@ void Tetrahedron::Scale(Range time, float sca) {
 			points[i] = scaled + distToCenter;
 		}
 	}
-	repositionLines(time);
 }
 
 void Tetrahedron::Fade(Range time, float startFloat, float endFloat) {
@@ -102,7 +98,7 @@ void Tetrahedron::Color(Range time, ::Color startColor, ::Color endColor) {
 	}
 }
 
-void Tetrahedron::repositionLines(Range time) {
+void Tetrahedron::RepositionLines(Range time) {
 	// Apply perspective
 	Vector2 top = applyPerspective(points[TetPoints::T]);
 	Vector2 left = applyPerspective(points[TetPoints::L]);

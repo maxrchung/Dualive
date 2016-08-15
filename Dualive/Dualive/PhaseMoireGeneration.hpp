@@ -1,9 +1,9 @@
 #ifndef PHASEMOIREGENERATION_HPP
 #define PHASEMOIREGENERATION_HPP
 
-#include "Phase.hpp"
+#include "Config.hpp"
 
-class PhaseMoireGeneration : public Phase {
+class PhaseMoireGeneration {
 private:
 	// Radix
 	std::vector<int> scrambleIndices(int size) {

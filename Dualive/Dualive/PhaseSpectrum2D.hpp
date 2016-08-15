@@ -1,9 +1,9 @@
 #ifndef PHASESPECTRUM2D_HPP
 #define PHASESPECTRUM2D_HPP
 
-#include "Phase.hpp"
+#include "Config.hpp"
 
-class PhaseSpectrum2D : public Phase {
+class PhaseSpectrum2D {
 private:
 	void GenerateSpectrum() {
 		std::vector<Sprite*> spectrum(data.bandCount);

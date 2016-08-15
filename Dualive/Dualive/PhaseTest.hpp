@@ -1,9 +1,9 @@
 #ifndef PHASETEST_HPP
 #define PHASETEST_HPP
 
-#include "Phase.hpp"
+#include "Config.hpp"
 
-class PhaseTest : public Phase{
+class PhaseTest {
 public:
 	PhaseTest() {
 		Sprite* line = new Sprite("Storyboard\\Blank.png", Vector2::Midpoint, Layer::Foreground);
