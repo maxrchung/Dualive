@@ -24,6 +24,10 @@ int main() {
 		Config::I()->songEnd.ms,
 		Color(0),
 		Color(0));
+	background->Fade(0,
+		Time("00:01:756").ms,
+		0.0f,
+		1.0f);
 
 	// PhaseTest phaseTest;
 	// PhaseTitle phaseTitle;

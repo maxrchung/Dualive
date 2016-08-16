@@ -192,14 +192,14 @@ private:
 	// long and short in terms of time
 	// long: Display lyric
 	// short: Moving to next location
-	float longRotation = Config::I()->DToR(45);
+	float longRotation = Config::I()->DToR(60);
 	// Rotation between each lyric
 	float rotationOffset = M_PI / 3;
 	float shortRotation = M_PI - longRotation + rotationOffset;
 
 	int lyricsOnScreen = 4;
 	float fadeIncrement = 1.0f / lyricsOnScreen;
-	float maxLyricScale = 0.5f;
+	float maxLyricScale = 0.7f;
 
 	float baseScale = 0.05f;
 	float longScaleIncrement = 1.3f;

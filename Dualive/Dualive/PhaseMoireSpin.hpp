@@ -40,10 +40,21 @@ public:
 	PhaseMoireSpin() {
 		Sprite* bg = new Sprite(bgPath, Vector2::Zero, Layer::Background);
 		SetupBackground(bg);
+		bg->Fade(0,
+			Time("00:01:756").ms,
+			0.0f,
+			1.0f);
 
 		Sprite* pattern = new Sprite(bgPathSpacing, Vector2::Zero - moveOffset, Layer::Background);
-		SetupBackground(pattern);
-
+	 	SetupBackground(pattern);
+		pattern->Fade(0,
+			endThirdSpeedup.ms,
+			Config::I()->reallySmallNumber,
+			Config::I()->reallySmallNumber);
+		pattern->Fade(endThirdSpeedup.ms,
+			endThirdSpeedup.ms,
+			1.0f,
+			1.0f);
 		pattern->Rotate(startMoire.ms, 
 			endMoire.ms, 
 			pattern->rotation, 
