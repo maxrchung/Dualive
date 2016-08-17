@@ -29,6 +29,7 @@ private:
 
 	std::string bgPath = "Storyboard\\Spectrum2D\\Pattern.png";
 	std::string bgPathSpacing = "Storyboard\\Spectrum2D\\PatternSpacing.png";
+	Time startSong = Time("00:01:756");
 	Time endThirdSpeedup = Time("00:21:966");
 	Time startMoire = Time("00:23:229");
 	Time startFadeEnd = Time("00:42:177");
@@ -41,9 +42,13 @@ public:
 		Sprite* bg = new Sprite(bgPath, Vector2::Zero, Layer::Background);
 		SetupBackground(bg);
 		bg->Fade(0,
-			Time("00:01:756").ms,
+			startSong.ms,
 			0.0f,
 			1.0f);
+		bg->Fade(endMoire.ms,
+			endMoire.ms,
+			0.0f,
+			0.0f);
 
 		Sprite* pattern = new Sprite(bgPathSpacing, Vector2::Zero - moveOffset, Layer::Background);
 	 	SetupBackground(pattern);

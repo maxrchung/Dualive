@@ -5,7 +5,6 @@
 #include "PhaseSpectrum2D.hpp"
 #include "PhaseTest.hpp"
 #include "PhaseTetrahedronSpin.hpp"
-#include "PhaseTitle.hpp"
 #include "Storyboard.hpp"
 #include "Time.hpp"
 #include <iostream>
@@ -29,13 +28,13 @@ int main() {
 		0.0f,
 		1.0f);
 
-	// PhaseTest phaseTest;
-	// PhaseTitle phaseTitle;
 	PhaseSpectrum2D phaseSpectrum2D;
 	PhaseMoireSpin phaseMoireSpin;
 	PhaseMoireGeneration phaseMoireGeneration;
 	PhaseLyricsTunnel phaseLyricsTunnel;
 	PhaseTetrahedronSpin phaseTetrahedronSpin;
+
+	// PhaseTest phaseTest;
 
 	Storyboard::Instance()->Write(Config::I()->storyboardPath);
 	//std::cin.get();

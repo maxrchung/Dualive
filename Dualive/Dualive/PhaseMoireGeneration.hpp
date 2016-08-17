@@ -93,12 +93,15 @@ private:
 				scrambledIndices.pop_back();
 				bgTri->Move(i, i + moveOffset, bgTri->position, pos);
 				bgTri->Scale(i, i, Config::I()->patternScale, Config::I()->patternScale);
-
 				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f);
 				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
 				bgTri->Fade(endSpectrum.ms - Config::I()->offset, endSpectrum.ms, 1.0f, 0.0f);
 				bgTri->Color(i, endThirdSpeedup.ms, patternColor, patternColor);
 				bgTri->Color(endThirdSpeedup.ms, endSpectrum.ms, bgTri->color, Color(255));
+
+				// Reappear and drop off
+				bgTri->Fade(endSpin.ms, startTunnel.ms, 0.0f, 1.0f);
+				bgTri->Color(endSpin.ms, endTet.ms, Color(25), Color(25));
 			}
 		}
 	}
@@ -115,6 +118,9 @@ private:
 	Time thirdSpeedup = Time("00:20:703");
 	Time endThirdSpeedup = Time("00:21:966");
 	Time endSpectrum = Time("00:23:229");
+	Time endSpin = Time("00:42:177");
+	Time startTunnel = Time("00:43:440");
+	Time endTet = Time("01:23:861");
 
 public:
 	PhaseMoireGeneration() {

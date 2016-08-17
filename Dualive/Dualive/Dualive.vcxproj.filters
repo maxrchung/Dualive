@@ -29,9 +29,6 @@
     <ClInclude Include="Config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PhaseTitle.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PhaseSpectrum2D.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,6 +54,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PhaseTetrahedronSpin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhaseBackground.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Phase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

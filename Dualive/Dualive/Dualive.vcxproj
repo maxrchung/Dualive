@@ -87,13 +87,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.hpp" />
+    <ClInclude Include="Phase.hpp" />
+    <ClInclude Include="PhaseBackground.hpp" />
     <ClInclude Include="PhaseLyricsTunnel.hpp" />
     <ClInclude Include="PhaseMoireSpin.hpp" />
     <ClInclude Include="PhaseMoireGeneration.hpp" />
     <ClInclude Include="PhaseSpectrum2D.hpp" />
     <ClInclude Include="PhaseTest.hpp" />
     <ClInclude Include="PhaseTetrahedronSpin.hpp" />
-    <ClInclude Include="PhaseTitle.hpp" />
     <ClInclude Include="Tetrahedron.hpp" />
     <ClInclude Include="TetPoints.hpp" />
     <ClInclude Include="TetLines.hpp" />
