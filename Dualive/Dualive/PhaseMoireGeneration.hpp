@@ -82,11 +82,11 @@ private:
 		}
 	}
 
-	void generateTriangles(Time startTime, Time endTime, int frequency, int numTri) {
+	void generateTriangles(std::vector<Sprite*>& triangles, Time startTime, Time endTime, int frequency, int numTri) {
 		for (float i = startTime.ms; i < endTime.ms; i += frequency) {
 			for (int j = 0; j < numTri; ++j) {
 				if (scrambledIndices.empty()) {
-					break;
+					return;
 				}
 				Sprite* bgTri = new Sprite(bgTriPath, Vector2::Zero, Layer::Background);
 				Vector2 pos = positions[scrambledIndices.back()];
@@ -102,6 +102,23 @@ private:
 				// Reappear and drop off
 				bgTri->Fade(endSpin.ms, startTunnel.ms, 0.0f, 1.0f);
 				bgTri->Color(endSpin.ms, endTet.ms, Color(25), Color(25));
+				triangles.push_back(bgTri);
+			}
+		}
+	}
+
+	void degenerateTriangles(std::vector<Sprite*>& triangles, Time startTime, Time endTime, int frequency, int numTri) {
+		for (float i = startTime.ms; i < endTime.ms; i += frequency) {
+			for (int j = 0; j < numTri; ++j) {
+				if (triangles.size() == 24) {
+					return;
+				}
+
+				// Get last
+				Sprite* tri = triangles.back();
+				tri->Fade(i, i + Config::I()->offset * 4, 1.0f, 0.0f);
+				// Pop back
+				triangles.pop_back();
 			}
 		}
 	}
@@ -120,14 +137,23 @@ private:
 	Time endSpectrum = Time("00:23:229");
 	Time endSpin = Time("00:42:177");
 	Time startTunnel = Time("00:43:440");
+	Time startTet = Time("01:03:650");
+	Time startTetSpeedup = Time("01:13:756");
+	Time startTetEnd = Time("01:21:335");
+	Time endScale = Time("01:22:598");
 	Time endTet = Time("01:23:861");
 
 public:
 	PhaseMoireGeneration() {
-		generateTriangles(startSpectrum, startSpeedup, 2 * Config::I()->mspb, 3);
-		generateTriangles(startSpeedup, secondSpeedup, 2 * Config::I()->mspb, 9);
-		generateTriangles(secondSpeedup, thirdSpeedup, Config::I()->mspb, 81);
-		generateTriangles(thirdSpeedup, endThirdSpeedup, Config::I()->mspb / 2, 243);
+		std::vector<Sprite*> triangles;
+		generateTriangles(triangles, startSpectrum, startSpeedup, 2 * Config::I()->mspb, 3);
+		generateTriangles(triangles, startSpeedup, secondSpeedup, 2 * Config::I()->mspb, 9);
+		generateTriangles(triangles, secondSpeedup, thirdSpeedup, Config::I()->mspb, 81);
+		generateTriangles(triangles, thirdSpeedup, endThirdSpeedup, Config::I()->mspb / 2, 243);
+
+		degenerateTriangles(triangles, startTet, startTetSpeedup, 2 * Config::I()->mspb, 18);
+		degenerateTriangles(triangles, startTetSpeedup, startTetEnd, Config::I()->mspb, 27);
+		degenerateTriangles(triangles, startTetEnd, endScale, Config::I()->mspb / 2, 81);
 	}
 };
 #endif//PHASEMOIREGENERATION_HPP
