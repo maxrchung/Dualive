@@ -101,7 +101,7 @@ private:
 
 				// Reappear and drop off
 				bgTri->Fade(endSpin.ms, startTunnel.ms, 0.0f, 1.0f);
-				bgTri->Color(endSpin.ms, endTet.ms, Color(25), Color(25));
+				bgTri->Color(endSpin.ms, startTunnel.ms, Color(25), Color(25));
 				triangles.push_back(bgTri);
 			}
 		}
@@ -110,7 +110,7 @@ private:
 	void degenerateTriangles(std::vector<Sprite*>& triangles, Time startTime, Time endTime, int frequency, int numTri) {
 		for (float i = startTime.ms; i < endTime.ms; i += frequency) {
 			for (int j = 0; j < numTri; ++j) {
-				if (triangles.size() == 24) {
+				if (triangles.size() == trianglesRemaining) {
 					return;
 				}
 
@@ -120,6 +120,23 @@ private:
 				// Pop back
 				triangles.pop_back();
 			}
+		}
+	}
+
+	void placeTriangles(std::vector<Sprite*>& triangles, Time startTime, Time endTime) {
+		float spacing = 100.0f;
+		int timeDiff = endTime.ms - startTime.ms;
+		for (int i = 0; i < triangles.size(); ++i) {
+			Vector2 up = Vector2(0, 1) * spacing;
+			float rot = 2 * M_PI * ((float)i / triangles.size());
+			Vector2 pos = up.Rotate(rot);
+			triangles[i]->Move(startTime.ms, endTime.ms, triangles[i]->position, pos);
+			triangles[i]->Rotate(startTime.ms, endTime.ms, triangles[i]->rotation, rot);
+			Vector2 scaleVector = triangles[i]->scaleVector;
+			scaleVector.y = 0.02f;
+			triangles[i]->ScaleVector(startTime.ms, endTime.ms, triangles[i]->scaleVector, scaleVector);
+			triangles[i]->Fade(startTime.ms, endTime.ms, triangles[i]->fade, 1.0f);
+			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, Color(255.0f));
 		}
 	}
 
@@ -142,6 +159,7 @@ private:
 	Time startTetEnd = Time("01:21:335");
 	Time endScale = Time("01:22:598");
 	Time endTet = Time("01:23:861");
+	int trianglesRemaining = 24;
 
 public:
 	PhaseMoireGeneration() {
@@ -154,6 +172,7 @@ public:
 		degenerateTriangles(triangles, startTet, startTetSpeedup, 2 * Config::I()->mspb, 18);
 		degenerateTriangles(triangles, startTetSpeedup, startTetEnd, Config::I()->mspb, 27);
 		degenerateTriangles(triangles, startTetEnd, endScale, Config::I()->mspb / 2, 81);
+		placeTriangles(triangles, endScale, endTet);
 	}
 };
 #endif//PHASEMOIREGENERATION_HPP
