@@ -58,7 +58,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Wax Chug da Gwad\Desktop\OsuukiSB\OsuukiSB\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>OsuukiSB.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -87,12 +87,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.hpp" />
-    <ClInclude Include="Phase.hpp" />
-    <ClInclude Include="PhaseBackground.hpp" />
     <ClInclude Include="PhaseLyricsTunnel.hpp" />
     <ClInclude Include="PhaseMoireSpin.hpp" />
     <ClInclude Include="PhaseMoireGeneration.hpp" />
     <ClInclude Include="PhaseSpectrum2D.hpp" />
+    <ClInclude Include="PhaseSpectrum3D.hpp" />
     <ClInclude Include="PhaseTest.hpp" />
     <ClInclude Include="PhaseTetrahedronSpin.hpp" />
     <ClInclude Include="Tetrahedron.hpp" />

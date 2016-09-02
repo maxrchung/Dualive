@@ -86,6 +86,18 @@ void Tetrahedron::Scale(float sca) {
 	}
 }
 
+// Just moves far point
+void Tetrahedron::ScaleVector(float sca) {
+	if (sca == 0) {
+		sca = Config::I()->reallySmallNumber;
+	}
+
+	Vector3 dist = points[TetPoints::F] - points[TetPoints::C];
+	Vector3 normalize = dist.Normalize();
+	Vector3 scaled = normalize * radius * sca;
+	points[TetPoints::F] = points[TetPoints::C] + scaled;
+}
+
 void Tetrahedron::Fade(Range time, float startFloat, float endFloat) {
 	for (auto& line : lines) {
 		line->Fade(time.start, time.end, startFloat, endFloat);

@@ -3,6 +3,7 @@
 #include "PhaseMoireGeneration.hpp"
 #include "PhaseMoireSpin.hpp"
 #include "PhaseSpectrum2D.hpp"
+#include "PhaseSpectrum3D.hpp"
 #include "PhaseTest.hpp"
 #include "PhaseTetrahedronSpin.hpp"
 #include "Storyboard.hpp"
@@ -28,11 +29,18 @@ int main() {
 		0.0f,
 		1.0f);
 
+	std::cout << "PhaseSpectrum2D..." << std::endl;
 	PhaseSpectrum2D phaseSpectrum2D;
+	std::cout << "PhaseMoireSpin..." << std::endl;
 	PhaseMoireSpin phaseMoireSpin;
+	std::cout << "PhaseMoireGeneration..." << std::endl;
 	PhaseMoireGeneration phaseMoireGeneration;
+	std::cout << "PhaseLyricsTunnel..." << std::endl;
 	PhaseLyricsTunnel phaseLyricsTunnel;
+	std::cout << "PhaseTetrahedronSpin..." << std::endl;
 	PhaseTetrahedronSpin phaseTetrahedronSpin;
+	std::cout << "PhaseSpectrum3D..." << std::endl;
+	PhaseSpectrum3D phaseSpectrum3D;
 
 	// PhaseTest phaseTest;
 

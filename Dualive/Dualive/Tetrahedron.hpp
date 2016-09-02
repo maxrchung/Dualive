@@ -15,6 +15,7 @@ public:
 	void RotateY(float rotY);
 	void RotateZ(float rotZ);
 	void Scale(float sca);
+	void ScaleVector(float sca);
 
 	// Calling move, rotate, or scale changes the points' positions.
 	// Because it is likely that you may want to call multiple

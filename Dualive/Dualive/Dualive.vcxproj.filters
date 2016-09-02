@@ -56,10 +56,7 @@
     <ClInclude Include="PhaseTetrahedronSpin.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PhaseBackground.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Phase.hpp">
+    <ClInclude Include="PhaseSpectrum3D.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
