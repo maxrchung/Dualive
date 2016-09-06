@@ -8,6 +8,8 @@ private:
 	void setupTetrahedrons() {
 		center = new Tetrahedron(radius);
 		center->RotateX(-M_PI / 2);
+		// Flip around
+		center->RotateY(M_PI);
 		center->Scale(1.0f);
 		center->RepositionLines(Range(startSpec.ms));
 
@@ -35,7 +37,7 @@ private:
 		float discRate = data.snapshotRate / 2.0f;
 		float disc = discRate / (endSpec.ms - startSpec.ms);
 		float totalRot = 4 * M_PI;
-		Vector3 rotAround = Vector3(1, 1, 1);
+		Vector3 rotAround = Vector3(-1, -1, -1);
 
 		for (int time = startSpec.ms; time < endSpec.ms; time += discRate) {
 			float rot = disc * totalRot;
@@ -55,8 +57,50 @@ private:
 		}
 	}
 
+	void fadeTetrahedrons() {
+		int spriteCount = 0;
+		std::vector<Sprite*> sprites = getSprites();
+		std::random_shuffle(std::begin(sprites), std::end(sprites));
+
+		fadeSection(sprites, startFade, startFadeSpeedup, Config::I()->offset);
+		fadeSection(sprites, startFadeSpeedup, endSpec, Config::I()->offset / 2);
+	}
+
+	void fadeSection(std::vector<Sprite*>& sprites, Time start, Time end, float frequency) {
+		for (int i = start.ms; i < end.ms; i += frequency) {
+			if (sprites.size() == 0) {
+				return;
+			}
+			Sprite* end = sprites.back();
+			end->Fade(i, i + Config::I()->offset * 8, 1.0f, 0.0f);
+			sprites.pop_back();
+		}
+	}
+
+	std::vector<Sprite*> getSprites() {
+		int spriteCount = 0;
+		std::vector<Sprite*> sprites;
+
+		// Pointer auto copies
+		for (auto line : center->lines) {
+			sprites.push_back(line);
+			++spriteCount;
+		}
+
+		for (auto spec : spectrum) {
+			for (auto line : spec->lines) {
+				sprites.push_back(line);
+				++spriteCount;
+			}
+		}
+
+		return sprites;
+	}
+
 	Time startSpec = Time("01:23:861");
-	Time endSpec = Time("01:43:440");
+	Time startFade = Time("01:33:966");
+	Time startFadeSpeedup = Time("01:39:019");
+	Time endSpec = Time("01:44:071");
 	std::vector<Tetrahedron*> spectrum;
 	Tetrahedron* center;
 	float radius = 50.0f;
@@ -64,10 +108,12 @@ private:
 	float specSpacing = 100.0f;
 	float specScale = 0.15f;
 	int numSpec = 24;
+
 public:
 	PhaseSpectrum3D() {
 		setupTetrahedrons();
 		spinTetrahedrons();
+		fadeTetrahedrons();
 	}
 };
 

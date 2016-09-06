@@ -32,11 +32,11 @@ public:
 	void Fade(Range time, float startFloat, float endFloat);
 	void Color(Range time, Color startColor, Color endColor);
 
-private:
-	static std::string linePath;
-
 	std::vector<Vector3> points;
 	std::vector<Sprite*> lines;
+
+private:
+	static std::string linePath;
 	float radius;
 
 	Vector2 applyPerspective(Vector3 vec);

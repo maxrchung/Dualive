@@ -8,9 +8,11 @@
 #include "Tetrahedron.hpp"
 #include "Time.hpp"
 #include "Vector2.hpp"
-#include <map>
+#include <algorithm>
+#include <deque>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <stdlib.h>
 #include <string>
 #include <time.h>

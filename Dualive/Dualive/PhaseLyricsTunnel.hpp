@@ -102,11 +102,11 @@ private:
 		float lastRot = 2 * M_PI / 3 - longRotation;
 		spinTet(tet, lastRotTime, -lastRot);
 
-		tet->Scale(2.5f);
+		tet->Scale(2.0f);
 		tet->RepositionLines(Range(startExpand.ms - offset / 2, startExpand.ms));
 
 		float endExpand = startExpand.ms + offset / 2;
-		tet->Scale(2.0f);
+		tet->Scale(1.5f);
 		tet->RepositionLines(Range(startExpand.ms, endExpand));
 
 		// Keep in place till end

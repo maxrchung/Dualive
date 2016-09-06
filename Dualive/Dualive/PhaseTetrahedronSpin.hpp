@@ -61,6 +61,7 @@ public:
 	PhaseTetrahedronSpin() {
 		Tetrahedron* cp = new Tetrahedron(radius);
 		cp->RotateX(-M_PI / 2);
+		cp->RotateY(M_PI);
 		cp->Scale(2.0f);
 		cp->RepositionLines(Range(startSpin.ms));
 
@@ -77,7 +78,7 @@ public:
 			float endTime = startSpin.ms + (i + 1) * msPerDisc;
 			float scale = getScale(scaleTimings, endTime);
 
-			cp->RotateAround(Vector3(1, 1, 1), discRot);
+			cp->RotateAround(Vector3(-1, -1, -1), discRot);
 			cp->Scale(scale);
 			cp->RepositionLines(Range(startTime, endTime));
 		}
