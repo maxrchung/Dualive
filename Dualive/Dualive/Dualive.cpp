@@ -6,6 +6,7 @@
 #include "PhaseSpectrum3D.hpp"
 #include "PhaseTest.hpp"
 #include "PhaseTetrahedronSpin.hpp"
+#include "PhaseTextGeneration.hpp"
 #include "Storyboard.hpp"
 #include "Time.hpp"
 #include <iostream>
@@ -29,18 +30,20 @@ int main() {
 		0.0f,
 		1.0f);
 
-	std::cout << "PhaseSpectrum2D..." << std::endl;
-	PhaseSpectrum2D phaseSpectrum2D;
-	std::cout << "PhaseMoireSpin..." << std::endl;
-	PhaseMoireSpin phaseMoireSpin;
-	std::cout << "PhaseMoireGeneration..." << std::endl;
-	PhaseMoireGeneration phaseMoireGeneration;
-	std::cout << "PhaseLyricsTunnel..." << std::endl;
-	PhaseLyricsTunnel phaseLyricsTunnel;
-	std::cout << "PhaseTetrahedronSpin..." << std::endl;
-	PhaseTetrahedronSpin phaseTetrahedronSpin;
-	std::cout << "PhaseSpectrum3D..." << std::endl;
-	PhaseSpectrum3D phaseSpectrum3D;
+	//std::cout << "PhaseSpectrum2D..." << std::endl;
+	//PhaseSpectrum2D phaseSpectrum2D;
+	//std::cout << "PhaseMoireSpin..." << std::endl;
+	//PhaseMoireSpin phaseMoireSpin;
+	//std::cout << "PhaseMoireGeneration..." << std::endl;
+	//PhaseMoireGeneration phaseMoireGeneration;
+	//std::cout << "PhaseLyricsTunnel..." << std::endl;
+	//PhaseLyricsTunnel phaseLyricsTunnel;
+	//std::cout << "PhaseTetrahedronSpin..." << std::endl;
+	//PhaseTetrahedronSpin phaseTetrahedronSpin;
+	//std::cout << "PhaseSpectrum3D..." << std::endl;
+	//PhaseSpectrum3D phaseSpectrum3D;
+	std::cout << "PhaseTextGeneration" << std::endl;
+	PhaseTextGeneration phaseTextGeneration;
 
 	// PhaseTest phaseTest;
 

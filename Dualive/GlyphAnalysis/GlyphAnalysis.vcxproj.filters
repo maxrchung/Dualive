@@ -29,5 +29,14 @@
     <ClInclude Include="Main.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DecomposedValue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DecomposedValueType.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ContourManagement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

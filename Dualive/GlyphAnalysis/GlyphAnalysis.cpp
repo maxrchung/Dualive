@@ -1,4 +1,4 @@
-#include "NonstaticClass.hpp"
+#include "Main.hpp"
 
 void main() {
 	Main();

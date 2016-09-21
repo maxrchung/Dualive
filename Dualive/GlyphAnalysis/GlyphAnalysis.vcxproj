@@ -85,6 +85,9 @@
     <ClCompile Include="GlyphAnalysis.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ContourManagement.hpp" />
+    <ClInclude Include="DecomposedValue.hpp" />
+    <ClInclude Include="DecomposedValueType.hpp" />
     <ClInclude Include="FTOutlineFuncs.hpp" />
     <ClInclude Include="Main.hpp" />
   </ItemGroup>
