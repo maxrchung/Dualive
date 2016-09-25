@@ -53,13 +53,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Wax Chug da Gwad\My Programs\freetype-2.7\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Wax Chug da Gwad\My Programs\freetype-2.7\include;C:\Users\Wax Chug da Gwad\Desktop\OsuukiSB\OsuukiSB\OsuukiSB</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Wax Chug da Gwad\My Programs\freetype-2.7\objs\vc2010\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freetype27d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Wax Chug da Gwad\My Programs\freetype-2.7\objs\vc2010\Win32;C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freetype27d.lib;OsuukiSB.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -85,7 +85,6 @@
     <ClCompile Include="GlyphAnalysis.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ContourManagement.hpp" />
     <ClInclude Include="DecomposedValue.hpp" />
     <ClInclude Include="DecomposedValueType.hpp" />
     <ClInclude Include="FTOutlineFuncs.hpp" />

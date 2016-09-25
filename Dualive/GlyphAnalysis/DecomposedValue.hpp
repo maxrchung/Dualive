@@ -3,6 +3,7 @@
 
 #include "DecomposedValueType.hpp"
 #include <freetype/ftoutln.h>
+#include <deque>
 #include <vector>
 
 class DecomposedValue {
@@ -14,6 +15,6 @@ public:
 };
 
 typedef std::vector<DecomposedValue> Contour;
-typedef std::vector<Contour> DecomposedOutline;
+typedef std::deque<Contour> DecomposedOutline;
 
 #endif//DECOMPOSEDVALUE_HPP
