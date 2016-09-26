@@ -23,6 +23,9 @@ public:
 
 		for (int i = 0; i < outlines.size(); ++i) {
 			Color color(rand() % 200 + 55, rand() % 200 + 55, rand() % 200 + 55);
+			int startTime = i * glyphTime;
+			int endTime = startTime + glyphTime;
+
 			for (auto pair : outlines[i]) {
 				Vector2 distanceVector = pair.second - pair.first;
 				float lineLength = distanceVector.Magnitude();
@@ -31,9 +34,6 @@ public:
 				float rotation = Vector2(1, 0).AngleBetween(distanceVector);
 
 				Sprite* line = new Sprite(linePath, Vector2::Zero, Layer::Foreground, Origin::CentreLeft);
-
-				int startTime = i * glyphTime;
-				int endTime = startTime + glyphTime;
 				line->ScaleVector(startTime, endTime, lineScale, lineScale);
 				line->Rotate(startTime, endTime, rotation, rotation);
 
@@ -75,39 +75,40 @@ private:
 		int numOutlines;
 		file >> numOutlines;
 
-		std::vector<Pair> pairs;
 		for (int j = 0; j < numOutlines; ++j) {
+			std::vector<Pair> pairs;
 			int numPairs;
 			file >> numPairs;
 
 			for (int k = 0; k < numPairs; ++k) {
-				int type, x, y, x2, y2;
-				file >> type >> x >> y >> x2 >> y2;
+				int x, y, x2, y2;
+				file >> x >> y >> x2 >> y2;
 				Vector2 first = Vector2(x, y) * pointScale;
 				Vector2 second = Vector2(x2, y2) * pointScale;
 				Pair pair(first, second);
 				pairs.push_back(pair);
 
-				if (x < min.x)
-					min.x = x;
-				else if (x > max.x)
-					max.x = x;
-				if (x2 < min.x)
-					min.x = x2;
-				else if (x2 > max.x)
-					max.x = x2;
+				if (first.x < min.x)
+					min.x = first.x;
+				else if (first.x > max.x)
+					max.x = first.x;
+				if (second.x < min.x)
+					min.x = second.x;
+				else if (second.x > max.x)
+					max.x = second.x;
 
-				if (y < min.y)
-					min.y = y;
-				else if (y > max.y)
-					max.y = y;
-				if (y2 < min.y)
-					min.y = y2;
-				else if (y2 > max.y)
-					max.y = y2;
+				if (first.y < min.y)
+					min.y = first.y;
+				else if (first.y > max.y)
+					max.y = first.y;
+				if (second.y < min.y)
+					min.y = second.y;
+				else if (second.y > max.y)
+					max.y = second.y;
 			}
+
+			outlines.push_back(pairs);
 		}
-		outlines.push_back(pairs);
 		return outlines;
 	}
 };

@@ -25,7 +25,6 @@ public:
 
 		std::vector<DecomposedOutline> decomposed = decompose(face);
 		std::vector<std::vector<Pair>> reduced = reduce(decomposed);
-		// std::vector<std::vector<Pair>> located = locate(reduced);
 
 		std::string path(R"(C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Debug\GlyphOutlineData.txt)");
 		save(reduced, path);
@@ -71,11 +70,14 @@ private:
 			FT_Outline_Decompose(&outline, &outlineFuncs, &contours);
 
 			if (i == 49) {
+				// Outer border
 				contours.pop_front();
 			}
 
 			if (i == 42) {
+				// Inner border outlining the center section of R
 				contours.erase(contours.begin() + 17);
+				// Outer border
 				contours.pop_front();
 			}
 
@@ -86,79 +88,91 @@ private:
 
 	std::vector<std::vector<Pair>> reduce(std::vector<DecomposedOutline>& outlines) {
 		std::vector<std::vector<Pair>> reduced;
-
 		for (int i = 0; i < outlines.size(); ++i) {
 			std::vector<Pair> pointPairs;
+			for (auto contour : outlines[i]) {
+				// Get Vector2 line pairs
+				std::vector<Pair> linePairs = getLinePairs(contour);
 
-			for (auto contours : outlines) {
-				for (auto contour : contours) {
-					// Get Vector2 line pairs
-					std::vector<Pair> linePoints;
-					Vector2 prevPoint = Vector2(contour[0].point.x, contour[0].point.y);
-					for (int j = 1; j < contour.size(); ++j) {
-						Vector2 curPoint = Vector2(contour[j].point.x, contour[j].point.y);
-						Pair linePoint(prevPoint, curPoint);
-						linePoints.push_back(linePoint);
-						prevPoint = curPoint;
-					}
-
-					// R index or Y index, find the largest 3
-					if (i == 42 - 25 || i == 49 - 25) {
-						// If there's only 3, then return that (most cases will be this)
-						if (linePoints.size() == 3) {
-							pointPairs = linePoints;
-						}
-						// Find largest 3
-						else {
-							std::list<Pair> maxList;
-							for (auto linePoint : linePoints) {
-								float magnitude = (linePoint.first - linePoint.second).Magnitude();
-
-								// Iterate through list, compare distance, add if larger
-								for (auto j = maxList.begin(); j != maxList.end(); ++j) {
-									float compareMagnitude = (j->first - j->second).Magnitude();
-									if (magnitude > compareMagnitude) {
-										maxList.insert(j, linePoint);
-									}
-								}
-
-								// Handle extra back
-								if (maxList.size() > 3) {
-									maxList.pop_back();
-								}
-								// Handle less than 3
-								else if (maxList.size() < 3) {
-									maxList.push_back(linePoint);
-								}
-							}
-
-							for (auto maxPoint : maxList) {
-								pointPairs.push_back(maxPoint);
-							}
-						}
-					}
-					// Find line with largest distance
-					else {
-						Pair maxPair(linePoints[0]);
-						float maxDistance = (maxPair.first - maxPair.second).Magnitude();
-						for (int j = 1; j < linePoints.size(); ++j) {
-							if ((linePoints[j].first - linePoints[j].second).Magnitude() > maxDistance) {
-								maxPair.first = linePoints[j].first;
-								maxPair.second = linePoints[j].second;
-							}
-						}
-						pointPairs.push_back(maxPair);
+				// R index or Y index, find the largest 3
+				if (i == 42 - 25 || i == 49 - 25) {
+					std::vector<Pair> maxPairs = getLargestThree(linePairs);
+					for (auto linePair : maxPairs) {
+						pointPairs.push_back(linePair);
 					}
 				}
-			}
 
+				// Find line with largest distance
+				else {
+					pointPairs.push_back(getMaxPair(linePairs));
+				}
+			}
 			reduced.push_back(pointPairs);
 		}
-
 		return reduced;
 	}
 
-	std::vector<std::vector<Pair>> locate(std::vector<std::vector<Pair>> reduced) {
+	std::vector<Pair> getLinePairs(std::vector<DecomposedValue>& contour) {
+		std::vector<Pair> linePoints;
+		Vector2 prevPoint = Vector2(contour[0].point.x, contour[0].point.y);
+		for (int j = 1; j < contour.size(); ++j) {
+			Vector2 curPoint = Vector2(contour[j].point.x, contour[j].point.y);
+			linePoints.push_back(Pair(prevPoint, curPoint));
+			prevPoint = curPoint;
+		}
+		return linePoints;
+	}
+
+	std::vector<Pair> getLargestThree(std::vector<Pair>& linePairs) {
+		// If there's only 3, then return that (most cases will be this)
+		if (linePairs.size() == 3) {
+			return linePairs;
+		}
+
+		// Else find largest 3
+		// TODO: Use localization to fix R cases where there are over 3 lines
+		std::list<Pair> maxList;
+		for (auto linePair : linePairs) {
+			float magnitude = (linePair.first - linePair.second).Magnitude();
+
+			// Iterate through list, compare distance, add if larger
+			for (auto j = maxList.begin(); j != maxList.end(); ++j) {
+				float compareMagnitude = (j->first - j->second).Magnitude();
+				if (magnitude > compareMagnitude) {
+					maxList.insert(j, linePair);
+					break;
+				}
+			}
+
+			// Handle extra back
+			if (maxList.size() > 3) {
+				maxList.pop_back();
+			}
+			// Handle less than 3
+			else if (maxList.size() < 3) {
+				maxList.push_back(linePair);
+			}
+		}
+
+		std::vector<Pair> pointPairs;
+		for (auto maxPoint : maxList) {
+			pointPairs.push_back(maxPoint);
+		}
+		return pointPairs;
+	}
+
+	Pair getMaxPair(std::vector<Pair>& linePairs) {
+		Pair maxPair(linePairs[0]);
+		float maxDistance = (maxPair.second - maxPair.first).Magnitude();
+		for (int j = 1; j < linePairs.size(); ++j) {
+			float curDistance = (linePairs[j].second - linePairs[j].first).Magnitude();
+			if (curDistance > maxDistance) {
+				maxPair.first = linePairs[j].first;
+				maxPair.second = linePairs[j].second;
+				maxDistance = curDistance;
+			}
+		}
+		return maxPair;
 	}
 
 	void save(std::vector<std::vector<Pair>>& located, std::string& path) {
