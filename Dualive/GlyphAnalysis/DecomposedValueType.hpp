@@ -1,7 +1,7 @@
 #ifndef DECOMPOSEDVALUETYPE_HPP
 #define DECOMPOSEDVALUETYPE_HPP
 
-enum DecomposedValueType {
+enum class DecomposedValueType {
 	Move,
 	Line,
 	Conic

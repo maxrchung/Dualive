@@ -88,6 +88,7 @@
     <ClInclude Include="DecomposedValue.hpp" />
     <ClInclude Include="DecomposedValueType.hpp" />
     <ClInclude Include="FTOutlineFuncs.hpp" />
+    <ClInclude Include="Line.hpp" />
     <ClInclude Include="Main.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

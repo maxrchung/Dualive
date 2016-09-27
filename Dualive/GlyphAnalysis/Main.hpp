@@ -3,6 +3,7 @@
 
 #include "DecomposedValue.hpp"
 #include "FTOutlineFuncs.hpp"
+#include "Line.hpp"
 #include "Vector2.hpp"
 #include <ft2build.h>
 #include <freetype/ftoutln.h>
@@ -129,34 +130,41 @@ private:
 			return linePairs;
 		}
 
-		// Else find largest 3
-		// TODO: Use localization to fix R cases where there are over 3 lines
+		// Else find largest 4
+		// Turns out finding max of 3 gives some finnicky results (blame the font maker not me)
+		// What happens is that a lot of outlines are left incomplete without a full sided edge
 		std::list<Pair> maxList;
 		for (auto linePair : linePairs) {
 			float magnitude = (linePair.first - linePair.second).Magnitude();
 
+			bool skipCheck = false;
 			// Iterate through list, compare distance, add if larger
 			for (auto j = maxList.begin(); j != maxList.end(); ++j) {
+				skipCheck = false;
 				float compareMagnitude = (j->first - j->second).Magnitude();
 				if (magnitude > compareMagnitude) {
 					maxList.insert(j, linePair);
+					skipCheck = true;
 					break;
 				}
 			}
 
 			// Handle extra back
-			if (maxList.size() > 3) {
+			if (maxList.size() > 4) {
 				maxList.pop_back();
 			}
-			// Handle less than 3
-			else if (maxList.size() < 3) {
-				maxList.push_back(linePair);
+
+			if (!skipCheck) {
+				// Handle less than 4
+				if (maxList.size() < 4) {
+					maxList.push_back(linePair);
+				}
 			}
 		}
 
 		std::vector<Pair> pointPairs;
-		for (auto maxPoint : maxList) {
-			pointPairs.push_back(maxPoint);
+		for (auto a : maxList) {
+			pointPairs.push_back(a);
 		}
 		return pointPairs;
 	}
