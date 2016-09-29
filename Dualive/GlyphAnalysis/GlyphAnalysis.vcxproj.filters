@@ -21,6 +21,9 @@
     <ClCompile Include="FTOutlineFuncs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Pocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FTOutlineFuncs.hpp">
@@ -35,7 +38,10 @@
     <ClInclude Include="DecomposedValueType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Line.hpp">
+    <ClInclude Include="Pocket.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,6 +22,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LyricAnalysis", "LyricAnalysis\LyricAnalysis.vcxproj", "{4B666ABF-F7FD-4F4E-8CA0-A1491F5DA6B4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GlyphAnalysis", "GlyphAnalysis\GlyphAnalysis.vcxproj", "{82E72018-7534-4664-967A-B95CB1AB37A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1441267D-3F87-43FD-BF1E-1B5A7919410D} = {1441267D-3F87-43FD-BF1E-1B5A7919410D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

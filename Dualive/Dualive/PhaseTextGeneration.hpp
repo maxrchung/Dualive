@@ -68,7 +68,7 @@ private:
 	});
 
 	std::vector<std::vector<Pair>> loadOutlinesData(std::string& path) {
-		float pointScale = 0.3f;
+		float pointScale = 1.0f;
 		std::ifstream file(path);
 
 		std::vector<std::vector<Pair>> outlines;

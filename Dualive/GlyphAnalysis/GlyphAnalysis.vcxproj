@@ -83,13 +83,15 @@
   <ItemGroup>
     <ClCompile Include="FTOutlineFuncs.cpp" />
     <ClCompile Include="GlyphAnalysis.cpp" />
+    <ClCompile Include="Pocket.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DecomposedValue.hpp" />
     <ClInclude Include="DecomposedValueType.hpp" />
     <ClInclude Include="FTOutlineFuncs.hpp" />
-    <ClInclude Include="Line.hpp" />
     <ClInclude Include="Main.hpp" />
+    <ClInclude Include="Node.hpp" />
+    <ClInclude Include="Pocket.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

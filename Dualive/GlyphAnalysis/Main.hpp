@@ -3,7 +3,8 @@
 
 #include "DecomposedValue.hpp"
 #include "FTOutlineFuncs.hpp"
-#include "Line.hpp"
+#include "Node.hpp"
+#include "Pocket.hpp"
 #include "Vector2.hpp"
 #include <ft2build.h>
 #include <freetype/ftoutln.h>
@@ -26,6 +27,7 @@ public:
 
 		std::vector<DecomposedOutline> decomposed = decompose(face);
 		std::vector<std::vector<Pair>> reduced = reduce(decomposed);
+		std::unordered_set<Pocket*> localized = localize(reduced);
 
 		std::string path(R"(C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Debug\GlyphOutlineData.txt)");
 		save(reduced, path);
@@ -49,7 +51,7 @@ private:
 		// Y = 49
 		// May need additional for !, ?, numeric, etc.
 		int startGlyphIndex = 25;
-		int endGlyphIndex = 50;
+		int endGlyphIndex = 25;
 		std::vector<DecomposedOutline> decomposedOutlines;
 
 		for (int i = startGlyphIndex; i <= endGlyphIndex; ++i) {
@@ -181,6 +183,21 @@ private:
 			}
 		}
 		return maxPair;
+	}
+
+	std::unordered_set<Pocket*> localize(std::vector<std::vector<Pair>>& reduced) {
+		std::unordered_set<Pocket*> pockets;
+		for (auto& outline : reduced) {
+			for (auto pair : outline) {
+				Pocket::AddPockets(pockets, pair);
+			}
+		}
+
+		for (auto pocket : pockets) {
+			Pocket::CalculateAverage(pocket);
+		}
+
+		return pockets;
 	}
 
 	void save(std::vector<std::vector<Pair>>& located, std::string& path) {
