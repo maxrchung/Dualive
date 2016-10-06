@@ -27,10 +27,11 @@ public:
 
 		std::vector<DecomposedOutline> decomposed = decompose(face);
 		std::vector<std::vector<Pair>> reduced = reduce(decomposed);
-		std::unordered_set<Pocket*> localized = localize(reduced);
+		std::vector<std::unordered_set<Pocket*>> localized = localize(reduced);
 
 		std::string path(R"(C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Debug\GlyphOutlineData.txt)");
-		save(reduced, path);
+		// savePairs(reduced, path);
+		savePockets(localized, path);
 	}
 private:
 	void initialize(FT_Library& library, FT_Face& face) {
@@ -185,28 +186,46 @@ private:
 		return maxPair;
 	}
 
-	std::unordered_set<Pocket*> localize(std::vector<std::vector<Pair>>& reduced) {
-		std::unordered_set<Pocket*> pockets;
+	std::vector<std::unordered_set<Pocket*>> localize(std::vector<std::vector<Pair>>& reduced) {
+		std::vector<std::unordered_set<Pocket*>> outlines;
 		for (auto& outline : reduced) {
+			std::unordered_set<Pocket*> pockets;
 			for (auto pair : outline) {
 				Pocket::AddPockets(pockets, pair);
 			}
+			for (auto pocket : pockets) {
+				Pocket::CalculateAverage(pocket);
+			}
+			outlines.push_back(pockets);
 		}
 
-		for (auto pocket : pockets) {
-			Pocket::CalculateAverage(pocket);
-		}
-
-		return pockets;
+		return outlines;
 	}
 
-	void save(std::vector<std::vector<Pair>>& located, std::string& path) {
+	void savePairs(std::vector<std::vector<Pair>>& located, std::string& path) {
 		std::ofstream file(path);
 		file << located.size() << std::endl;
 		for (auto pairs : located) {
 			file << pairs.size() << std::endl;
 			for (auto pair : pairs) {
 				file << (int)pair.first.x << " " << (int)pair.first.y << " " << (int)pair.second.x << " " << (int)pair.second.y << std::endl;
+			}
+		}
+	}
+
+	// Save pockets, read in as Nodes
+	void savePockets(std::vector<std::unordered_set<Pocket*>>& outlines, std::string& path) {
+		std::ofstream file(path);
+		file << outlines.size() << std::endl;
+		for (auto& pocketSet : outlines) {
+			file << pocketSet.size() << std::endl;
+			for (auto pocket : pocketSet) {
+				file << pocket->average << std::endl;
+
+				file << pocket->pockets.size() << std::endl;
+				for (auto surroundingPocket : pocket->pockets) {
+					file << surroundingPocket->average << std::endl;
+				}
 			}
 		}
 	}
