@@ -52,7 +52,7 @@ private:
 		// Y = 49
 		// May need additional for !, ?, numeric, etc.
 		int startGlyphIndex = 25;
-		int endGlyphIndex = 25;
+		int endGlyphIndex = 50;
 		std::vector<DecomposedOutline> decomposedOutlines;
 
 		for (int i = startGlyphIndex; i <= endGlyphIndex; ++i) {
@@ -190,8 +190,14 @@ private:
 		std::vector<std::unordered_set<Pocket*>> outlines;
 		for (auto& outline : reduced) {
 			std::unordered_set<Pocket*> pockets;
+
+			// 64 is the min pairs and 495 is the max from my rough estimates
+			float normalizeFactor = (float)(outline.size() - 64) / (495 - 64);
+			float scaledDistance = normalizeFactor * (Pocket::cutOffDistanceMax - Pocket::cutOffDistanceMin);
+			float cutOffDistance = scaledDistance + Pocket::cutOffDistanceMin;
+
 			for (auto pair : outline) {
-				Pocket::AddPockets(pockets, pair);
+				Pocket::AddPockets(pockets, pair, cutOffDistance);
 			}
 			for (auto pocket : pockets) {
 				Pocket::CalculateAverage(pocket);

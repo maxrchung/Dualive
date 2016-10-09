@@ -17,14 +17,15 @@ void Pocket::CalculateAverage(Pocket* pocket) {
 	pocket->average = total / pocket->points.size();
 }
 
-float Pocket::cutOffDistance = 50.0f;
-void Pocket::AddPockets(std::unordered_set<Pocket*>& pockets, Pair pair) {
-	Pocket* firstPocket = addVectorToPocket(pockets, pair.first);
-	Pocket* secondPocket = addVectorToPocket(pockets, pair.second);
+void Pocket::AddPockets(std::unordered_set<Pocket*>& pockets, Pair pair, float cutOffDistance) {
+	Pocket* firstPocket = addVectorToPocket(pockets, pair.first, cutOffDistance);
+	Pocket* secondPocket = addVectorToPocket(pockets, pair.second, cutOffDistance);
 	connectPockets(firstPocket, secondPocket);
 }
 
-Pocket* Pocket::addVectorToPocket(std::unordered_set<Pocket*>& pockets, Vector2 vector) {
+float Pocket::cutOffDistanceMin = 20.0f;
+float Pocket::cutOffDistanceMax = 30.0f;
+Pocket* Pocket::addVectorToPocket(std::unordered_set<Pocket*>& pockets, Vector2 vector, float cutOffDistance) {
 	for (auto pocket : pockets) {
 		// Add vector to pocket if distance is < some distance
 		Vector2 pocketPoint = *(pocket->points.begin());

@@ -21,12 +21,12 @@ public:
 	Vector2 average;
 
 	static void CalculateAverage(Pocket* pocket);
-
-	static float cutOffDistance;
-	static void AddPockets(std::unordered_set<Pocket*>& pockets, Pair pair);
+	static float cutOffDistanceMin;
+	static float cutOffDistanceMax;
+	static void AddPockets(std::unordered_set<Pocket*>& pockets, Pair pair, float cutOffDistance);
 
 private:
-	static Pocket* addVectorToPocket(std::unordered_set<Pocket*>& pockets, Vector2 vector);
+	static Pocket* addVectorToPocket(std::unordered_set<Pocket*>& pockets, Vector2 vector, float cutOffDistance);
 	static void connectPockets(Pocket* firstPocket, Pocket* secondPocket);
 };
 

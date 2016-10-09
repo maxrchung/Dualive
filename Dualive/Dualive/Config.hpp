@@ -16,7 +16,22 @@
 #include <stdlib.h>
 #include <string>
 #include <time.h>
+#include <unordered_map>
+#include <unordered_set>
 #include <winsock.h>
+
+typedef std::unordered_map<Vector2, std::unordered_set<Vector2>> VectorMap;
+typedef std::pair<Vector2, Vector2> Pair;
+
+// Pair hash
+namespace std {
+	template<>
+	struct hash<std::pair<Vector2, Vector2>> {
+		size_t operator()(const std::pair<Vector2, Vector2>& value) const {
+			return (std::hash<Vector2>()(value.first) * 0x1f1f1f1f) ^ (std::hash<Vector2>()(value.second) << 1);
+		}
+	};
+}
 
 class Config {
 public:
