@@ -50,13 +50,18 @@ private:
 		// Z = 50
 		// R = 42
 		// Y = 49
+		// ' = 93
 		// May need additional for !, ?, numeric, etc.
-		int startGlyphIndex = 25;
-		int endGlyphIndex = 50;
-		std::vector<DecomposedOutline> decomposedOutlines;
 
-		for (int i = startGlyphIndex; i <= endGlyphIndex; ++i) {
-			FT_Load_Glyph(face, i, FT_LOAD_NO_HINTING);
+		std::vector<int> glyphIndices;
+		for (int i = 25; i <= 50; ++i) {
+			glyphIndices.push_back(i);
+		}
+		glyphIndices.push_back(93);
+
+		std::vector<DecomposedOutline> decomposedOutlines;
+		for (int i = 0; i < glyphIndices.size(); ++i) {
+			FT_Load_Glyph(face, glyphIndices[i], FT_LOAD_NO_HINTING);
 			FT_Outline outline = face->glyph->outline;
 
 			// o_o
@@ -73,12 +78,12 @@ private:
 			DecomposedOutline contours;
 			FT_Outline_Decompose(&outline, &outlineFuncs, &contours);
 
-			if (i == 49) {
+			if (glyphIndices[i] == 49) {
 				// Outer border
 				contours.pop_front();
 			}
 
-			if (i == 42) {
+			if (glyphIndices[i] == 42) {
 				// Inner border outlining the center section of R
 				contours.erase(contours.begin() + 17);
 				// Outer border
@@ -87,6 +92,7 @@ private:
 
 			decomposedOutlines.push_back(contours);
 		}
+		
 		return decomposedOutlines;
 	}
 
@@ -188,21 +194,29 @@ private:
 
 	std::vector<std::unordered_set<Pocket*>> localize(std::vector<std::vector<Pair>>& reduced) {
 		std::vector<std::unordered_set<Pocket*>> outlines;
-		for (auto& outline : reduced) {
+		for (int i = 0; i < reduced.size(); ++i) {
+			auto& outline = reduced[i];
 			std::unordered_set<Pocket*> pockets;
 
-			// 64 is the min pairs and 495 is the max from my rough estimates
-			float normalizeFactor = (float)(outline.size() - 64) / (495 - 64);
-			float scaledDistance = normalizeFactor * (Pocket::cutOffDistanceMax - Pocket::cutOffDistanceMin);
-			float cutOffDistance = scaledDistance + Pocket::cutOffDistanceMin;
+			float cutOffDistance;
+			if (i == reduced.size() - 1) {
+				cutOffDistance = Pocket::cutOffDistanceMin;
+			}
+			else {
+				// 64 is the min pairs and 495 is the max from my rough estimates
+				float normalizeFactor = (float)(reduced[i].size() - 64) / (495 - 64);
+				float scaledDistance = normalizeFactor * (Pocket::cutOffDistanceMax - Pocket::cutOffDistanceMin);
+				cutOffDistance = scaledDistance + Pocket::cutOffDistanceMin;
+			}
 
-			for (auto pair : outline) {
+			for (auto pair : reduced[i]) {
 				Pocket::AddPockets(pockets, pair, cutOffDistance);
 			}
 			for (auto pocket : pockets) {
 				Pocket::CalculateAverage(pocket);
 			}
 			outlines.push_back(pockets);
+
 		}
 
 		return outlines;

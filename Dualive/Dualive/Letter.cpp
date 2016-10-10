@@ -56,7 +56,9 @@ std::vector<std::vector<Pair>> Letter::buildPairs(VectorMap& vectorMap, std::vec
 				}
 			}
 		}
-		pairTravel.push_back(pairs);
+		if (!pairs.empty()) {
+			pairTravel.push_back(pairs);
+		}
 	}
 
 	return pairTravel;
@@ -87,7 +89,12 @@ std::vector<std::vector<Sprite*>> Letter::setupSprites(std::vector<std::vector<P
 	std::vector<std::vector<Sprite*>> spriteTravel;
 
 	for (auto& layer : pairTravel) {
-		std::vector<Sprite*> sprites(layer.size(), new Sprite(linePath, Vector2::Zero, Layer::Foreground, Origin::CentreLeft));
+		std::vector<Sprite*> sprites;
+		// Would have used range constructor but seems like doing this with pointers is bad and they
+		// just go to the same one
+		for (int i = 0; i < layer.size(); ++i) {
+			sprites.push_back(new Sprite(linePath, Vector2::Zero, Layer::Foreground, Origin::CentreLeft));
+		}
 		spriteTravel.push_back(sprites);
 	}
 
@@ -96,14 +103,19 @@ std::vector<std::vector<Sprite*>> Letter::setupSprites(std::vector<std::vector<P
 
 
 float Letter::lineScaleHeight = 0.1f;
-void Letter::display(Letter* letter, int startTime, int endTime, float scale, Vector2 displacement) {
-	auto& spriteTravel = letter->spriteTravel;
-	float freq = (endTime - startTime) / letter->spriteTravel.size();
+// Leave some time at the end
+float freqFinish = 0.8f;
+void Letter::display(Letter& letter, int startTime, int endTime, float scale, Vector2 displacement) {
+	auto& spriteTravel = letter.spriteTravel;
+	float freq = ((endTime - startTime) * freqFinish) / letter.spriteTravel.size();
 
-	auto& pairTravel = letter->pairTravel;
+	auto& pairTravel = letter.pairTravel;
 	for (int i = 0; i < pairTravel.size(); ++i) {
 		for (int j = 0; j < pairTravel[i].size(); ++j) {
 			Pair pair = pairTravel[i][j];
+			pair.first = pair.first * scale + (displacement * scale);
+			pair.second = pair.second * scale + (displacement * scale);
+
 			Vector2 distanceVector = pair.second - pair.first;
 			float lineLength = distanceVector.Magnitude();
 			float lineScaleWidth = lineLength / 1000;
@@ -111,11 +123,9 @@ void Letter::display(Letter* letter, int startTime, int endTime, float scale, Ve
 			float rotation = Vector2(1, 0).AngleBetween(distanceVector);
 
 			Sprite* line = spriteTravel[i][j];
-			line->ScaleVector(startTime, startTime + freq, Vector2(0, lineScaleHeight), lineScale);
+			line->ScaleVector(startTime, startTime + (freq * (i + 1)), Vector2(0, lineScaleHeight), lineScale);
 			line->Rotate(startTime, endTime, rotation, rotation);
-
-			Vector2 linePos = pair.first - displacement;
-			line->Move(startTime, endTime, linePos, linePos);
+			line->Move(startTime, endTime, pair.first, pair.first);
 			line->Color(startTime, endTime, Color(255), Color(255));
 		}
 	}

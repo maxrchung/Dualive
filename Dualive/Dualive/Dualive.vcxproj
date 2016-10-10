@@ -84,12 +84,14 @@
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Dualive.cpp" />
     <ClCompile Include="Letter.cpp" />
+    <ClCompile Include="LetterGroup.cpp" />
     <ClCompile Include="LetterMeasurements.cpp" />
     <ClCompile Include="Tetrahedron.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.hpp" />
     <ClInclude Include="Letter.hpp" />
+    <ClInclude Include="LetterGroup.hpp" />
     <ClInclude Include="LetterMeasurements.hpp" />
     <ClInclude Include="PhaseLyricsTunnel.hpp" />
     <ClInclude Include="PhaseMoireSpin.hpp" />
