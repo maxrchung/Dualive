@@ -105,16 +105,21 @@ std::vector<std::vector<Sprite*>> Letter::setupSprites(std::vector<std::vector<P
 float Letter::lineScaleHeight = 0.1f;
 // Leave some time at the end
 float freqFinish = 0.8f;
-void Letter::display(Letter& letter, int startTime, int endTime, float scale, Vector2 displacement) {
-	auto& spriteTravel = letter.spriteTravel;
-	float freq = ((endTime - startTime) * freqFinish) / letter.spriteTravel.size();
+void Letter::display(int startTime, int endTime, float scale, Vector2 displacement) {
+	float freq = ((endTime - startTime) * freqFinish) / this->spriteTravel.size();
 
-	auto& pairTravel = letter.pairTravel;
+	auto& pairTravel = this->pairTravel;
 	for (int i = 0; i < pairTravel.size(); ++i) {
 		for (int j = 0; j < pairTravel[i].size(); ++j) {
+			// Scale and displace
+			Pair& pairEdit = pairTravel[i][j];
+			pairEdit.first = (pairEdit.first + displacement) * scale;
+			pairEdit.second = (pairEdit.second + displacement) * scale;
+
 			Pair pair = pairTravel[i][j];
-			pair.first = pair.first * scale + (displacement * scale);
-			pair.second = pair.second * scale + (displacement * scale);
+			// Put in perspective
+			pair.first = Vector3(pair.first).Perspect(Config::I()->cameraZ, Config::I()->projectionDistance);
+			pair.second = Vector3(pair.second).Perspect(Config::I()->cameraZ, Config::I()->projectionDistance);
 
 			Vector2 distanceVector = pair.second - pair.first;
 			float lineLength = distanceVector.Magnitude();
@@ -123,14 +128,13 @@ void Letter::display(Letter& letter, int startTime, int endTime, float scale, Ve
 			float rotation = Vector2(1, 0).AngleBetween(distanceVector);
 
 			Sprite* line = spriteTravel[i][j];
-			line->ScaleVector(startTime, startTime + (freq * (i + 1)), Vector2(0, lineScaleHeight), lineScale);
+			line->ScaleVector(startTime + (freq * i), startTime + (freq * (i + 1)), Vector2(0, lineScaleHeight), lineScale);
 			line->Rotate(startTime, endTime, rotation, rotation);
 			line->Move(startTime, endTime, pair.first, pair.first);
 			line->Color(startTime, endTime, Color(255), Color(255));
 		}
 	}
 }
-
 
 int Letter::getIndex(char c) {
 	return c - int('A');

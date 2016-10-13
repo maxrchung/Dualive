@@ -15,18 +15,27 @@ public:
 			letters.push_back(Letter(vectorMap));
 		}
 
-		for (int i = 0; i < lyrics.size(); ++i) {
+		for (int i = 0; i < 2; ++i) {
 			LetterGroup letterGroup(letters, lyrics[i]);
-
 			int startDisplay = timings[i].ms;
 
 			if (i < lyrics.size() - 1) {
 				int endDisplay = timings[i + 1].ms - Config::I()->mspb / 2;
-				LetterGroup::display(letterGroup, startDisplay, endDisplay);
+				letterGroup.display(startDisplay, endDisplay);
+
+				if (i == 0) {
+					letterGroup.Fade(timings[i + 1].ms - Config::I()->mspb / 2, timings[i + 1].ms, 0.25f);
+					letterGroup.Move(Vector3(300, 0, 0));
+					letterGroup.Rotate(Config::I()->DToR(rand() % 360 - 180),
+						Config::I()->DToR(rand() % 360 - 180),
+						Config::I()->DToR(rand() % 360 - 180));
+					letterGroup.Reposition(timings[i + 1].ms, timings[i + 1].ms + Config::I()->mspb / 2);
+					letterGroup.Fade(timings[i + 1].ms, timings[i + 4].ms, 0.0f);
+				}
 			}
 			else {
 				int dualiveEnding = Time("02:06:808").ms;
-				LetterGroup::display(letterGroup, startDisplay, dualiveEnding);
+				letterGroup.display(startDisplay, dualiveEnding);
 			}
 		}
 	}

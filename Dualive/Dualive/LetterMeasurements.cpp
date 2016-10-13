@@ -1,11 +1,10 @@
 #include "LetterMeasurements.hpp"
 
 LetterMeasurements::LetterMeasurements(Vector2 min, Vector2 max)
-	:
-	width(max.x - min.x),
-	height(max.y - min.y),
-	halfWidth(width / 2),
-	halfHeight(height / 2) {
+	: width(max.x - min.x),
+	  height(max.y - min.y),
+	  halfWidth(width / 2),
+	  halfHeight(height / 2) {
 	// WTF PREPROCESSOR VARIABLES(?)?
 	this->min = min;
 	this->max = max;

@@ -22,6 +22,7 @@
 
 typedef std::unordered_map<Vector2, std::unordered_set<Vector2>> VectorMap;
 typedef std::pair<Vector2, Vector2> Pair;
+typedef std::pair<Vector3, Vector3> Pair3;
 
 // Pair hash
 namespace std {
