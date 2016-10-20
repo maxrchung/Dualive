@@ -15,27 +15,72 @@ public:
 			letters.push_back(Letter(vectorMap));
 		}
 
-		for (int i = 0; i < 2; ++i) {
-			LetterGroup letterGroup(letters, lyrics[i]);
+		std::list<LetterGroup*> letterGroups;
+		for (int i = 0; i < lyrics.size(); ++i) {
+			std::cout << "Processing lyric: " << i << " / " << lyrics.size() << std::endl;
+
+			LetterGroup* letterGroup = new LetterGroup(letters, lyrics[i]);
 			int startDisplay = timings[i].ms;
+			int endDisplay = timings[i + 1].ms - Config::I()->mspb / 2;
+			letterGroup->display(startDisplay, endDisplay);
+				
+			if (letterGroups.size() > 0) {
+				LetterGroup* compare = letterGroups.back();
+				RectPoints compareRect = compare->rectPoints;
+				// Forced local rotation
+				float localRotation = Config::I()->DToR(rand() % 360 - 180);
+				compareRect.LocalRotate(0, 0, localRotation);
 
-			if (i < lyrics.size() - 1) {
-				int endDisplay = timings[i + 1].ms - Config::I()->mspb / 2;
-				letterGroup.display(startDisplay, endDisplay);
+				RectPoints centerRect = letterGroup->rectPoints;
+				float minDistance = fmin((centerRect.points[0] - centerRect.points[4]).Magnitude(),
+					(compareRect.points[0] - compareRect.points[4]).Magnitude());
 
-				if (i == 0) {
-					letterGroup.Fade(timings[i + 1].ms - Config::I()->mspb / 2, timings[i + 1].ms, 0.25f);
-					letterGroup.Move(Vector3(300, 0, 0));
-					letterGroup.Rotate(Config::I()->DToR(rand() % 360 - 180),
-						Config::I()->DToR(rand() % 360 - 180),
-						Config::I()->DToR(rand() % 360 - 180));
-					letterGroup.Reposition(timings[i + 1].ms, timings[i + 1].ms + Config::I()->mspb / 2);
-					letterGroup.Fade(timings[i + 1].ms, timings[i + 4].ms, 0.0f);
+				bool foundMove = false;
+				while (!foundMove) {
+					RectPoints centerRectCopy = centerRect;
+					RectPoints compareRectCopy = compareRect;
+					float distance = minDistance;
+
+					// Chooses random direction to move
+					float moveRot = Config::I()->DToR(rand() % 360 - 180);
+					Vector3 movement = Vector3(1, 0, 0).Rotate(0, 0, moveRot);
+					Vector3 totalMovement = movement;
+
+					// Slowly moves outwards and checks for closest collision
+					while (centerRectCopy.Collide(compareRectCopy)) {
+						compareRectCopy.Move(movement);
+						totalMovement += movement;
+					}
+
+					// Skip and recalculate movement if colliding with older letters
+					bool skipMove = false;
+					for (auto& lg : letterGroups) {
+						RectPoints old = lg->rectPoints;
+						old.Move(totalMovement);
+						old.LocalRotate(0, 0, localRotation);
+						if (centerRectCopy.Collide(old)) {
+							skipMove = true;
+						}
+					}
+					if (skipMove) {
+						continue;
+					}
+
+					foundMove = true;
+					for (auto& lg : letterGroups) {
+						lg->Move(totalMovement);
+						lg->LocalRotate(0, 0, localRotation);
+						lg->Reposition(timings[i].ms, timings[i].ms + Config::I()->mspb / 2);
+						lg->Fade(timings[i].ms, timings[i].ms + 5000, 1.0f);
+					}
 				}
 			}
-			else {
-				int dualiveEnding = Time("02:06:808").ms;
-				letterGroup.display(startDisplay, dualiveEnding);
+
+			letterGroups.push_back(letterGroup);
+			// Remove so there aren't too many things we have to move
+			if (letterGroups.size() > 3) {
+				delete letterGroups.front();
+				letterGroups.pop_front();
 			}
 		}
 	}
@@ -91,6 +136,7 @@ private:
 		Time("02:03:019"), //"BREATHING",
 		Time("02:03:335"), //"IN",
 		Time("02:03:650"), //"DUALIVE"
+		Time("02:06:808")
 	});
 
 

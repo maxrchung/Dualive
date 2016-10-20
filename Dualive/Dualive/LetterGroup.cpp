@@ -16,7 +16,7 @@ LetterGroup::LetterGroup(std::vector<Letter>& lettersBase, std::string& lyric) {
 		}
 	}
 
-	// Set up pair3s and sprites
+	// Set up sprites
 	for (auto letter : letters) {
 		if (letter != NULL) {
 			for (auto& layer : letter->spriteTravel) {
@@ -64,8 +64,8 @@ void LetterGroup::display(int startTime, int endTime) {
 			this->letters[i]->display(startTime, endTime, scale, displacement);
 			displacement.x += this->letters[i]->letterMeasurements.max.x;
 			setupPair3s(letters[i]->pairTravel);
+			rectPoints = RectPoints(pair3s);
 		}
-
 	}
 }
 
@@ -74,12 +74,27 @@ void LetterGroup::Move(Vector3 movement) {
 		pair.first += movement;
 		pair.second += movement;
 	}
+
+	rectPoints.Move(movement);
 }
 
 void LetterGroup::Rotate(float xRot, float yRot, float zRot) {
 	for (auto& pair : pair3s) {
 		pair.first = pair.first.Rotate(xRot, yRot, zRot);
 		pair.second = pair.second.Rotate(xRot, yRot, zRot);
+	}
+}
+
+void LetterGroup::LocalRotate(float xRot, float yRot, float zRot) {
+	Vector3 center = rectPoints.points[4];
+	for (auto& pair : pair3s) {
+		pair.first = pair.first - center;
+		pair.first = pair.first.Rotate(xRot, yRot, zRot);
+		pair.first = pair.first + center;
+
+		pair.second = pair.second - center;
+		pair.second = pair.second.Rotate(xRot, yRot, zRot);
+		pair.second = pair.second + center;
 	}
 }
 

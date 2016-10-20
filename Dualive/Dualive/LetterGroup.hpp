@@ -3,6 +3,7 @@
 
 #include "Config.hpp"
 #include "Letter.hpp"
+#include "RectPoints.hpp"
 
 class LetterGroup {
 public:
@@ -10,11 +11,14 @@ public:
 	void display(int startTime, int endTime);
 	void Move(Vector3 movement);
 	void Rotate(float xRot, float yRot, float zRot);
+	void LocalRotate(float xRot, float yRot, float zRot);
 	void Reposition(int startTime, int endTime);
 	void Fade(int startTime, int endTime, float fade);
 
+	RectPoints rectPoints;
+
 private:
-	void LetterGroup::setupPair3s(std::vector<std::vector<Pair>>& pairTravel);
+	void setupPair3s(std::vector<std::vector<Pair>>& pairTravel);
 
 	// Using pointers because I think the simplest way to handle
 	// spaces is by using NULL
