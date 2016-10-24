@@ -10,6 +10,7 @@ public:
 	LetterGroup(std::vector<Letter>& lettersBase, std::string& lyric);
 	void display(int startTime, int endTime);
 	void Move(Vector3 movement);
+	void Rotate(Vector3 rotAmounts);
 	void Rotate(float xRot, float yRot, float zRot);
 	void LocalRotate(float xRot, float yRot, float zRot);
 	void Reposition(int startTime, int endTime);

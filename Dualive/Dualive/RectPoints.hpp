@@ -10,6 +10,7 @@ public:
 	
 	void Move(Vector3 movement);
 	void Rotate(float xRot, float yRot, float zRot);
+	void Rotate(Vector3 rotAmounts);
 	void LocalRotate(float xRot, float yRot, float zRot);
 	bool Collide(RectPoints& rectPoints);
 

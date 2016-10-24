@@ -16,50 +16,64 @@ public:
 		}
 
 		std::list<LetterGroup*> letterGroups;
+		int afterImages = 2;
 		for (int i = 0; i < lyrics.size(); ++i) {
 			std::cout << "Processing lyric: " << i << " / " << lyrics.size() << std::endl;
-
+			
 			LetterGroup* letterGroup = new LetterGroup(letters, lyrics[i]);
 			int startDisplay = timings[i].ms;
 			int endDisplay = timings[i + 1].ms - Config::I()->mspb / 2;
 			letterGroup->display(startDisplay, endDisplay);
-				
-			if (letterGroups.size() > 0) {
-				LetterGroup* compare = letterGroups.back();
-				RectPoints compareRect = compare->rectPoints;
-				// Forced local rotation
-				float localRotation = Config::I()->DToR(rand() % 360 - 180);
-				compareRect.LocalRotate(0, 0, localRotation);
 
+			// Handle fading
+			letterGroup->Fade(endDisplay, timings[i + 1].ms, 0.25f);
+			int fadeIndex;
+			if (i == lyrics.size() - 1) {
+				fadeIndex = timings.size() - 1;
+			}
+			else {
+				fadeIndex = min(i + afterImages, timings.size() - 2);
+			}
+			letterGroup->Fade(timings[fadeIndex].ms, timings[fadeIndex].ms + Config::I()->mspb * 2, 0.0f);
+			
+			if (letterGroups.size() > 0) {
 				RectPoints centerRect = letterGroup->rectPoints;
-				float minDistance = fmin((centerRect.points[0] - centerRect.points[4]).Magnitude(),
-					(compareRect.points[0] - compareRect.points[4]).Magnitude());
+				RectPoints compareRect = letterGroups.back()->rectPoints;
+
+				float minDistance = fmin((centerRect.points[0] - centerRect.points[3]).Magnitude(),
+					(compareRect.points[0] - compareRect.points[3]).Magnitude());
 
 				bool foundMove = false;
 				while (!foundMove) {
 					RectPoints centerRectCopy = centerRect;
 					RectPoints compareRectCopy = compareRect;
-					float distance = minDistance;
+
+					// Forced local rotation
+					Vector3 rotAmounts(0, 0, Config::I()->DToR(rand() % 90 - 90));
+					compareRectCopy.Rotate(rotAmounts);
 
 					// Chooses random direction to move
-					float moveRot = Config::I()->DToR(rand() % 360 - 180);
-					Vector3 movement = Vector3(1, 0, 0).Rotate(0, 0, moveRot);
+					Vector3 moveAmounts(0, 0, Config::I()->DToR(rand() % 360));
+					Vector3 movement = Vector3(minDistance, 0, 0).Rotate(moveAmounts.x, moveAmounts.y, moveAmounts.z);
 					Vector3 totalMovement = movement;
+					Vector3 increment = Vector3(1, 0, 0).Rotate(moveAmounts.x, moveAmounts.y, moveAmounts.z);
+					compareRectCopy.Move(movement);
 
 					// Slowly moves outwards and checks for closest collision
 					while (centerRectCopy.Collide(compareRectCopy)) {
-						compareRectCopy.Move(movement);
-						totalMovement += movement;
+						compareRectCopy.Move(increment);
+						totalMovement += increment;
 					}
 
 					// Skip and recalculate movement if colliding with older letters
 					bool skipMove = false;
 					for (auto& lg : letterGroups) {
 						RectPoints old = lg->rectPoints;
+						old.Rotate(rotAmounts);
 						old.Move(totalMovement);
-						old.LocalRotate(0, 0, localRotation);
 						if (centerRectCopy.Collide(old)) {
 							skipMove = true;
+							break;
 						}
 					}
 					if (skipMove) {
@@ -68,17 +82,16 @@ public:
 
 					foundMove = true;
 					for (auto& lg : letterGroups) {
+						lg->Rotate(rotAmounts);
 						lg->Move(totalMovement);
-						lg->LocalRotate(0, 0, localRotation);
-						lg->Reposition(timings[i].ms, timings[i].ms + Config::I()->mspb / 2);
-						lg->Fade(timings[i].ms, timings[i].ms + 5000, 1.0f);
+						lg->Reposition(timings[i].ms, timings[i].ms + Config::I()->mspb);
 					}
 				}
 			}
 
 			letterGroups.push_back(letterGroup);
 			// Remove so there aren't too many things we have to move
-			if (letterGroups.size() > 3) {
+			if (letterGroups.size() > afterImages) {
 				delete letterGroups.front();
 				letterGroups.pop_front();
 			}

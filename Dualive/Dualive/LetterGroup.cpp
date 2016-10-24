@@ -78,11 +78,17 @@ void LetterGroup::Move(Vector3 movement) {
 	rectPoints.Move(movement);
 }
 
+void LetterGroup::Rotate(Vector3 rotAmounts) {
+	Rotate(rotAmounts.x, rotAmounts.y, rotAmounts.z);
+}
+
+
 void LetterGroup::Rotate(float xRot, float yRot, float zRot) {
 	for (auto& pair : pair3s) {
 		pair.first = pair.first.Rotate(xRot, yRot, zRot);
 		pair.second = pair.second.Rotate(xRot, yRot, zRot);
 	}
+	rectPoints.Rotate(xRot, yRot, zRot);
 }
 
 void LetterGroup::LocalRotate(float xRot, float yRot, float zRot) {
@@ -96,6 +102,7 @@ void LetterGroup::LocalRotate(float xRot, float yRot, float zRot) {
 		pair.second = pair.second.Rotate(xRot, yRot, zRot);
 		pair.second = pair.second + center;
 	}
+	rectPoints.Rotate(xRot, yRot, zRot);
 }
 
 void LetterGroup::Fade(int startTime, int endTime, float fade) {
@@ -115,11 +122,12 @@ void LetterGroup::Reposition(int startTime, int endTime) {
 		float lineLength = distanceVector.Magnitude();
 		float lineScaleWidth = lineLength / 1000;
 		Vector2 lineScale(lineScaleWidth, Letter::lineScaleHeight);
-		float rotation = Vector2(1, 0).AngleBetween(distanceVector);
 
 		Sprite* line = sprites[i];
+		float rotation = Vector2(line->rotation).AngleBetween(distanceVector);
+		float totalRotation = line->rotation + rotation;
 		line->ScaleVector(startTime, endTime, line->scaleVector, lineScale);
-		line->Rotate(startTime, endTime, line->rotation, rotation);
+		line->Rotate(startTime, endTime, line->rotation, totalRotation);
 		line->Move(startTime, endTime, line->position, startPoint);
 		line->Color(startTime, endTime, Color(255), Color(255));
 	}

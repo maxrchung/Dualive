@@ -38,6 +38,10 @@ void RectPoints::Move(Vector3 movement) {
 	}
 }
 
+void RectPoints::Rotate(Vector3 rotAmounts) {
+	Rotate(rotAmounts.x, rotAmounts.y, rotAmounts.z);
+}
+
 void RectPoints::Rotate(float xRot, float yRot, float zRot) {
 	for (auto& v3 : points) {
 		v3 = v3.Rotate(xRot, yRot, zRot);
@@ -77,6 +81,7 @@ bool RectPoints::Collide(RectPoints& rectPoints) {
 	axes.insert(axes.end(), otherAxes.begin(), otherAxes.end());
 
 	// Adding in cross product of axes combinations
+	// This is for 3D rectangles only
 	for (auto centerAxis : centerAxes) {
 		for (auto otherAxis : otherAxes) {
 			axes.push_back(centerAxis.Cross(otherAxis));
