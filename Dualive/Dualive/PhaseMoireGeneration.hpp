@@ -158,6 +158,7 @@ private:
 	Time startTetSpeedup = Time("01:13:756");
 	Time startTetEnd = Time("01:21:335");
 	Time endScale = Time("01:22:598");
+	Time startPlace = Time("01:22:598");
 	Time endTet = Time("01:23:861");
 	int trianglesRemaining = 24;
 
@@ -171,8 +172,10 @@ public:
 
 		degenerateTriangles(triangles, startTet, startTetSpeedup, 2 * Config::I()->mspb, 18);
 		degenerateTriangles(triangles, startTetSpeedup, startTetEnd, Config::I()->mspb, 27);
-		degenerateTriangles(triangles, startTetEnd, endScale, Config::I()->mspb / 2, 81);
-		placeTriangles(triangles, endScale, endTet);
+		//degenerateTriangles(triangles, startTetEnd, endScale, Config::I()->mspb / 2, 81);
+		degenerateTriangles(triangles, startTetEnd, endScale, Config::I()->mspb / 2, 162);
+
+		placeTriangles(triangles, startPlace, endTet);
 	}
 };
 #endif//PHASEMOIREGENERATION_HPP

@@ -38,6 +38,8 @@ public:
 private:
 	static std::string linePath;
 	float radius;
+	// How far away the far point should be
+	float peakFraction = 2.0f / 3;
 
 	Vector2 applyPerspective(Vector3 vec);
 	// Rerranges sprites after a Move/Rotate/Scale command

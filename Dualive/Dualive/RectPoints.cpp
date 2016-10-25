@@ -80,13 +80,13 @@ bool RectPoints::Collide(RectPoints& rectPoints) {
 	std::vector<Vector3> axes = centerAxes;
 	axes.insert(axes.end(), otherAxes.begin(), otherAxes.end());
 
-	// Adding in cross product of axes combinations
-	// This is for 3D rectangles only
-	for (auto centerAxis : centerAxes) {
-		for (auto otherAxis : otherAxes) {
-			axes.push_back(centerAxis.Cross(otherAxis));
-		}
-	}
+	//// Adding in cross product of axes combinations
+	//// This is for 3D rectangles only
+	//for (auto centerAxis : centerAxes) {
+	//	for (auto otherAxis : otherAxes) {
+	//		axes.push_back(centerAxis.Cross(otherAxis));
+	//	}
+	//}
 
 	for (auto axis : axes) {
 		float minCenter = center[0].Dot(axis);

@@ -56,9 +56,6 @@
     <ClInclude Include="PhaseLyricsTunnel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tetrahedron.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TetPoints.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -84,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RectPoints.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tetrahedron.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

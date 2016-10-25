@@ -9,11 +9,13 @@ Tetrahedron::Tetrahedron(float radius, Vector3 midpoint)
 	: radius(radius),
 	  points(TetPoints::Count),
 	  lines(TetLines::Count) {
+	// Lowering the peak because it looks more equilateral
+	points[TetPoints::F] = midpoint + Vector3(0, radius * peakFraction, 0);
+	// Lowering the center to fix rotation
 	points[TetPoints::C] = midpoint;
 
 	// mfw I can't just use far because of Windows' header define
 	Vector3 farVector = midpoint + Vector3(0, radius, 0);
-	points[TetPoints::F] = farVector;
 
 	Vector3 top = farVector.RotateX(Config::I()->DToR(120));
 	points[TetPoints::T] = top;
@@ -23,6 +25,8 @@ Tetrahedron::Tetrahedron(float radius, Vector3 midpoint)
 
 	Vector3 left = top.RotateY(Config::I()->DToR(-120));
 	points[TetPoints::L] = left;
+
+	Move(Vector3(0, radius - radius * peakFraction, 0));
 
 	// I tried doing this in the vector constructor in the member initializer
 	// but then realized it had the same line Sprite pointer
@@ -70,7 +74,7 @@ void Tetrahedron::Scale(float sca) {
 	// Let's be honest this is pretty bad but
 	// this won't affect how this function looks outside.
 	// The better solution is probably adjusting scale
-	// inside of repositionLines or something. idc
+	// inside of repositionLines or something. idk
 	if (sca == 0) {
 		sca = Config::I()->reallySmallNumber;
 	}
@@ -80,7 +84,13 @@ void Tetrahedron::Scale(float sca) {
 		if (i != TetPoints::C) {
 			Vector3 setToCenter = points[i] - distToCenter;
 			Vector3 normalize = setToCenter.Normalize();
-			Vector3 scaled = normalize * radius * sca;
+			Vector3 scaled;
+			if (i == TetPoints::F) {
+				scaled = normalize * radius * peakFraction * sca;
+			}
+			else {
+				scaled = normalize * radius * sca;
+			}
 			points[i] = scaled + distToCenter;
 		}
 	}
@@ -94,7 +104,7 @@ void Tetrahedron::ScaleVector(float sca) {
 
 	Vector3 dist = points[TetPoints::F] - points[TetPoints::C];
 	Vector3 normalize = dist.Normalize();
-	Vector3 scaled = normalize * radius * sca;
+	Vector3 scaled = normalize * radius * peakFraction * sca;
 	points[TetPoints::F] = points[TetPoints::C] + scaled;
 }
 
