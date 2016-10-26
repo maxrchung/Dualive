@@ -35,6 +35,7 @@ Tetrahedron::Tetrahedron(float radius, Vector3 midpoint)
 	}
 }
 
+// Note that this is MoveTo(pos) not relative movement
 void Tetrahedron::Move(Vector3 pos) {
 	Vector3 dist = pos - points[TetPoints::C];
 	for (auto& point : points) {

@@ -6,6 +6,7 @@
 #include "MusicAnalysis.hpp"
 #include "Sprite.hpp"
 #include "Tetrahedron.hpp"
+#include "TetPoints.hpp"
 #include "Time.hpp"
 #include "Vector2.hpp"
 #include <algorithm>

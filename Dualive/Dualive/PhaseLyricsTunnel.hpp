@@ -110,7 +110,7 @@ private:
 		tet->RepositionLines(Range(startExpand.ms, endExpand));
 
 		// Keep in place till end
-		tet->Move(Vector3::Zero);
+		tet->Move(tet->points[TetPoints::C]);
 		tet->RepositionLines(Range(endExpand, startMoire.ms));
 	}
 

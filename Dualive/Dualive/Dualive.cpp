@@ -40,8 +40,8 @@ int main() {
 	PhaseLyricsTunnel phaseLyricsTunnel;
 	std::cout << "PhaseTetrahedronSpin..." << std::endl;
 	PhaseTetrahedronSpin phaseTetrahedronSpin;
-	std::cout << "PhaseSpectrum3D..." << std::endl;
-	PhaseSpectrum3D phaseSpectrum3D;
+	//std::cout << "PhaseSpectrum3D..." << std::endl;
+	//PhaseSpectrum3D phaseSpectrum3D;
 	//std::cout << "PhaseTextGeneration..." << std::endl;
 	//PhaseTextGeneration phaseTextGeneration;
 

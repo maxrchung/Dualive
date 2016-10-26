@@ -140,6 +140,12 @@ private:
 		}
 	}
 
+	int calcNumTri(Time startTetEnd, Time endScale, float frequency, int remainingTriangles) {
+		int timeRemaining = endScale.ms - startTetEnd.ms;
+		float divisions = timeRemaining / frequency;
+		return ceilf(remainingTriangles / divisions);
+	}
+
 	Color patternColor = Color(100);
 	std::vector<Vector2> positions = getPositions();
 	std::vector<int> scrambledIndices = scrambleIndices(positions.size());
@@ -168,12 +174,15 @@ public:
 		generateTriangles(triangles, startSpectrum, startSpeedup, 2 * Config::I()->mspb, 3);
 		generateTriangles(triangles, startSpeedup, secondSpeedup, 2 * Config::I()->mspb, 9);
 		generateTriangles(triangles, secondSpeedup, thirdSpeedup, Config::I()->mspb, 81);
-		generateTriangles(triangles, thirdSpeedup, endThirdSpeedup, Config::I()->mspb / 2, 243);
+
+		int numGenTri = calcNumTri(thirdSpeedup, endThirdSpeedup, Config::I()->mspb / 2, scrambledIndices.size());
+		generateTriangles(triangles, thirdSpeedup, endThirdSpeedup, Config::I()->mspb / 2, numGenTri);
 
 		degenerateTriangles(triangles, startTet, startTetSpeedup, 2 * Config::I()->mspb, 18);
 		degenerateTriangles(triangles, startTetSpeedup, startTetEnd, Config::I()->mspb, 27);
-		//degenerateTriangles(triangles, startTetEnd, endScale, Config::I()->mspb / 2, 81);
-		degenerateTriangles(triangles, startTetEnd, endScale, Config::I()->mspb / 2, 162);
+
+		int numDegenTri = calcNumTri(startTetEnd, endScale, Config::I()->mspb / 2, triangles.size());
+		degenerateTriangles(triangles, startTetEnd, endScale, Config::I()->mspb / 2, numDegenTri);
 
 		placeTriangles(triangles, startPlace, endTet);
 	}
