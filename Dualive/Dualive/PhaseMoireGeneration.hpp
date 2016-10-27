@@ -124,18 +124,43 @@ private:
 	}
 
 	void placeTriangles(std::vector<Sprite*>& triangles, Time startTime, Time endTime) {
-		float spacing = 100.0f;
 		int timeDiff = endTime.ms - startTime.ms;
+		Time endPause("01:23:229");
+		float imageHeight = Config::I()->GetImageSize(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\Spectrum2D\PatternPiece.png)").y;
+		
+		// Mirrored from PhaseSpectrum3D.hpp
+		float specRadius = 16.0f;
+		float specSpacing = 100.0f;
+		float specScale = 0.15f;
+		float peakFraction = 2.0f / 3;
+		MusicAnalysisData& data = Config::I()->data;
+		int timeIndex = data.GetMeasureIndex(Time("01:23:861"));
+
+		// Yolo hardcoded... too much thinking for me
+		float conversionFactor = 0.65f;
+		
 		for (int i = 0; i < triangles.size(); ++i) {
-			Vector2 up = Vector2(0, 1) * spacing;
-			float rot = 2 * M_PI * ((float)i / triangles.size());
-			Vector2 pos = up.Rotate(rot);
-			triangles[i]->Move(startTime.ms, endTime.ms, triangles[i]->position, pos);
-			triangles[i]->Rotate(startTime.ms, endTime.ms, triangles[i]->rotation, rot);
-			Vector2 scaleVector = triangles[i]->scaleVector;
-			scaleVector.y = 0.02f;
+			float beforeHeight = triangles[i]->scale * triangles[i]->scaleVector.y * imageHeight;
+			float dataScale = data.scaleData[i][timeIndex] * specScale * conversionFactor;
+			Vector2 scaleVector = Vector2(triangles[i]->scaleVector.x, dataScale);
 			triangles[i]->ScaleVector(startTime.ms, endTime.ms, triangles[i]->scaleVector, scaleVector);
-			triangles[i]->Fade(startTime.ms, endTime.ms, triangles[i]->fade, 1.0f);
+
+			Vector3 up = Vector3(-1, 0, 0) * specSpacing;
+			float moveRot = 2 * M_PI * ((float)i / triangles.size());
+			Vector3 pos = up.RotateZ(-moveRot);
+			Vector2 perspect = pos.Perspect(Config::I()->cameraZ, Config::I()->projectionDistance);
+			float afterHeight = dataScale * triangles[i]->scale * imageHeight;
+			float displace = afterHeight / 2 - beforeHeight / 2;
+			float trackDistance = perspect.Magnitude();
+			Vector2 adjustedPos = perspect.Normalize() * (trackDistance + displace);
+
+			triangles[i]->Move(startTime.ms, endPause.ms, triangles[i]->position, adjustedPos);
+
+			float rot = moveRot - M_PI / 2;
+			triangles[i]->Rotate(startTime.ms, endPause.ms, triangles[i]->rotation, rot);
+
+			triangles[i]->Fade(startTime.ms, endPause.ms, triangles[i]->fade, 1.0f);
+			triangles[i]->Fade(endPause.ms, endTime.ms, triangles[i]->fade, 0.0f);
 			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, Color(255.0f));
 		}
 	}

@@ -27,7 +27,6 @@ private:
 
 			// Rotate to position
 			specTri->RotateZ(-rot);
-			specTri->RepositionLines(Range(startSpec.ms));
 			spectrum.push_back(specTri);
 		}
 	}
@@ -52,7 +51,12 @@ private:
 				float scale = data.scaleData[i][timeIndex] * specScale;
 				spectrum[i]->RotateAround(rotAround, rot);
 				spectrum[i]->ScaleVector(scale);
-				spectrum[i]->RepositionLines(reposition);
+				if (time == startSpec.ms) {
+					spectrum[i]->RepositionLines(Range(startSpec.ms));
+				}
+				else {
+					spectrum[i]->RepositionLines(reposition);
+				}
 			}
 		}
 	}
