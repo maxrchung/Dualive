@@ -17,9 +17,7 @@ private:
 
 			float startFade = 1 - ((i - fadeIndex) / (float)lyricsOnScreen);
 			// Start at 0
-			sprite->Color(startTunnel.ms - offset, timings[fadeIndex].ms, Color(0.0f), Color(255) * startFade);
-			// Easiest way I can think of to keep track of fade value
-			sprite->fade = startFade;
+			sprite->Fade(startTunnel.ms - offset, timings[fadeIndex].ms, 0.0f, startFade);
 
 			float startScale = sprite->scale * 
 				baseScale * 
@@ -35,9 +33,8 @@ private:
 					if (fade > 1.0f) {
 						fade = 1.0f;
 					}
-					sprite->fade = fade;
 
-					sprite->Color(timings[j].ms, timings[j + 1].ms,	sprite->color, Color(255.0f) * fade);
+					sprite->Fade(timings[j].ms, timings[j + 1].ms, sprite->fade, fade);
 					sprite->Scale(timings[j].ms, timings[j + 1].ms - offset, sprite->scale, sprite->scale * longScaleIncrement);
 					sprite->Scale(timings[j + 1].ms - offset, timings[j + 1].ms, sprite->scale, sprite->scale * shortScaleIncrement);
 					
@@ -48,7 +45,7 @@ private:
 			}
 
 			// Fade out
-			sprite->Color(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->color, Color(0.0f));
+			sprite->Fade(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->fade, 0);
 			sprite->Scale(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->scale, sprite->scale * shortScaleIncrement);
 
 			// Set starting rotation

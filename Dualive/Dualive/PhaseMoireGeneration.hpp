@@ -125,7 +125,7 @@ private:
 
 	void placeTriangles(std::vector<Sprite*>& triangles, Time startTime, Time endTime) {
 		int timeDiff = endTime.ms - startTime.ms;
-		Time endPause("01:23:229");
+		Time endPause("01:23:545");
 		float imageHeight = Config::I()->GetImageSize(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\Spectrum2D\PatternPiece.png)").y;
 		
 		// Mirrored from PhaseSpectrum3D.hpp
@@ -159,7 +159,6 @@ private:
 			float rot = moveRot - M_PI / 2;
 			triangles[i]->Rotate(startTime.ms, endPause.ms, triangles[i]->rotation, rot);
 
-			triangles[i]->Fade(startTime.ms, endPause.ms, triangles[i]->fade, 1.0f);
 			triangles[i]->Fade(endPause.ms, endTime.ms, triangles[i]->fade, 0.0f);
 			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, Color(255.0f));
 		}
