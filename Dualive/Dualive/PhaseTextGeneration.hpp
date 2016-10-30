@@ -21,8 +21,8 @@ public:
 			std::cout << "Processing lyric: " << i << " / " << lyrics.size() << std::endl;
 			
 			LetterGroup* letterGroup = new LetterGroup(letters, lyrics[i]);
-			int startDisplay = timings[i].ms;
-			int endDisplay = timings[i + 1].ms - Config::I()->mspb / 2;
+			int startDisplay = timings[i].ms - Config::I()->mspb;
+			int endDisplay = timings[i + 1].ms - Config::I()->mspb;
 			letterGroup->display(startDisplay, endDisplay);
 
 			// Handle fading
@@ -84,7 +84,7 @@ public:
 					for (auto& lg : letterGroups) {
 						lg->Rotate(rotAmounts);
 						lg->Move(totalMovement);
-						lg->Reposition(timings[i].ms, timings[i].ms + Config::I()->mspb);
+						lg->Reposition(timings[i].ms - Config::I()->mspb, timings[i].ms);
 					}
 				}
 			}
