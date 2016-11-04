@@ -13,7 +13,7 @@ private:
 			float rotateAmount = 2 * M_PI * ((float)i / data.bandCount);
 			Vector2 specPos = startPoint.Rotate(rotateAmount);
 			// Move to starting position
-			bar->Move(startSpectrumExpand.ms, startSpectrumRound.ms, Vector2::Zero, specPos);
+			bar->Move(startSpectrumExpand.ms, startSpectrumRound.ms, Vector2::Zero, specPos, Easing::CubicIn);
 
 			// Rotate into position
 			float localRotation = rotateAmount;
@@ -56,12 +56,12 @@ private:
 			}
 
 			float fadeAmount = (1 - (float)i / data.bandCount) * 0.75f + 0.25f;
-			bar->Fade(Time("00:02:703").ms, Time("00:03:019").ms, 0.0f, fadeAmount);
-			bar->Fade(thirdSpeedupEnd.ms, endRotationRound.ms, fadeAmount, 0.0f);
+			bar->Fade(Time("00:02:703").ms, Time("00:03:019").ms, 0.0f, fadeAmount, Easing::CubicIn);
+			bar->Fade(thirdSpeedupEnd.ms, endRotationRound.ms, fadeAmount, 0.0f, Easing::CubicIn);
 			bar->Color(startMove.ms, startMove.ms, GetColor[GC::PINK], GetColor[GC::PINK]);
 			bar->Color(startSpeedup.ms - Config::I()->mspb, startSpeedup.ms, bar->color, GetColor[GC::ORANGE], Easing::CubicIn);
 			bar->Color(Time("00:15:650").ms - Config::I()->mspb, Time("00:15:650").ms, bar->color, GetColor[GC::NAVY], Easing::CubicIn);
-			switchSpriteColor(bar, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::YELLOW], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
+			switchSpriteColor(bar, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::GREEN], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
 			switchSpriteColor(bar, thirdSpeedup.ms, thirdSpeedupEnd.ms, GetColor[GC::PURPLE], GetColor[GC::SUNLIGHT], Config::I()->mspb / 8, Config::I()->mspb / 8);
 		}
 	}
@@ -74,7 +74,6 @@ private:
 		centerpiece->Scale(endShrink.ms, startSpectrum.ms, cpShrinkScale, cpMiniScale);
 		centerpiece->Scale(startSpectrum.ms, startSpectrum.ms + Config::I()->offset * 2, cpMiniScale, cpShrinkScale);
 		centerpiece->Fade(endExpand.ms,	thirdSpeedupEnd.ms,	1.0f, 1.0f);
-		centerpiece->Fade(thirdSpeedupEnd.ms, endRotation.ms, 1.0f,	0.0f);
 		centerpiece->Rotate(startSpectrumRound.ms, startSpeedupRound.ms, centerpiece->rotation,	centerpiece->rotation + rotAmount);
 		centerpiece->Rotate(startSpeedupRound.ms, endRotationRound.ms, centerpiece->rotation, centerpiece->rotation + rotSpeedupAmount);
 		centerpiece->Color(Config::I()->songStart.ms, Config::I()->songStart.ms, GetColor[GC::PINK], GetColor[GC::PINK]);
@@ -96,10 +95,11 @@ private:
 
 		centerpiece->Color(startSpeedup.ms - Config::I()->mspb, startSpeedup.ms, centerpiece->color, GetColor[GC::ORANGE], Easing::CubicIn);
 		centerpiece->Color(Time("00:15:650").ms - Config::I()->mspb, Time("00:15:650").ms, centerpiece->color, GetColor[GC::NAVY], Easing::CubicIn);
-		switchSpriteColor(centerpiece, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::YELLOW], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
+		switchSpriteColor(centerpiece, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::GREEN], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
 		switchSpriteColor(centerpiece, thirdSpeedup.ms, thirdSpeedupEnd.ms, GetColor[GC::PURPLE], GetColor[GC::SUNLIGHT], Config::I()->mspb / 8, Config::I()->mspb / 8);
 
-		centerpiece->Scale(thirdSpeedupEnd.ms, endRotationRound.ms, centerpiece->scale, 0.0f);
+		centerpiece->Scale(thirdSpeedupEnd.ms, endRotationRound.ms, centerpiece->scale, 0.0f, Easing::CubicIn);
+		centerpiece->Fade(thirdSpeedupEnd.ms, endRotation.ms, 1.0f, 0.0f, Easing::CubicIn);
 	}
 
 	// Centerpiece setup

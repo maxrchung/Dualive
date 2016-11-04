@@ -97,11 +97,11 @@ private:
 				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
 				bgTri->Fade(endSpectrum.ms - Config::I()->offset, endSpectrum.ms, 1.0f, 0.0f);
 				bgTri->Color(i, endThirdSpeedup.ms, patternColor, patternColor);
-				bgTri->Color(endThirdSpeedup.ms, endSpectrum.ms, bgTri->color, Color(255));
+				bgTri->Color(endThirdSpeedup.ms, endSpectrum.ms, bgTri->color, patternColor);
 
 				// Reappear and drop off
 				bgTri->Fade(endSpin.ms, startTunnel.ms, 0.0f, 1.0f);
-				bgTri->Color(endSpin.ms, startTunnel.ms, Color(25), Color(25));
+				bgTri->Color(endSpin.ms, startTunnel.ms, patternColor, patternColor);
 				triangles.push_back(bgTri);
 			}
 		}
@@ -154,13 +154,12 @@ private:
 			float trackDistance = perspect.Magnitude();
 			Vector2 adjustedPos = perspect.Normalize() * (trackDistance + displace);
 
-			triangles[i]->Move(startTime.ms, endPause.ms, triangles[i]->position, adjustedPos);
+			triangles[i]->Move(startTime.ms, endPause.ms, triangles[i]->position, adjustedPos, Easing::CubicOut);
 
 			float rot = moveRot - M_PI / 2;
 			triangles[i]->Rotate(startTime.ms, endPause.ms, triangles[i]->rotation, rot);
-
 			triangles[i]->Fade(endPause.ms, endTime.ms, triangles[i]->fade, 0.0f);
-			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, Color(255.0f));
+			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, patternColor);
 		}
 	}
 
@@ -170,7 +169,7 @@ private:
 		return ceilf(remainingTriangles / divisions);
 	}
 
-	Color patternColor = Color(100);
+	Color patternColor = GetColor[GC::YELLOW];
 	std::vector<Vector2> positions = getPositions();
 	std::vector<int> scrambledIndices = scrambleIndices(positions.size());
 	std::string bgTriPath = "Storyboard\\Spectrum2D\\PatternPiece.png";
