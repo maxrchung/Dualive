@@ -3,6 +3,7 @@
 
 #define CONFIGPATH R"(C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Dualive\config.txt)"
 
+#include "GetColor.hpp"
 #include "MusicAnalysis.hpp"
 #include "Sprite.hpp"
 #include "Tetrahedron.hpp"

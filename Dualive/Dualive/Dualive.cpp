@@ -23,27 +23,28 @@ int main() {
 		maxBgSize);
 	background->Color(Config::I()->songStart.ms,
 		Config::I()->songEnd.ms,
-		Color(0),
-		Color(0));
+		GetColor[GC::CYAN],
+		GetColor[GC::CYAN]);
 	background->Fade(0,
 		Time("00:01:756").ms,
 		0.0f,
-		1.0f);
+		1.0f,
+		Easing::CubicIn);
 
-	//std::cout << "PhaseSpectrum2D..." << std::endl;
-	//PhaseSpectrum2D phaseSpectrum2D;
-	//std::cout << "PhaseMoireSpin..." << std::endl;
-	//PhaseMoireSpin phaseMoireSpin;
-	//std::cout << "PhaseMoireGeneration..." << std::endl;
-	//PhaseMoireGeneration phaseMoireGeneration;
-	//std::cout << "PhaseLyricsTunnel..." << std::endl;
+	std::cout << "PhaseSpectrum2D..." << std::endl;
+	PhaseSpectrum2D phaseSpectrum2D;
+	std::cout << "PhaseMoireSpin..." << std::endl;
+	PhaseMoireSpin phaseMoireSpin;
+	std::cout << "PhaseMoireGeneration..." << std::endl;
+	PhaseMoireGeneration phaseMoireGeneration;
+	//std::cout << "PhaseLyricsTunnel..." << std::endl; 
 	//PhaseLyricsTunnel phaseLyricsTunnel;
 	//std::cout << "PhaseTetrahedronSpin..." << std::endl;
 	//PhaseTetrahedronSpin phaseTetrahedronSpin;
 	//std::cout << "PhaseSpectrum3D..." << std::endl;
 	//PhaseSpectrum3D phaseSpectrum3D;
-	std::cout << "PhaseTextGeneration..." << std::endl;
-	PhaseTextGeneration phaseTextGeneration;
+	//std::cout << "PhaseTextGeneration..." << std::endl;
+	//PhaseTextGeneration phaseTextGeneration;
 
 	// PhaseTest phaseTest;
 

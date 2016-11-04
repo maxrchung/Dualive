@@ -13,8 +13,8 @@ private:
 
 		bg->Color(0,
 			endThirdSpeedup.ms,
-			Color(25),
-			Color(25));
+			GetColor[GC::CYAN],
+			GetColor[GC::CYAN]);
 
 		bg->Color(endThirdSpeedup.ms, 
 			startMoire.ms, 
@@ -44,7 +44,7 @@ public:
 		bg->Fade(0,
 			startSong.ms,
 			0.0f,
-			1.0f);
+			0.0f);
 		bg->Fade(endMoire.ms,
 			endMoire.ms,
 			0.0f,

@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Dualive.cpp" />
+    <ClCompile Include="GetColor.cpp" />
     <ClCompile Include="Letter.cpp" />
     <ClCompile Include="LetterGroup.cpp" />
     <ClCompile Include="LetterMeasurements.cpp" />
@@ -91,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.hpp" />
+    <ClInclude Include="GetColor.hpp" />
     <ClInclude Include="Letter.hpp" />
     <ClInclude Include="LetterGroup.hpp" />
     <ClInclude Include="LetterMeasurements.hpp" />
