@@ -31,3 +31,17 @@ Vector2 Config::GetImageSize(const std::string& path) {
 Time Config::GetClosestTime(Time time) {
 	return Time(roundf(time.ms / 100.0f) * 100.0f);
 }
+
+void Config::SwitchSpriteColor(Sprite* sprite, int start, int end, Color first, Color second, float offset, float frequency) {
+	sprite->Color(start - offset, start, sprite->color, first);
+	bool switchColor = true;
+	for (int time = start + frequency; time <= end; time += frequency) {
+		if (switchColor) {
+			sprite->Color(time - offset, time, first, second);
+		}
+		else {
+			sprite->Color(time - offset, time, second, first);
+		}
+		switchColor = !switchColor;
+	}
+}

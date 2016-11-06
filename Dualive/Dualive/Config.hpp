@@ -47,6 +47,8 @@ public:
 
 	Time GetClosestTime(Time time);
 
+	void SwitchSpriteColor(Sprite* sprite, int start, int end, Color first, Color second, float offset, float frequency);
+
 	// Background dimensions
 	Vector2 bgDims = Vector2(853.0f, 480.0f);
 

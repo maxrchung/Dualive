@@ -61,8 +61,8 @@ private:
 			bar->Color(startMove.ms, startMove.ms, GetColor[GC::PINK], GetColor[GC::PINK]);
 			bar->Color(startSpeedup.ms - Config::I()->mspb, startSpeedup.ms, bar->color, GetColor[GC::ORANGE], Easing::CubicIn);
 			bar->Color(Time("00:15:650").ms - Config::I()->mspb, Time("00:15:650").ms, bar->color, GetColor[GC::NAVY], Easing::CubicIn);
-			switchSpriteColor(bar, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::GREEN], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
-			switchSpriteColor(bar, thirdSpeedup.ms, thirdSpeedupEnd.ms, GetColor[GC::PURPLE], GetColor[GC::SUNLIGHT], Config::I()->mspb / 8, Config::I()->mspb / 8);
+			Config::I()->SwitchSpriteColor(bar, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::GREEN], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
+			Config::I()->SwitchSpriteColor(bar, thirdSpeedup.ms, thirdSpeedupEnd.ms, GetColor[GC::PURPLE], GetColor[GC::SUNLIGHT], Config::I()->mspb / 8, Config::I()->mspb / 8);
 		}
 	}
 
@@ -95,8 +95,8 @@ private:
 
 		centerpiece->Color(startSpeedup.ms - Config::I()->mspb, startSpeedup.ms, centerpiece->color, GetColor[GC::ORANGE], Easing::CubicIn);
 		centerpiece->Color(Time("00:15:650").ms - Config::I()->mspb, Time("00:15:650").ms, centerpiece->color, GetColor[GC::NAVY], Easing::CubicIn);
-		switchSpriteColor(centerpiece, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::GREEN], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
-		switchSpriteColor(centerpiece, thirdSpeedup.ms, thirdSpeedupEnd.ms, GetColor[GC::PURPLE], GetColor[GC::SUNLIGHT], Config::I()->mspb / 8, Config::I()->mspb / 8);
+		Config::I()->SwitchSpriteColor(centerpiece, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::GREEN], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
+		Config::I()->SwitchSpriteColor(centerpiece, thirdSpeedup.ms, thirdSpeedupEnd.ms, GetColor[GC::PURPLE], GetColor[GC::SUNLIGHT], Config::I()->mspb / 8, Config::I()->mspb / 8);
 
 		centerpiece->Scale(thirdSpeedupEnd.ms, endRotationRound.ms, centerpiece->scale, 0.0f, Easing::CubicIn);
 		centerpiece->Fade(thirdSpeedupEnd.ms, endRotation.ms, 1.0f, 0.0f, Easing::CubicIn);
@@ -137,20 +137,6 @@ private:
 
 	Time startMove = "00:01:756";
 	Time maxFadeSpectrum = "00:03:019";
-
-	void switchSpriteColor(Sprite* sprite, int start, int end, Color first, Color second, float offset, float frequency) {
-		sprite->Color(start - offset, start, sprite->color, first);
-		bool switchColor = true;
-		for (int time = start + frequency; time <= end; time += frequency) {
-			if (switchColor) {
-				sprite->Color(time - offset, time, first, second);
-			}
-			else {
-				sprite->Color(time - offset, time, second, first);
-			}
-			switchColor = !switchColor;
-		}
-	}
 public: 
 	PhaseSpectrum2D() {
 		GenerateSpectrum();

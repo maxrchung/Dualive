@@ -92,8 +92,9 @@ private:
 				Vector2 pos = positions[scrambledIndices.back()];
 				scrambledIndices.pop_back();
 				bgTri->Move(i, i + moveOffset, bgTri->position, pos);
+				bgTri->Rotate(i, i + moveOffset, bgTri->rotation, M_PI * 2, Easing::CubicIn);
 				bgTri->Scale(i, i, Config::I()->patternScale, Config::I()->patternScale);
-				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f);
+				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f, Easing::CubicIn);
 				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
 				bgTri->Fade(endSpectrum.ms - Config::I()->offset, endSpectrum.ms, 1.0f, 0.0f);
 				bgTri->Color(i, endThirdSpeedup.ms, patternColor, patternColor);
@@ -101,7 +102,7 @@ private:
 
 				// Reappear and drop off
 				bgTri->Fade(endSpin.ms, startTunnel.ms, 0.0f, 1.0f);
-				bgTri->Color(endSpin.ms, startTunnel.ms, patternColor, patternColor);
+				bgTri->Color(endSpin.ms, startTunnel.ms, GetColor[GC::ICE], GetColor[GC::ICE]);
 				triangles.push_back(bgTri);
 			}
 		}
@@ -158,7 +159,6 @@ private:
 
 			float rot = moveRot - M_PI / 2;
 			triangles[i]->Rotate(startTime.ms, endPause.ms, triangles[i]->rotation, rot);
-			triangles[i]->Fade(endPause.ms, endTime.ms, triangles[i]->fade, 0.0f);
 			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, patternColor);
 		}
 	}
@@ -198,8 +198,8 @@ public:
 		generateTriangles(triangles, startSpeedup, secondSpeedup, 2 * Config::I()->mspb, 9);
 		generateTriangles(triangles, secondSpeedup, thirdSpeedup, Config::I()->mspb, 81);
 
-		int numGenTri = calcNumTri(thirdSpeedup, endThirdSpeedup, Config::I()->mspb / 2, scrambledIndices.size());
-		generateTriangles(triangles, thirdSpeedup, endThirdSpeedup, Config::I()->mspb / 2, numGenTri);
+		int numGenTri = calcNumTri(thirdSpeedup, Time(endThirdSpeedup.ms - moveOffset), Config::I()->mspb / 2, scrambledIndices.size());
+		generateTriangles(triangles, thirdSpeedup, Time(endThirdSpeedup.ms - moveOffset), Config::I()->mspb / 2, numGenTri);
 
 		degenerateTriangles(triangles, startTet, startTetSpeedup, 2 * Config::I()->mspb, 18);
 		degenerateTriangles(triangles, startTetSpeedup, startTetEnd, Config::I()->mspb, 27);
