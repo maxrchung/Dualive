@@ -103,6 +103,12 @@ private:
 				// Reappear and drop off
 				bgTri->Fade(endSpin.ms, startTunnel.ms, 0.0f, 1.0f);
 				bgTri->Color(endSpin.ms, startTunnel.ms, GetColor[GC::ICE], GetColor[GC::ICE]);
+
+				Config::I()->SwitchSpriteColor(bgTri, Time("00:53:545").ms, Time("00:54:493").ms, GetColor[GC::FAKEINDIGO], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+				Config::I()->SwitchSpriteColor(bgTri, Time("00:54:808").ms, Time("00:55:756").ms, GetColor[GC::FLUFFPINK], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+				Config::I()->SwitchSpriteColor(bgTri, Time("00:58:598").ms, Time("00:59:545").ms, GetColor[GC::ANGRYBLUE], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+				Config::I()->SwitchSpriteColor(bgTri, Time("00:59:861").ms, Time("01:00:808").ms, GetColor[GC::WARNING], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+
 				triangles.push_back(bgTri);
 			}
 		}

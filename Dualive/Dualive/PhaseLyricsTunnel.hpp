@@ -9,23 +9,24 @@ private:
 		for (int i = 0; i < lyrics.size(); ++i) {
 			Sprite* sprite = lyrics[i];
 			
-			 // Fade section
+			 // Timing index when to fade
 			int fadeIndex = i - lyricsOnScreen;
 			if (fadeIndex < 0) {
 				fadeIndex = 0;
 			}
 
 			float startFade = 1 - ((i - fadeIndex) / (float)lyricsOnScreen);
-			// Start at 0
-			sprite->Fade(startTunnel.ms - offset, timings[fadeIndex].ms, 0.0f, startFade);
+			// Start at 0 afde
+			sprite->Fade(startTunnel.ms - offset, timings[fadeIndex].ms, 0.0f, startFade, Easing::CubicOut);
 
+			// Set start scale
 			float startScale = sprite->scale * 
 				baseScale * 
 				pow(longScaleIncrement, (lyricsOnScreen - ((i - fadeIndex)))) *
 				pow(shortScaleIncrement, (lyricsOnScreen - ((i - fadeIndex))));
-			sprite->Scale(startTunnel.ms - offset, timings[fadeIndex].ms, 0.0f, startScale);
+			sprite->Scale(startTunnel.ms - offset, timings[fadeIndex].ms, 0.0f, startScale, Easing::CubicOut);
 
-			// Increment fade at each long step
+			// Increment fade and scale at each step
 			for (int j = fadeIndex; j < lyrics.size(); ++j) {
 				// Increment if not at max
 				if (sprite->fade != 1.0f) {
@@ -37,7 +38,6 @@ private:
 					sprite->Fade(timings[j].ms, timings[j + 1].ms, sprite->fade, fade);
 					sprite->Scale(timings[j].ms, timings[j + 1].ms - offset, sprite->scale, sprite->scale * longScaleIncrement);
 					sprite->Scale(timings[j + 1].ms - offset, timings[j + 1].ms, sprite->scale, sprite->scale * shortScaleIncrement);
-					
 				}
 				else {
 					break;
@@ -45,8 +45,8 @@ private:
 			}
 
 			// Fade out
-			sprite->Fade(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->fade, 0);
-			sprite->Scale(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->scale, sprite->scale * shortScaleIncrement);
+			sprite->Fade(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->fade, 0, Easing::CubicOut);
+			sprite->Scale(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->scale, sprite->scale * shortScaleIncrement, Easing::CubicOut);
 
 			// Set starting rotation
 			float startRotation = M_PI - longRotation / 2 - (i * rotationOffset);
@@ -72,7 +72,7 @@ private:
 		}
 	}
 
-	void setupTet(std::vector<Sprite*> lyrics) {
+	Tetrahedron* setupTet(std::vector<Sprite*> lyrics) {
 		Tetrahedron* tet = new Tetrahedron(tetRadius);
 		tet->RotateX(-M_PI / 2);
 		tet->Scale(0.0f);
@@ -80,8 +80,8 @@ private:
 
 		Range fadeIn(startTunnel.ms - offset, timings[0].ms);
 		tet->Scale(1.0f);
-		tet->RepositionLines(fadeIn);
-		tet->Fade(fadeIn, 0.0f, 1.0f);
+		tet->RepositionLines(fadeIn, Easing::CubicOut);
+		tet->Fade(fadeIn, 0.0f, 1.0f, Easing::CubicOut);
 
 		// Spin tetrahedron
 		for (int j = 0; j < lyrics.size(); ++j) {
@@ -109,6 +109,8 @@ private:
 		// Keep in place till end
 		tet->Move(tet->points[TetPoints::C]);
 		tet->RepositionLines(Range(endExpand, startMoire.ms));
+
+		return tet;
 	}
 
 	void spin(Sprite* sprite, int startTime, int endTime, float rotation) {
@@ -249,13 +251,53 @@ private:
 		endTunnel
 	});
 
+	void coloring(std::vector<Sprite*>& sprites) {
+		for (auto sprite : sprites) {
+			// Initial color
+			sprite->Color(0, 0, GetColor[GC::LAVENDER], GetColor[GC::LAVENDER]);
+			//hyoujou wa
+			sprite->Color(timings[1].ms - offset, timings[1].ms, sprite->color, GetColor[GC::NEONGREEN], Easing::CubicIn);
+			//chintsuuzai
+			sprite->Color(timings[2].ms - offset, timings[2].ms, sprite->color, GetColor[GC::SHALLOWSEA], Easing::CubicIn);
+			//hontou no jibun wo
+			sprite->Color(timings[3].ms - offset, timings[3].ms, sprite->color, GetColor[GC::ELECTRICITY], Easing::CubicIn);
+			//kakushita
+			sprite->Color(timings[4].ms - offset, timings[4].ms, sprite->color, GetColor[GC::COTTONCANDY], Easing::CubicIn);
+			//nimensei
+			sprite->Color(timings[5].ms - offset, timings[5].ms, sprite->color, GetColor[GC::SEAFOAM], Easing::CubicIn);
+			//what are you waiting for?
+			sprite->Color(timings[6].ms - offset, timings[6].ms, sprite->color, GetColor[GC::GOLD], Easing::CubicIn);
+			//i will give what you want
+			sprite->Color(timings[7].ms - offset, timings[7].ms, sprite->color, GetColor[GC::IRONGRIT], Easing::CubicIn);
+			//kowai no wa
+			sprite->Color(timings[8].ms - offset, timings[8].ms, sprite->color, GetColor[GC::CHERRY], Easing::CubicIn);
+			//kizuku
+			sprite->Color(timings[9].ms - offset, timings[9].ms, sprite->color, GetColor[GC::LEATHER], Easing::CubicIn);
+			//koto
+			sprite->Color(timings[10].ms - offset, timings[10].ms, sprite->color, GetColor[GC::MOSS], Easing::CubicIn);
+			//what are you worrying about?
+			sprite->Color(timings[11].ms - offset, timings[11].ms, sprite->color, GetColor[GC::DIAMONDSHINE], Easing::CubicIn);
+			//i will remove what you fear
+			sprite->Color(timings[12].ms - offset, timings[12].ms, sprite->color, GetColor[GC::OPENSIGN], Easing::CubicIn);
+			//muku datte
+			//koto ni
+			sprite->Color(timings[13].ms - offset, timings[13].ms, sprite->color, GetColor[GC::RUST], Easing::CubicIn);
+		}
+	}
+
 public:
 	PhaseLyricsTunnel() {
 		std::string lyricsExactDirectory = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\LyricsTunnel\)";
 		std::string lyricsLocalDirectory = R"(Storyboard\LyricsTunnel\)";
 		std::vector<Sprite*> lyrics = loadLyrics(lyricsExactDirectory, lyricsLocalDirectory);
 		setupLyrics(lyrics);
-		setupTet(lyrics);
+		Tetrahedron* tet = setupTet(lyrics);
+
+		std::vector<Sprite*> spritesToColor = lyrics;
+		for (auto sprite : tet->lines) {
+			spritesToColor.push_back(sprite);
+		}
+		coloring(spritesToColor);
 	}
 };
 

@@ -109,47 +109,47 @@ void Tetrahedron::ScaleVector(float sca) {
 	points[TetPoints::F] = points[TetPoints::C] + scaled;
 }
 
-void Tetrahedron::Fade(Range time, float startFloat, float endFloat) {
+void Tetrahedron::Fade(Range time, float startFloat, float endFloat, Easing easing) {
 	for (auto& line : lines) {
-		line->Fade(time.start, time.end, startFloat, endFloat);
+		line->Fade(time.start, time.end, startFloat, endFloat, easing);
 	}
 }
 
-void Tetrahedron::Color(Range time, ::Color startColor, ::Color endColor) {
+void Tetrahedron::Color(Range time, ::Color startColor, ::Color endColor, Easing easing) {
 	for (auto& line : lines) {
-		line->Color(time.start, time.end, startColor, endColor);
+		line->Color(time.start, time.end, startColor, endColor, easing);
 	}
 }
 
-void Tetrahedron::RepositionLines(Range time) {
+void Tetrahedron::RepositionLines(Range time, Easing easing) {
 	// Apply perspective
 	Vector2 top = applyPerspective(points[TetPoints::T]);
 	Vector2 left = applyPerspective(points[TetPoints::L]);
 	Vector2 right = applyPerspective(points[TetPoints::R]);
 	Vector2 farVector = applyPerspective(points[TetPoints::F]);
 	
-	repositionLine(time, lines[TetLines::FL], farVector, left);
-	repositionLine(time, lines[TetLines::FR], farVector, right);
-	repositionLine(time, lines[TetLines::FT], farVector, top);
-	repositionLine(time, lines[TetLines::LR], left, right);
-	repositionLine(time, lines[TetLines::RT], right, top);
-	repositionLine(time, lines[TetLines::TL], top, left);
+	repositionLine(time, lines[TetLines::FL], farVector, left, easing);
+	repositionLine(time, lines[TetLines::FR], farVector, right, easing);
+	repositionLine(time, lines[TetLines::FT], farVector, top, easing);
+	repositionLine(time, lines[TetLines::LR], left, right, easing);
+	repositionLine(time, lines[TetLines::RT], right, top, easing);
+	repositionLine(time, lines[TetLines::TL], top, left, easing);
 }
 
 Vector2 Tetrahedron::applyPerspective(Vector3 vec) {
 	return vec.Perspect(Config::I()->cameraZ, Config::I()->projectionDistance);
 }
 
-void Tetrahedron::repositionLine(Range time, Sprite* line, Vector2 left, Vector2 right) {
+void Tetrahedron::repositionLine(Range time, Sprite* line, Vector2 left, Vector2 right, Easing easing) {
 	Vector2 prevRot = Vector2(line->rotation);
 	Vector2 between = right - left;
 	float rot = prevRot.AngleBetween(between);
 	float totalRot = line->rotation + rot;
-	line->Rotate(time.start, time.end, line->rotation, totalRot);
+	line->Rotate(time.start, time.end, line->rotation, totalRot, easing);
 
 	float distance = between.Magnitude();
 	Vector2 scaleVector(distance / Config::I()->lineWidth, Config::I()->lineScaleHeight);
-	line->ScaleVector(time.start, time.end, line->scaleVector, scaleVector);
+	line->ScaleVector(time.start, time.end, line->scaleVector, scaleVector, easing);
 
-	line->Move(time.start, time.end, line->position, left);
+	line->Move(time.start, time.end, line->position, left, easing);
 }
