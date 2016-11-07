@@ -25,6 +25,8 @@
 typedef std::unordered_map<Vector2, std::unordered_set<Vector2>> VectorMap;
 typedef std::pair<Vector2, Vector2> Pair;
 typedef std::pair<Vector3, Vector3> Pair3;
+typedef std::deque<std::pair<int, float>> ScaleTimings;
+typedef std::pair<int, float> ScaleTiming;
 
 // Pair hash
 namespace std {
@@ -42,12 +44,11 @@ public:
 
 	// Convert degrees to radians
 	float DToR(int degrees);
-
 	Vector2 GetImageSize(const std::string& path);
-
 	Time GetClosestTime(Time time);
-
 	void SwitchSpriteColor(Sprite* sprite, int start, int end, Color first, Color second, float offset, float frequency);
+	void AddScaleTimings(ScaleTimings& scaleTimings, Time timeStart, Time timeEnd, float freq, float scaleLarge, float scaleSmall);
+	float GetScale(ScaleTimings& scaleTimings, float time);
 
 	// Background dimensions
 	Vector2 bgDims = Vector2(853.0f, 480.0f);

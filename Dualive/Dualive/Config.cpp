@@ -45,3 +45,35 @@ void Config::SwitchSpriteColor(Sprite* sprite, int start, int end, Color first, 
 		switchColor = !switchColor;
 	}
 }
+
+void Config::AddScaleTimings(ScaleTimings& scaleTimings, Time timeStart, Time timeEnd, float freq, float scaleLarge, float scaleSmall) {
+	for (int i = timeStart.ms; i < timeEnd.ms; i += freq) {
+		scaleTimings.push_back(ScaleTiming(i - offset, scaleLarge));
+		scaleTimings.push_back(ScaleTiming(i, scaleSmall));
+		scaleTimings.push_back(ScaleTiming(i + offset, scaleLarge));
+	}
+
+	// May miss last value
+	scaleTimings.push_back(ScaleTiming(timeEnd.ms - offset, scaleLarge));
+	scaleTimings.push_back(ScaleTiming(timeEnd.ms, scaleSmall));
+	scaleTimings.push_back(ScaleTiming(timeEnd.ms + offset, scaleLarge));
+}
+
+float Config::GetScale(ScaleTimings& scaleTimings, float time) {
+	int remove = 0;
+	ScaleTiming base = scaleTimings[remove];
+	ScaleTiming next = scaleTimings[remove + 1];
+	while (time > next.first) {
+		scaleTimings.pop_front();
+		base = scaleTimings[remove];
+		next = scaleTimings[remove + 1];
+	}
+
+	float localMax = next.first - base.first;
+	float localValue = time - base.first;
+	float fraction = localValue / localMax;
+	float scaleFraction = (next.second - base.second) * fraction;
+	float scale = base.second + scaleFraction;
+
+	return scale;
+}

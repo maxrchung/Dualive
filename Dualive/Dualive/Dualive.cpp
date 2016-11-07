@@ -31,22 +31,20 @@ int main() {
 	Config::I()->SwitchSpriteColor(bg, Time("00:40:914").ms, Time("00:42:177").ms, GetColor[GC::BURGANDY], GetColor[GC::MUSTARD], Config::I()->mspb / 2, Config::I()->mspb / 2);
 	bg->Color(Time("01:22:598").ms, Time("01:23:861").ms, bg->color, GetColor[GC::HAPPYNESS]);
 
-	std::cout << "PhaseSpectrum2D..." << std::endl;
-	PhaseSpectrum2D phaseSpectrum2D;
-	std::cout << "PhaseMoireGeneration..." << std::endl;
-	PhaseMoireGeneration phaseMoireGeneration;
-	std::cout << "PhaseMoireSpin..." << std::endl;
-	PhaseMoireSpin phaseMoireSpin;
-	std::cout << "PhaseLyricsTunnel..." << std::endl; 
-	PhaseLyricsTunnel phaseLyricsTunnel;
-	std::cout << "PhaseTetrahedronSpin..." << std::endl;
-	PhaseTetrahedronSpin phaseTetrahedronSpin;
+	//std::cout << "PhaseSpectrum2D..." << std::endl;
+	//PhaseSpectrum2D phaseSpectrum2D;
+	//std::cout << "PhaseMoireGeneration..." << std::endl;
+	//PhaseMoireGeneration phaseMoireGeneration;
+	//std::cout << "PhaseMoireSpin..." << std::endl;
+	//PhaseMoireSpin phaseMoireSpin;
+	//std::cout << "PhaseLyricsTunnel..." << std::endl; 
+	//PhaseLyricsTunnel phaseLyricsTunnel;
+	//std::cout << "PhaseTetrahedronSpin..." << std::endl;
+	//PhaseTetrahedronSpin phaseTetrahedronSpin;
 	//std::cout << "PhaseSpectrum3D..." << std::endl;
 	//PhaseSpectrum3D phaseSpectrum3D;
-	//std::cout << "PhaseTextGeneration..." << std::endl;
-	//PhaseTextGeneration phaseTextGeneration;
-
-	// PhaseTest phaseTest;
+	std::cout << "PhaseTextGeneration..." << std::endl;
+	PhaseTextGeneration phaseTextGeneration;
 
 	Storyboard::Instance()->Write(Config::I()->storyboardPath);
 	//std::cin.get();

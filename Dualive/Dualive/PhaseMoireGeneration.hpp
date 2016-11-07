@@ -155,13 +155,12 @@ private:
 		// Mirrored from PhaseSpectrum3D.hpp
 		float specRadius = 16.0f;
 		float specSpacing = 100.0f;
-		float specScale = 0.15f;
-		float peakFraction = 2.0f / 3;
+		float specScale = 0.2f;
 		MusicAnalysisData& data = Config::I()->data;
 		int timeIndex = data.GetMeasureIndex(Time("01:23:861"));
 
 		// Yolo hardcoded... too much thinking for me
-		float conversionFactor = 0.65f;
+		float conversionFactor = 0.64f;
 		
 		for (int i = 0; i < triangles.size(); ++i) {
 			float beforeHeight = triangles[i]->scale * triangles[i]->scaleVector.y * imageHeight;
@@ -169,7 +168,7 @@ private:
 			Vector2 scaleVector = Vector2(triangles[i]->scaleVector.x, dataScale);
 			triangles[i]->ScaleVector(startTime.ms, endTime.ms, triangles[i]->scaleVector, scaleVector);
 
-			Vector3 up = Vector3(-1, 0, 0) * specSpacing;
+			Vector3 up = Vector3(0, 1, 0) * specSpacing;
 			float moveRot = 2 * M_PI * ((float)i / triangles.size());
 			Vector3 pos = up.RotateZ(-moveRot);
 			Vector2 perspect = pos.Perspect(Config::I()->cameraZ, Config::I()->projectionDistance);
@@ -177,12 +176,13 @@ private:
 			float displace = afterHeight / 2 - beforeHeight / 2;
 			float trackDistance = perspect.Magnitude();
 			Vector2 adjustedPos = perspect.Normalize() * (trackDistance + displace);
-
 			triangles[i]->Move(startTime.ms, endPause.ms, triangles[i]->position, adjustedPos, Easing::CubicOut);
 
-			float rot = moveRot - M_PI / 2;
+			float rot = moveRot;
 			triangles[i]->Rotate(startTime.ms, endPause.ms, triangles[i]->rotation, rot);
 			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, GetColor[GC::SADNESS]);
+			float spectrumFade = (1 - (float)i / triangles.size()) * 0.75 + 0.25;
+			triangles[i]->Fade(startTime.ms, endTime.ms, triangles[i]->fade, spectrumFade);
 		}
 	}
 

@@ -146,8 +146,8 @@ public:
 		spotlight->Fade(endThirdSpeedup.ms, startMoire.ms, spotlight->fade, 1.0f, Easing::CubicIn);
 		spotlight->Fade(jitteryEnd.ms, endMoire.ms, spotlight->fade, 0.75f, Easing::CubicIn);
 		spotlight->Fade(Time("01:22:598").ms, Time("01:23:861").ms, spotlight->fade, 1.0f, Easing::CubicIn);
-		spotlight->Fade(Time("01:42:177").ms, Time("01:43:440").ms, spotlight->fade, 1.0f, Easing::CubicIn);
-		spotlight->Fade(Time("01:42:177").ms, Config::I()->songEnd.ms, spotlight->fade, 1.0f, Easing::CubicIn);
+		spotlight->Fade(Time("01:42:177").ms, Time("01:43:440").ms, spotlight->fade, 0.75f, Easing::CubicIn);
+		spotlight->Fade(Time("01:42:177").ms, Config::I()->songEnd.ms, spotlight->fade, 0.75f, Easing::CubicIn);
 
 		Sprite* cover = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Midpoint, Layer::Background);
 		cover->ScaleVector(Config::I()->songStart.ms, Config::I()->songEnd.ms, Vector2::ScreenSize, Vector2::ScreenSize);

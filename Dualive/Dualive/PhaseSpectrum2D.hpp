@@ -106,8 +106,8 @@ private:
 	// Easier access
 	MusicAnalysisData data = Config::I()->data;
 	float cpExpandScale = 0.2f;
-	float cpShrinkScale = 0.11f;
-	float cpMiniScale = 0.08f;
+	float cpShrinkScale = 0.085f;
+	float cpMiniScale = 0.06f;
 	float rotAmount = 2 * M_PI;
 	// Not actually 4 times faster because of period lengths
 	float rotSpeedupAmount = 4 * M_PI;
@@ -129,9 +129,9 @@ private:
 	Time thirdSpeedupEnd = Time("00:21:966");
 
 	// Distance away from center
-	float spectrumSpacing = 80.0f;
-	float barWidthScale = 0.018f;
-	float barLengthScale = 0.003f;
+	float spectrumSpacing = 75.0f;
+	float barWidthScale = 0.016f;
+	float barLengthScale = 0.0023f;
 	Vector2 startPoint = Vector2(0, spectrumSpacing);
 	std::string barPath = "Storyboard\\Spectrum2D\\CenterpieceNoSpacing.png";
 

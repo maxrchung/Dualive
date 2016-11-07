@@ -10,23 +10,26 @@ private:
 		center->RotateX(-M_PI / 2);
 		// Flip around
 		center->RotateY(M_PI);
-		center->Scale(1.0f);
+		center->Scale(1.5f);
 		center->RepositionLines(Range(startSpec.ms));
+		center->Color(Range(startSpec.ms), GetColor[GC::SADNESS], GetColor[GC::SADNESS]);
 
 		for (int i = 0; i < numSpec; ++i) {
 			Tetrahedron* specTri = new Tetrahedron(specRadius);
 			float rot = (2 * M_PI) * ((float)i / numSpec);
 			// Local rotation
 			specTri->RotateY(Config::I()->DToR(-30));
-			// Set to start at (-specSpacing,0,0)
-			specTri->RotateZ(Config::I()->DToR(90));
+			// Set to start at (0, specSpacing)
+			specTri->RotateZ(Config::I()->DToR(0));
 
 			// Move to position
-			Vector2 pos = Vector2(-specSpacing, 0);
+			Vector2 pos = Vector2(0, specSpacing);
 			specTri->Move(Vector3(pos));
 
 			// Rotate to position
 			specTri->RotateZ(-rot);
+
+			specTri->Color(Range(startSpec.ms), GetColor[GC::SADNESS], GetColor[GC::SADNESS]);
 			spectrum.push_back(specTri);
 		}
 	}
@@ -38,12 +41,16 @@ private:
 		float totalRot = 4 * M_PI;
 		Vector3 rotAround = Vector3(-1, -1, -1);
 
+		ScaleTimings scaleTimings;
+		Config::I()->AddScaleTimings(scaleTimings, startSpec, endSpec, Config::I()->mspb, 1.5f, 1.0f);
+
 		for (int time = startSpec.ms; time < endSpec.ms; time += discRate) {
 			float rot = disc * totalRot;
 			// Aiming for the tick after startSpec
 			Range reposition(time, time + discRate);
 
 			center->RotateAround(rotAround, rot);
+			center->Scale(Config::I()->GetScale(scaleTimings, time));
 			center->RepositionLines(reposition);
 
 			int timeIndex = data.GetMeasureIndex(Time(reposition.end));
@@ -57,6 +64,8 @@ private:
 				else {
 					spectrum[i]->RepositionLines(reposition);
 				}
+				float startFade = (1 - (float)i / spectrum.size()) * 0.75 + 0.25;
+				spectrum[i]->Fade(Range(startSpec.ms), startFade, startFade);
 			}
 		}
 	}
@@ -67,7 +76,15 @@ private:
 		std::random_shuffle(std::begin(sprites), std::end(sprites));
 
 		fadeSection(sprites, startFade, startFadeSpeedup, Config::I()->offset);
-		fadeSection(sprites, startFadeSpeedup, endSpec, Config::I()->offset / 2);
+
+		Time adjustedEndVoice = Time(endVoice.ms - Config::I()->offset * 8);
+		float fadeRate = calcSpeedFade(startFadeSpeedup, adjustedEndVoice, sprites.size());
+		fadeSection(sprites, startFadeSpeedup, adjustedEndVoice, fadeRate);
+	}
+
+	float calcSpeedFade(Time startFade, Time endFade, int remainingTriangles) {
+		int timeRemaining = endFade.ms - startFade.ms;
+		return timeRemaining / remainingTriangles;
 	}
 
 	void fadeSection(std::vector<Sprite*>& sprites, Time start, Time end, float frequency) {
@@ -76,7 +93,7 @@ private:
 				return;
 			}
 			Sprite* end = sprites.back();
-			end->Fade(i, i + Config::I()->offset * 8, 1.0f, 0.0f);
+			end->Fade(i, i + Config::I()->offset * 8, end->fade, 0.0f);
 			sprites.pop_back();
 		}
 	}
@@ -101,16 +118,19 @@ private:
 		return sprites;
 	}
 
-	Time startSpec = Time("01:23:861");
+	// Set 1/16 before because of some drawing issue with trying
+	// to call reposition lines twice(?)...?
+	Time startSpec = Time("01:23:841");
 	Time startFade = Time("01:33:966");
 	Time startFadeSpeedup = Time("01:39:019");
+	Time endVoice = Time("01:42:177");
 	Time endSpec = Time("01:44:071");
 	std::vector<Tetrahedron*> spectrum;
 	Tetrahedron* center;
 	float radius = 50.0f;
 	float specRadius = 16.0f;
 	float specSpacing = 100.0f;
-	float specScale = 0.15f;
+	float specScale = 0.2f;
 	int numSpec = 24;
 
 public:
