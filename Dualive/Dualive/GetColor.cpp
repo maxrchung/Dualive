@@ -43,5 +43,16 @@ std::unordered_map<GC, Color> GetColor = {
 	{ GC::RUST, Color(255, 103, 68) },
 	{ GC::FLUFFPINK, Color(255, 114, 160) },
 	{ GC::ANGRYBLUE, Color(4, 26, 255) },
-	{ GC::WARNING, Color(228, 57, 15) }
+	{ GC::WARNING, Color(228, 57, 15) },
+	{ GC::BABYGREEN, Color(79, 255, 105) },
+	{ GC::STEELBLUE, Color(46, 150, 225) },
+	{ GC::COUPLEMONTHSWORNBASKETBALLORANGE, Color(190, 72, 0) },
+	{ GC::ALIENWARE, Color(36, 255, 18) },
+	{ GC::MOSSYAQUARIUM, Color(0, 227, 142) },
+	{ GC::GOLDENGATERED, Color(255, 48, 31) },
+	{ GC::SANDPAPER, Color(255, 191, 98) },
+	{ GC::SUICIDEAD, Color(159, 0, 2) },
+	{ GC::BRUISE, Color(59, 31, 103) },
+	{ GC::HAPPYNESS, Color(255, 244, 69) },
+	{ GC::SADNESS, Color(66, 0, 216) },
 };

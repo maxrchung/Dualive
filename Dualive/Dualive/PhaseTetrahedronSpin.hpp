@@ -82,6 +82,20 @@ public:
 			cp->Scale(scale);
 			cp->RepositionLines(Range(startTime, endTime));
 		}
+
+		cp->Color(Range(startSpin.ms), GetColor[GC::WARNING], GetColor[GC::WARNING]);
+		cp->Color(Time("01:06:177").ms - Config::I()->mspb, Time("01:06:177").ms, cp->lines[0]->color, GetColor[GC::BABYGREEN]);
+		cp->Color(Time("01:08:703").ms - Config::I()->mspb, Time("01:08:703").ms, cp->lines[0]->color, GetColor[GC::STEELBLUE]);
+		cp->Color(Time("01:09:966").ms - Config::I()->mspb, Time("01:09:966").ms, cp->lines[0]->color, GetColor[GC::COUPLEMONTHSWORNBASKETBALLORANGE]);
+		cp->Color(Time("01:11:229").ms - Config::I()->mspb, Time("01:11:229").ms, cp->lines[0]->color, GetColor[GC::ALIENWARE]);
+		cp->Color(Time("01:12:493").ms - Config::I()->mspb, Time("01:12:493").ms, cp->lines[0]->color, GetColor[GC::GOLDENGATERED]);
+		for (auto sprite : cp->lines) {
+			Config::I()->SwitchSpriteColor(sprite, Time("01:13:756").ms, Time("01:15:019").ms, GetColor[GC::SANDPAPER], GetColor[GC::BRUISE], Config::I()->mspb / 2, Config::I()->mspb / 2);
+			Config::I()->SwitchSpriteColor(sprite, Time("01:16:282").ms, Time("01:17:545").ms, GetColor[GC::MOSSYAQUARIUM], GetColor[GC::SUICIDEAD], Config::I()->mspb / 2, Config::I()->mspb / 2);
+			Config::I()->SwitchSpriteColor(sprite, Time("01:18:808").ms, Time("01:20:071").ms, GetColor[GC::SADNESS], GetColor[GC::HAPPYNESS], Config::I()->mspb, Config::I()->mspb);
+			Config::I()->SwitchSpriteColor(sprite, Time("01:20:229").ms, Time("01:21:335").ms, GetColor[GC::HAPPYNESS], GetColor[GC::SADNESS], Config::I()->mspb / 2, Config::I()->mspb / 2);
+			Config::I()->SwitchSpriteColor(sprite, Time("01:21:414").ms, Time("01:22:598").ms, GetColor[GC::HAPPYNESS], GetColor[GC::SADNESS], Config::I()->mspb / 4, Config::I()->mspb / 4);
+		}
 	}
 };
 

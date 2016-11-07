@@ -121,6 +121,10 @@ void Tetrahedron::Color(Range time, ::Color startColor, ::Color endColor, Easing
 	}
 }
 
+void Tetrahedron::Color(Time startTime, Time endTime, ::Color startColor, ::Color endColor, Easing easing) {
+	Color(Range(startTime.ms, endTime.ms), startColor, endColor, easing);
+}
+
 void Tetrahedron::RepositionLines(Range time, Easing easing) {
 	// Apply perspective
 	Vector2 top = applyPerspective(points[TetPoints::T]);
@@ -146,7 +150,7 @@ void Tetrahedron::repositionLine(Range time, Sprite* line, Vector2 left, Vector2
 	float rot = prevRot.AngleBetween(between);
 	float totalRot = line->rotation + rot;
 	line->Rotate(time.start, time.end, line->rotation, totalRot, easing);
-
+	
 	float distance = between.Magnitude();
 	Vector2 scaleVector(distance / Config::I()->lineWidth, Config::I()->lineScaleHeight);
 	line->ScaleVector(time.start, time.end, line->scaleVector, scaleVector, easing);

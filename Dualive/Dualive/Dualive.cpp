@@ -29,6 +29,7 @@ int main() {
 	Config::I()->SwitchSpriteColor(bg, Time("00:37:124").ms, Time("00:38:387").ms, GetColor[GC::PEACH], GetColor[GC::SPIDERMANRED], Config::I()->mspb / 2, Config::I()->mspb / 2);
 	Config::I()->SwitchSpriteColor(bg, Time("00:39:966").ms, Time("00:40:598").ms, GetColor[GC::MUSTARD], GetColor[GC::PEACH], Config::I()->mspb / 4, Config::I()->mspb / 4);
 	Config::I()->SwitchSpriteColor(bg, Time("00:40:914").ms, Time("00:42:177").ms, GetColor[GC::BURGANDY], GetColor[GC::MUSTARD], Config::I()->mspb / 2, Config::I()->mspb / 2);
+	bg->Color(Time("01:22:598").ms, Time("01:23:861").ms, bg->color, GetColor[GC::HAPPYNESS]);
 
 	std::cout << "PhaseSpectrum2D..." << std::endl;
 	PhaseSpectrum2D phaseSpectrum2D;

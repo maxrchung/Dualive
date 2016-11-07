@@ -141,15 +141,19 @@ public:
 		pattern->Rotate(jitteryEnd.ms, endMoire.ms, pattern->rotation, pattern->rotation + finalRotAmount, Easing::SineOut);
 
 		Sprite* spotlight = new Sprite(bgFade, Vector2::Zero, Layer::Background);
-		spotlight->Scale(startMoire.ms, endMoire.ms, 1.0f, 1.0f);
-		spotlight->Fade(0, endThirdSpeedup.ms, 0.75f, 0.75f);
-		spotlight->Fade(endThirdSpeedup.ms, startMoire.ms, spotlight->fade, 1.0f);
-		spotlight->Fade(jitteryEnd.ms, endMoire.ms, 1.0f, 0.0f);
+		spotlight->Scale(0, 0, 1.0f, 1.0f);
+		spotlight->Fade(0, Time("00:01:756").ms, 0.0f, 0.75f, Easing::CubicIn);
+		spotlight->Fade(endThirdSpeedup.ms, startMoire.ms, spotlight->fade, 1.0f, Easing::CubicIn);
+		spotlight->Fade(jitteryEnd.ms, endMoire.ms, spotlight->fade, 0.75f, Easing::CubicIn);
+		spotlight->Fade(Time("01:22:598").ms, Time("01:23:861").ms, spotlight->fade, 1.0f, Easing::CubicIn);
+		spotlight->Fade(Time("01:42:177").ms, Time("01:43:440").ms, spotlight->fade, 1.0f, Easing::CubicIn);
+		spotlight->Fade(Time("01:42:177").ms, Config::I()->songEnd.ms, spotlight->fade, 1.0f, Easing::CubicIn);
 
 		Sprite* cover = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Midpoint, Layer::Background);
 		cover->ScaleVector(Config::I()->songStart.ms, Config::I()->songEnd.ms, Vector2::ScreenSize, Vector2::ScreenSize);
 		cover->Color(0, 0, Color(0), Color(0));
-		cover->Fade(jitteryEnd.ms, endMoire.ms, 0.0f, 0.9f);
+		cover->Fade(jitteryEnd.ms, endMoire.ms, 0.0f, 0.88f);
+		cover->Fade(Time("01:03:650 ").ms, Time("01:23:861").ms, cover->fade, 0.0f, Easing::CubicIn);
 	}
 };
 

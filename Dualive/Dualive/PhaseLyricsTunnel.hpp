@@ -49,7 +49,7 @@ private:
 			sprite->Scale(timings[i + 1].ms, timings[i + 1].ms + offset, sprite->scale, sprite->scale * shortScaleIncrement, Easing::CubicOut);
 
 			// Set starting rotation
-			float startRotation = M_PI - longRotation / 2 - (i * rotationOffset);
+			float startRotation = M_PI - longRotation / 2 - (i * rotationOffset) - localRotCorrection;
 
 			Vector2 startPos = Vector2(cos(startRotation) * spacing, -sin(startRotation) * spacing);
 			sprite->Move(startTunnel.ms, startTunnel.ms, startPos, startPos);
@@ -195,6 +195,9 @@ private:
 	// Rotation between each lyric
 	float rotationOffset = M_PI / 3;
 	float shortRotation = M_PI - longRotation + rotationOffset;
+	// Lyrics are misaligned with center triangle by a little bit.
+	// localRotCorrection is used to correct this
+	float localRotCorrection = M_PI / 40;
 
 	int lyricsOnScreen = 4;
 	float fadeIncrement = 1.0f / lyricsOnScreen;
@@ -281,7 +284,7 @@ private:
 			sprite->Color(timings[12].ms - offset, timings[12].ms, sprite->color, GetColor[GC::OPENSIGN], Easing::CubicIn);
 			//muku datte
 			//koto ni
-			sprite->Color(timings[13].ms - offset, timings[13].ms, sprite->color, GetColor[GC::RUST], Easing::CubicIn);
+			sprite->Color(timings[13].ms - offset, timings[13].ms, sprite->color, GetColor[GC::WARNING], Easing::CubicIn);
 		}
 	}
 

@@ -104,10 +104,23 @@ private:
 				bgTri->Fade(endSpin.ms, startTunnel.ms, 0.0f, 1.0f);
 				bgTri->Color(endSpin.ms, startTunnel.ms, GetColor[GC::ICE], GetColor[GC::ICE]);
 
+				// Lyric tunnel
 				Config::I()->SwitchSpriteColor(bgTri, Time("00:53:545").ms, Time("00:54:493").ms, GetColor[GC::FAKEINDIGO], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
 				Config::I()->SwitchSpriteColor(bgTri, Time("00:54:808").ms, Time("00:55:756").ms, GetColor[GC::FLUFFPINK], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
 				Config::I()->SwitchSpriteColor(bgTri, Time("00:58:598").ms, Time("00:59:545").ms, GetColor[GC::ANGRYBLUE], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
 				Config::I()->SwitchSpriteColor(bgTri, Time("00:59:861").ms, Time("01:00:808").ms, GetColor[GC::WARNING], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+
+				// Tet spin
+				bgTri->Color(Time("01:06:177").ms - Config::I()->mspb, Time("01:06:177").ms, bgTri->color, GetColor[GC::BABYGREEN]);
+				bgTri->Color(Time("01:08:703").ms - Config::I()->mspb, Time("01:08:703").ms, bgTri->color, GetColor[GC::STEELBLUE]);
+				bgTri->Color(Time("01:09:966").ms - Config::I()->mspb, Time("01:09:966").ms, bgTri->color, GetColor[GC::COUPLEMONTHSWORNBASKETBALLORANGE]);
+				bgTri->Color(Time("01:11:229").ms - Config::I()->mspb, Time("01:11:229").ms, bgTri->color, GetColor[GC::ALIENWARE]);
+				bgTri->Color(Time("01:12:493").ms - Config::I()->mspb, Time("01:12:493").ms, bgTri->color, GetColor[GC::GOLDENGATERED]);
+				Config::I()->SwitchSpriteColor(bgTri, Time("01:13:756").ms, Time("01:15:019").ms, GetColor[GC::SANDPAPER], GetColor[GC::BRUISE], Config::I()->mspb / 2, Config::I()->mspb / 2);
+				Config::I()->SwitchSpriteColor(bgTri, Time("01:16:282").ms, Time("01:17:545").ms, GetColor[GC::MOSSYAQUARIUM], GetColor[GC::SUICIDEAD], Config::I()->mspb / 2, Config::I()->mspb / 2);
+				Config::I()->SwitchSpriteColor(bgTri, Time("01:18:808").ms, Time("01:20:071").ms, GetColor[GC::SADNESS], GetColor[GC::HAPPYNESS], Config::I()->mspb, Config::I()->mspb);
+				Config::I()->SwitchSpriteColor(bgTri, Time("01:20:229").ms, Time("01:21:335").ms, GetColor[GC::HAPPYNESS], GetColor[GC::SADNESS], Config::I()->mspb / 2, Config::I()->mspb / 2);
+				Config::I()->SwitchSpriteColor(bgTri, Time("01:21:414").ms, Time("01:22:598").ms, GetColor[GC::HAPPYNESS], GetColor[GC::SADNESS], Config::I()->mspb / 4, Config::I()->mspb / 4);
 
 				triangles.push_back(bgTri);
 			}
@@ -123,7 +136,11 @@ private:
 
 				// Get last
 				Sprite* tri = triangles.back();
-				tri->Fade(i, i + Config::I()->offset * 4, 1.0f, 0.0f);
+				tri->Fade(i, i + Config::I()->mspb * 4, 1.0f, 0.0f, Easing::CubicIn);
+				tri->Rotate(i, i + Config::I()->mspb * 4, tri->rotation, tri->rotation + 4 * M_PI, Easing::CubicIn);
+				tri->Scale(i, i + Config::I()->mspb * 4, tri->scale, 0.0f, Easing::CubicIn);
+				tri->Move(i, i + Config::I()->mspb * 4, tri->position, tri->position + Vector2(0, -1000), Easing::CubicIn);
+
 				// Pop back
 				triangles.pop_back();
 			}
@@ -165,7 +182,7 @@ private:
 
 			float rot = moveRot - M_PI / 2;
 			triangles[i]->Rotate(startTime.ms, endPause.ms, triangles[i]->rotation, rot);
-			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, patternColor);
+			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, GetColor[GC::SADNESS]);
 		}
 	}
 

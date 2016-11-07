@@ -31,6 +31,7 @@ public:
 	// because they are not concerned with the Sprite lines' positions
 	void Fade(Range time, float startFloat, float endFloat, Easing easing = Easing::Linear);
 	void Color(Range time, Color startColor, Color endColor, Easing easing = Easing::Linear);
+	void Color(Time startTime, Time endTime, ::Color startColor, ::Color endColor, Easing easing = Easing::Linear);
 
 	std::vector<Vector3> points;
 	std::vector<Sprite*> lines;
