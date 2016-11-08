@@ -76,7 +76,7 @@ public:
 	// Paths
 	std::string beatmapDirectory = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\)";
 	std::string dataPath = R"(C:\Users\Wax Chug da Gwad\Desktop\Dualive\Dualive\Debug\MusicAnalysisData.txt)";
-	std::string storyboardPath = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Quarks - Dualive (Osuuki).osb)";
+	std::string storyboardPath = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\474742 Quarks - Dualive\Quarks - Dualive (Osuuki).osb)";
 
 	// MusicAnalysisData
 	MusicAnalysisData data = MusicAnalysis::LoadData(dataPath);

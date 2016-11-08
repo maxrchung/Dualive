@@ -31,18 +31,43 @@ int main() {
 	Config::I()->SwitchSpriteColor(bg, Time("00:40:914").ms, Time("00:42:177").ms, GetColor[GC::BURGANDY], GetColor[GC::MUSTARD], Config::I()->mspb / 2, Config::I()->mspb / 2);
 	bg->Color(Time("01:22:598").ms, Time("01:23:861").ms, bg->color, GetColor[GC::HAPPYNESS]);
 
-	//std::cout << "PhaseSpectrum2D..." << std::endl;
-	//PhaseSpectrum2D phaseSpectrum2D;
-	//std::cout << "PhaseMoireGeneration..." << std::endl;
-	//PhaseMoireGeneration phaseMoireGeneration;
-	//std::cout << "PhaseMoireSpin..." << std::endl;
-	//PhaseMoireSpin phaseMoireSpin;
-	//std::cout << "PhaseLyricsTunnel..." << std::endl; 
-	//PhaseLyricsTunnel phaseLyricsTunnel;
-	//std::cout << "PhaseTetrahedronSpin..." << std::endl;
-	//PhaseTetrahedronSpin phaseTetrahedronSpin;
-	//std::cout << "PhaseSpectrum3D..." << std::endl;
-	//PhaseSpectrum3D phaseSpectrum3D;
+	bg->Color(Time("01:23:861").ms, Time("01:26:387").ms, bg->color, GetColor[GC::AQUAMARINE]);
+	bg->Color(Time("01:26:387").ms, Time("01:28:914").ms, bg->color, GetColor[GC::PARADENIGHT]);
+	bg->Color(Time("01:28:914").ms, Time("01:31:440").ms, bg->color, GetColor[GC::COALMINE]);
+	bg->Color(Time("01:31:440").ms, Time("01:33:966").ms, bg->color, GetColor[GC::TENSIONSENVELOPMENT]);
+	Config::I()->SwitchSpriteColor(bg,
+		Time("01:33:966").ms, Time("01:36:493").ms - Config::I()->mspb * 2,
+		GetColor[GC::TENSIONSENVELOPMENT], GetColor[GC::THELIGHTOFSPACE],
+		Config::I()->mspb * 2, Config::I()->mspb * 2);
+
+	Config::I()->SwitchSpriteColor(bg,
+		Time("01:36:493").ms, Time("01:39:019").ms - Config::I()->mspb,
+		GetColor[GC::LIPSTICK], GetColor[GC::THELIGHTOFSPACE],
+		Config::I()->mspb * 2, Config::I()->mspb * 2);
+
+	Config::I()->SwitchSpriteColor(bg,
+		Time("01:39:019").ms, Time("01:40:282").ms - Config::I()->mspb / 2,
+		GetColor[GC::URANUSDEATH], GetColor[GC::LIPSTICK],
+		Config::I()->mspb / 2, Config::I()->mspb / 2);
+
+	Config::I()->SwitchSpriteColor(bg,
+		Time("01:40:282").ms, Time("01:42:177").ms,
+		GetColor[GC::URANUSDEATH], GetColor[GC::LIPSTICK],
+		Config::I()->mspb / 4, Config::I()->mspb / 4);
+	bg->Color(Time("01:42:177").ms, Time("01:43:440").ms, bg->color, GetColor[GC::LIPSTICK]);
+
+	std::cout << "PhaseSpectrum2D..." << std::endl;
+	PhaseSpectrum2D phaseSpectrum2D;
+	std::cout << "PhaseMoireGeneration..." << std::endl;
+	PhaseMoireGeneration phaseMoireGeneration;
+	std::cout << "PhaseMoireSpin..." << std::endl;
+	PhaseMoireSpin phaseMoireSpin;
+	std::cout << "PhaseLyricsTunnel..." << std::endl; 
+	PhaseLyricsTunnel phaseLyricsTunnel;
+	std::cout << "PhaseTetrahedronSpin..." << std::endl;
+	PhaseTetrahedronSpin phaseTetrahedronSpin;
+	std::cout << "PhaseSpectrum3D..." << std::endl;
+	PhaseSpectrum3D phaseSpectrum3D;
 	std::cout << "PhaseTextGeneration..." << std::endl;
 	PhaseTextGeneration phaseTextGeneration;
 

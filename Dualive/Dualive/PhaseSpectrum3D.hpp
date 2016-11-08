@@ -118,6 +118,40 @@ private:
 		return sprites;
 	}
 
+	void colorTetrahedrons() {
+		std::vector<Tetrahedron*> tets = spectrum;
+		tets.push_back(center);
+
+		for (auto tet : tets) {
+			tet->Color(Time("01:23:861").ms, Time("01:26:387").ms, tet->lines[0]->color, GetColor[GC::TRAFFICONE]);
+			tet->Color(Time("01:26:387").ms, Time("01:28:914").ms, tet->lines[0]->color, GetColor[GC::PARADELIGHTS]);
+			tet->Color(Time("01:28:914").ms, Time("01:31:440").ms, tet->lines[0]->color, GetColor[GC::EMERALD]);
+			tet->Color(Time("01:31:440").ms, Time("01:33:966").ms, tet->lines[0]->color, GetColor[GC::STOICROCK]);
+
+			for (auto line : tet->lines) {
+				Config::I()->SwitchSpriteColor(line, 
+					Time("01:33:966").ms, Time("01:36:493").ms - Config::I()->mspb * 2,
+					GetColor[GC::STOICROCK], GetColor[GC::FLAMINGROCKET],
+					Config::I()->mspb * 2, Config::I()->mspb * 2);
+
+				Config::I()->SwitchSpriteColor(line, 
+					Time("01:36:493").ms, Time("01:39:019").ms - Config::I()->mspb * 2,
+					GetColor[GC::MARBLEGUMBALL], GetColor[GC::FLAMINGROCKET],
+					Config::I()->mspb * 2, Config::I()->mspb * 2);
+
+				Config::I()->SwitchSpriteColor(line, 
+					Time("01:39:019").ms, Time("01:40:282").ms - Config::I()->mspb / 2,
+					GetColor[GC::SATURN], GetColor[GC::MARBLEGUMBALL],
+					Config::I()->mspb / 2, Config::I()->mspb / 2);
+
+				Config::I()->SwitchSpriteColor(line, 
+					Time("01:40:282").ms, Time("01:42:177").ms, 
+					GetColor[GC::SATURN], GetColor[GC::MARBLEGUMBALL],
+					Config::I()->mspb / 4, Config::I()->mspb / 4);
+			}
+		}
+	}
+
 	// Set 1/16 before because of some drawing issue with trying
 	// to call reposition lines twice(?)...?
 	Time startSpec = Time("01:23:841");
@@ -137,6 +171,7 @@ public:
 	PhaseSpectrum3D() {
 		setupTetrahedrons();
 		spinTetrahedrons();
+		colorTetrahedrons();
 		fadeTetrahedrons();
 	}
 };
