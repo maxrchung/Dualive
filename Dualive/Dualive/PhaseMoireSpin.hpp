@@ -148,12 +148,14 @@ public:
 		spotlight->Fade(Time("01:22:598").ms, Time("01:23:861").ms, spotlight->fade, 1.0f, Easing::CubicIn);
 		spotlight->Fade(Time("01:42:177").ms, Time("01:43:440").ms, spotlight->fade, 0.75f, Easing::CubicIn);
 		spotlight->Fade(Time("01:42:177").ms, Config::I()->songEnd.ms, spotlight->fade, 0.75f, Easing::CubicIn);
+		spotlight->Fade(Time("02:05:545").ms, Time("02:06:808").ms, spotlight->fade, 0.0f, Easing::CubicIn);
 
 		Sprite* cover = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Midpoint, Layer::Background);
 		cover->ScaleVector(Config::I()->songStart.ms, Config::I()->songEnd.ms, Vector2::ScreenSize, Vector2::ScreenSize);
 		cover->Color(0, 0, Color(0), Color(0));
 		cover->Fade(jitteryEnd.ms, endMoire.ms, 0.0f, 0.88f);
 		cover->Fade(Time("01:03:650 ").ms, Time("01:23:861").ms, cover->fade, 0.0f, Easing::CubicIn);
+		cover->Fade(Time("02:05:545").ms, Time("02:06:808").ms, cover->fade, 0.0f, Easing::CubicIn);
 	}
 };
 

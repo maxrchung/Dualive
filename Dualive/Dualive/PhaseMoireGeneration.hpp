@@ -150,7 +150,7 @@ private:
 	void placeTriangles(std::vector<Sprite*>& triangles, Time startTime, Time endTime) {
 		int timeDiff = endTime.ms - startTime.ms;
 		Time endPause("01:23:545");
-		float imageHeight = Config::I()->GetImageSize(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\Spectrum2D\PatternPiece.png)").y;
+		float imageHeight = Config::I()->GetImageSize(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\474742 Quarks - Dualive\Storyboard\Spectrum2D\PatternPiece.png)").y;
 		
 		// Mirrored from PhaseSpectrum3D.hpp
 		float specRadius = 16.0f;

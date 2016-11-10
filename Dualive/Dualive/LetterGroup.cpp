@@ -24,6 +24,14 @@ LetterGroup::LetterGroup(std::vector<Letter>& lettersBase, std::string& lyric) {
 			}
 		}
 	}
+
+	// Randomize the disabled list so that it does not only take the last half of sprites
+	for (int i = 0; i < sprites.size(); ++i) {
+		disableIndices.push_back(i);
+		disableReference.push_back(false);
+		markedReference.push_back(false);
+	}
+	std::random_shuffle(disableIndices.begin(), disableIndices.end());
 }
 
 int LetterGroup::spaceWidth = 200;
@@ -105,31 +113,51 @@ void LetterGroup::LocalRotate(float xRot, float yRot, float zRot) {
 	rectPoints.Rotate(xRot, yRot, zRot);
 }
 
-void LetterGroup::Fade(int startTime, int endTime, float fade) {
+void LetterGroup::Fade(int startTime, int endTime, float fade, Easing easing) {
 	for (auto sprite : sprites) {
-		sprite->Fade(startTime, endTime, sprite->fade, fade);
+		// Stop some calls
+		if (sprite->fade != 0.0f) {
+			sprite->Fade(startTime, endTime, sprite->fade, fade, easing);
+		}
 	}
 }
 
-void LetterGroup::Reposition(int startTime, int endTime) {
+void LetterGroup::Reposition(int startTime, int endTime, Easing easing) {
+	// Disables half on each reposition
+	int disableAmount = disableIndices.size() / 2;
+	for (int i = 0; i < disableAmount; ++i) {
+		markedReference[disableIndices.back()] = true;
+		disableIndices.pop_back();
+	}
+
 	for (int i = 0; i < sprites.size(); ++i) {
-		Pair3 pair = pair3s[i];
+		if (!disableReference[i]) {
+			float displacement = (rand() % 75) / 75.0f + 0.25f;
+			float offsetEnd = startTime + (endTime - startTime) * displacement;
 
-		Vector2 startPoint = pair.first.Perspect(Config::I()->cameraZ, Config::I()->projectionDistance);
-		Vector2 endPoint = pair.second.Perspect(Config::I()->cameraZ, Config::I()->projectionDistance);
+			Sprite* line = sprites[i];
+			Pair3 pair = pair3s[i];
 
-		Vector2 distanceVector = endPoint - startPoint;
-		float lineLength = distanceVector.Magnitude();
-		float lineScaleWidth = lineLength / 1000;
-		Vector2 lineScale(lineScaleWidth, Letter::lineScaleHeight);
+			Vector2 startPoint = pair.first.Perspect(Config::I()->cameraZ, Config::I()->projectionDistance);
+			Vector2 endPoint = pair.second.Perspect(Config::I()->cameraZ, Config::I()->projectionDistance);
+			Vector2 distanceVector = endPoint - startPoint;
+			float rotation = Vector2(line->rotation).AngleBetween(distanceVector);
+			float totalRotation = line->rotation + rotation;
 
-		Sprite* line = sprites[i];
-		float rotation = Vector2(line->rotation).AngleBetween(distanceVector);
-		float totalRotation = line->rotation + rotation;
-		line->ScaleVector(startTime, endTime, line->scaleVector, lineScale);
-		line->Rotate(startTime, endTime, line->rotation, totalRotation);
-		line->Move(startTime, endTime, line->position, startPoint);
-		line->Color(startTime, endTime, Color(255), Color(255));
+			// How to tell if sprite has been disabled
+			if (markedReference[i]) {
+				line->Move(startTime, offsetEnd + Config::I()->mspb * 3, line->position, startPoint, easing);
+				line->Fade(startTime, offsetEnd, line->fade, line->fade / 2.0f, easing);
+				line->Fade(offsetEnd, offsetEnd + Config::I()->mspb * 3, line->fade, 0.0f, easing);
+				disableReference[i] = true;
+			}
+			else {
+				line->Rotate(startTime, offsetEnd, line->rotation, totalRotation, easing);
+				line->Move(startTime, offsetEnd, line->position, startPoint, easing);
+				float endFade = line->fade - 1.0f / Config::I()->afterImages;
+				line->Fade(startTime, offsetEnd, line->fade, endFade, easing);
+			}
+		}
 	}
 }
 

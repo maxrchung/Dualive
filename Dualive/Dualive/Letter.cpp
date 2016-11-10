@@ -84,7 +84,7 @@ LetterMeasurements Letter::calculateMeasurements(VectorMap& vectorMap) {
 	return LetterMeasurements(min, max);
 }
 
-std::string Letter::linePath = std::string(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\3D\line.png)");
+std::string Letter::linePath = std::string(R"(Storyboard\3D\line.png)");
 std::vector<std::vector<Sprite*>> Letter::setupSprites(std::vector<std::vector<Pair>>& pairTravel) {
 	std::vector<std::vector<Sprite*>> spriteTravel;
 
@@ -104,7 +104,7 @@ std::vector<std::vector<Sprite*>> Letter::setupSprites(std::vector<std::vector<P
 
 float Letter::lineScaleHeight = 0.1f;
 // Leave some time at the end
-float freqFinish = 0.8f;
+float freqFinish = 0.75f;
 void Letter::display(int startTime, int endTime, float scale, Vector2 displacement) {
 	float freq = ((endTime - startTime) * freqFinish) / this->spriteTravel.size();
 

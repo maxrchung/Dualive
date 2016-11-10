@@ -16,7 +16,6 @@ public:
 		}
 
 		std::list<LetterGroup*> letterGroups;
-		int afterImages = 2;
 		for (int i = 0; i < lyrics.size(); ++i) {
 			std::cout << "Processing lyric: " << i << " / " << lyrics.size() << std::endl;
 			
@@ -25,17 +24,11 @@ public:
 			int endDisplay = timings[i + 1].ms - Config::I()->mspb;
 			letterGroup->display(startDisplay, endDisplay);
 
-			// Handle fading
-			letterGroup->Fade(endDisplay, timings[i + 1].ms, 0.25f);
-			int fadeIndex;
+			// Fade out last Dualive
 			if (i == lyrics.size() - 1) {
-				fadeIndex = timings.size() - 1;
+				letterGroup->Fade(Time("02:05:545").ms, Time("02:06:808").ms, 0.0f, Easing::CubicIn);
 			}
-			else {
-				fadeIndex = min(i + afterImages, timings.size() - 2);
-			}
-			letterGroup->Fade(timings[fadeIndex].ms, timings[fadeIndex].ms + Config::I()->mspb * 2, 0.0f);
-			
+
 			if (letterGroups.size() > 0) {
 				RectPoints centerRect = letterGroup->rectPoints;
 				RectPoints compareRect = letterGroups.back()->rectPoints;
@@ -49,11 +42,17 @@ public:
 					RectPoints compareRectCopy = compareRect;
 
 					// Forced local rotation
-					Vector3 rotAmounts(0, 0, Config::I()->DToR(rand() % 90 - 90));
+					Vector3 rotAmounts(0, 0, Config::I()->DToR(rand() % 120 - 60));
 					compareRectCopy.Rotate(rotAmounts);
 
 					// Chooses random direction to move
-					Vector3 moveAmounts(0, 0, Config::I()->DToR(rand() % 360));
+					// Do not go to edges
+					Vector3 moveAmounts(0, 0, Config::I()->DToR(rand() % 160 + 10));
+					// Flip on each word
+					if (i % 2 == 0) {
+						moveAmounts *= -1;
+					}
+
 					Vector3 movement = Vector3(minDistance, 0, 0).Rotate(moveAmounts.x, moveAmounts.y, moveAmounts.z);
 					Vector3 totalMovement = movement;
 					Vector3 increment = Vector3(1, 0, 0).Rotate(moveAmounts.x, moveAmounts.y, moveAmounts.z);
@@ -64,6 +63,7 @@ public:
 						compareRectCopy.Move(increment);
 						totalMovement += increment;
 					}
+					totalMovement += increment * bufferDistance;
 
 					// Skip and recalculate movement if colliding with older letters
 					bool skipMove = false;
@@ -84,14 +84,14 @@ public:
 					for (auto& lg : letterGroups) {
 						lg->Rotate(rotAmounts);
 						lg->Move(totalMovement);
-						lg->Reposition(timings[i].ms - Config::I()->mspb, timings[i].ms);
+						lg->Reposition(timings[i].ms - Config::I()->mspb, timings[i].ms, Easing::CubicOut);
 					}
 				}
 			}
 
 			letterGroups.push_back(letterGroup);
 			// Remove so there aren't too many things we have to move
-			if (letterGroups.size() > afterImages) {
+			if (letterGroups.size() > Config::I()->afterImages) {
 				delete letterGroups.front();
 				letterGroups.pop_front();
 			}
@@ -152,6 +152,7 @@ private:
 		Time("02:06:808")
 	});
 
+	float bufferDistance = 20.0f;
 
 	std::vector<VectorMap> loadOutlinesData(std::string& path) {
 		float pointScale = 0.3f;
