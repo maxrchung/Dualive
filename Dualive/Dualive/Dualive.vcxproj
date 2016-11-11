@@ -87,6 +87,7 @@
     <ClCompile Include="Letter.cpp" />
     <ClCompile Include="LetterGroup.cpp" />
     <ClCompile Include="LetterMeasurements.cpp" />
+    <ClCompile Include="PhaseTextGeneration.cpp" />
     <ClCompile Include="RectPoints.cpp" />
     <ClCompile Include="Tetrahedron.cpp" />
   </ItemGroup>

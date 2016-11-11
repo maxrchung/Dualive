@@ -92,7 +92,6 @@ private:
 				Vector2 pos = positions[scrambledIndices.back()];
 				scrambledIndices.pop_back();
 				bgTri->Move(i, i + moveOffset, bgTri->position, pos);
-				bgTri->Rotate(i, i + moveOffset, bgTri->rotation, M_PI * 2, Easing::CubicIn);
 				bgTri->Scale(i, i, Config::I()->patternScale, Config::I()->patternScale);
 				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f, Easing::CubicIn);
 				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
@@ -105,6 +104,7 @@ private:
 				bgTri->Color(endSpin.ms, startTunnel.ms, GetColor[GC::ICE], GetColor[GC::ICE]);
 
 				// Lyric tunnel
+				// Switch this to normal picture
 				Config::I()->SwitchSpriteColor(bgTri, Time("00:53:545").ms, Time("00:54:493").ms, GetColor[GC::FAKEINDIGO], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
 				Config::I()->SwitchSpriteColor(bgTri, Time("00:54:808").ms, Time("00:55:756").ms, GetColor[GC::FLUFFPINK], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
 				Config::I()->SwitchSpriteColor(bgTri, Time("00:58:598").ms, Time("00:59:545").ms, GetColor[GC::ANGRYBLUE], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
@@ -136,8 +136,6 @@ private:
 
 				// Get last
 				Sprite* tri = triangles.back();
-				tri->Fade(i, i + Config::I()->mspb * 4, 1.0f, 0.0f, Easing::CubicIn);
-				tri->Rotate(i, i + Config::I()->mspb * 4, tri->rotation, tri->rotation + 4 * M_PI, Easing::CubicIn);
 				tri->Scale(i, i + Config::I()->mspb * 4, tri->scale, 0.0f, Easing::CubicIn);
 				tri->Move(i, i + Config::I()->mspb * 4, tri->position, tri->position + Vector2(0, -1000), Easing::CubicIn);
 

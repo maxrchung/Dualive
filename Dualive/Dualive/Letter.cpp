@@ -131,7 +131,6 @@ void Letter::display(int startTime, int endTime, float scale, Vector2 displaceme
 			line->ScaleVector(startTime + (freq * i), startTime + (freq * (i + 1)), Vector2(0, lineScaleHeight), lineScale);
 			line->Rotate(startTime, endTime, rotation, rotation);
 			line->Move(startTime, endTime, pair.first, pair.first);
-			line->Color(startTime, endTime, Color(255), Color(255));
 		}
 	}
 }

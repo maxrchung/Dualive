@@ -39,6 +39,9 @@
     <ClCompile Include="GetColor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PhaseTextGeneration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.hpp">

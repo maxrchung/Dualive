@@ -9,6 +9,7 @@ class LetterGroup {
 public:
 	LetterGroup(std::vector<Letter>& lettersBase, std::string& lyric);
 	void display(int startTime, int endTime);
+	void Color(int startTime, int endTIme, Color color);
 	void Move(Vector3 movement);
 	void Rotate(Vector3 rotAmounts);
 	void Rotate(float xRot, float yRot, float zRot);

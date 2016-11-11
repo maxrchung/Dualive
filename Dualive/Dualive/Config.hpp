@@ -86,7 +86,7 @@ public:
 	Time songEnd = Time("02:07:985");
 
 	// For PhaseTextGeneration
-	int afterImages = 4;
+	int afterImages = 3;
 
 private:
 	static Config* instance;

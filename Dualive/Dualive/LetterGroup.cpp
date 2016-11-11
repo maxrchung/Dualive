@@ -35,7 +35,7 @@ LetterGroup::LetterGroup(std::vector<Letter>& lettersBase, std::string& lyric) {
 }
 
 int LetterGroup::spaceWidth = 200;
-int LetterGroup::verticalDisplacement = 200;
+int LetterGroup::verticalDisplacement = 150;
 float LetterGroup::widthMax = 0.9f;
 float LetterGroup::heightMax = 0.2f;
 void LetterGroup::display(int startTime, int endTime) {
@@ -74,6 +74,12 @@ void LetterGroup::display(int startTime, int endTime) {
 			setupPair3s(letters[i]->pairTravel);
 			rectPoints = RectPoints(pair3s);
 		}
+	}
+}
+
+void LetterGroup::Color(int startTime, int endTime, ::Color color) {
+	for (auto sprite : sprites) {
+		sprite->Color(startTime, endTime, color, color);
 	}
 }
 
@@ -146,9 +152,9 @@ void LetterGroup::Reposition(int startTime, int endTime, Easing easing) {
 
 			// How to tell if sprite has been disabled
 			if (markedReference[i]) {
-				line->Move(startTime, offsetEnd + Config::I()->mspb * 3, line->position, startPoint, easing);
+				line->Move(startTime, offsetEnd + Config::I()->mspb * 4, line->position, startPoint, easing);
 				line->Fade(startTime, offsetEnd, line->fade, line->fade / 2.0f, easing);
-				line->Fade(offsetEnd, offsetEnd + Config::I()->mspb * 3, line->fade, 0.0f, easing);
+				line->Fade(offsetEnd, offsetEnd + Config::I()->mspb * 4, line->fade, 0.0f, easing);
 				disableReference[i] = true;
 			}
 			else {

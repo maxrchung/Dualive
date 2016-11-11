@@ -56,22 +56,28 @@ int main() {
 		Config::I()->mspb / 4, Config::I()->mspb / 4);
 	bg->Color(Time("01:42:177").ms, Time("01:43:440").ms, bg->color, GetColor[GC::LIPSTICK]);
 
+	int backgroundColor = (int)GC::GREENPASTURE;
+	auto& timings = PhaseTextGeneration::timings;
+	for (int i = 1; i < timings.size(); ++i) {
+		bg->Color(timings[i].ms - Config::I()->mspb, timings[i].ms, bg->color, GetColor[(GC)backgroundColor], Easing::CubicIn);
+		backgroundColor += 2;
+	}
 
 
 	bg->Fade(Time("02:05:545").ms, Time("02:06:808").ms, bg->fade, 0.0f, Easing::CubicIn);
 
-	//std::cout << "PhaseSpectrum2D..." << std::endl;
-	//PhaseSpectrum2D phaseSpectrum2D;
-	//std::cout << "PhaseMoireGeneration..." << std::endl;
-	//PhaseMoireGeneration phaseMoireGeneration;
+	std::cout << "PhaseSpectrum2D..." << std::endl;
+	PhaseSpectrum2D phaseSpectrum2D;
+	std::cout << "PhaseMoireGeneration..." << std::endl;
+	PhaseMoireGeneration phaseMoireGeneration;
 	std::cout << "PhaseMoireSpin..." << std::endl;
 	PhaseMoireSpin phaseMoireSpin;
-	//std::cout << "PhaseLyricsTunnel..." << std::endl; 
-	//PhaseLyricsTunnel phaseLyricsTunnel;
-	//std::cout << "PhaseTetrahedronSpin..." << std::endl;
-	//PhaseTetrahedronSpin phaseTetrahedronSpin;
-	//std::cout << "PhaseSpectrum3D..." << std::endl;
-	//PhaseSpectrum3D phaseSpectrum3D;
+	std::cout << "PhaseLyricsTunnel..." << std::endl; 
+	PhaseLyricsTunnel phaseLyricsTunnel;
+	std::cout << "PhaseTetrahedronSpin..." << std::endl;
+	PhaseTetrahedronSpin phaseTetrahedronSpin;
+	std::cout << "PhaseSpectrum3D..." << std::endl;
+	PhaseSpectrum3D phaseSpectrum3D;
 	std::cout << "PhaseTextGeneration..." << std::endl;
 	PhaseTextGeneration phaseTextGeneration;
 
