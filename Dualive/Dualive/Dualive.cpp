@@ -15,9 +15,7 @@ int main() {
 	// For random
 	srand(time(NULL));
 
-	Vector2 maxBgSize(Vector2::ScreenSize);
-	Sprite* bg = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Midpoint, Layer::Background);
-	bg->ScaleVector(Config::I()->songStart.ms, Config::I()->songEnd.ms, maxBgSize, maxBgSize);
+	Sprite* bg = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Zero, Layer::Background);
 	bg->Color(0, 0, GetColor[GC::CYAN], GetColor[GC::CYAN]);
 	bg->Fade(0, Time("00:01:756").ms, 0.0f, 1.0f, Easing::CubicIn);
 	Config::I()->SwitchSpriteColor(bg, Time("00:27:019").ms, Time("00:28:282").ms, GetColor[GC::MUSTARD], GetColor[GC::CYAN], Config::I()->mspb, Config::I()->mspb);
@@ -66,20 +64,13 @@ int main() {
 
 	bg->Fade(Time("02:05:545").ms, Time("02:06:808").ms, bg->fade, 0.0f, Easing::CubicIn);
 
-	std::cout << "PhaseSpectrum2D..." << std::endl;
-	PhaseSpectrum2D phaseSpectrum2D;
-	std::cout << "PhaseMoireGeneration..." << std::endl;
-	PhaseMoireGeneration phaseMoireGeneration;
-	std::cout << "PhaseMoireSpin..." << std::endl;
-	PhaseMoireSpin phaseMoireSpin;
-	std::cout << "PhaseLyricsTunnel..." << std::endl; 
-	PhaseLyricsTunnel phaseLyricsTunnel;
-	std::cout << "PhaseTetrahedronSpin..." << std::endl;
-	PhaseTetrahedronSpin phaseTetrahedronSpin;
-	std::cout << "PhaseSpectrum3D..." << std::endl;
-	PhaseSpectrum3D phaseSpectrum3D;
-	std::cout << "PhaseTextGeneration..." << std::endl;
-	PhaseTextGeneration phaseTextGeneration;
+	std::cout << "PhaseSpectrum2D..." << std::endl; PhaseSpectrum2D phaseSpectrum2D;
+	std::cout << "PhaseMoireGeneration..." << std::endl; PhaseMoireGeneration phaseMoireGeneration;
+	std::cout << "PhaseMoireSpin..." << std::endl; PhaseMoireSpin phaseMoireSpin;
+	std::cout << "PhaseLyricsTunnel..." << std::endl; PhaseLyricsTunnel phaseLyricsTunnel;
+	std::cout << "PhaseTetrahedronSpin..." << std::endl; PhaseTetrahedronSpin phaseTetrahedronSpin;
+	//std::cout << "PhaseSpectrum3D..." << std::endl; PhaseSpectrum3D phaseSpectrum3D;
+	//std::cout << "PhaseTextGeneration..." << std::endl; PhaseTextGeneration phaseTextGeneration;
 
 	Storyboard::Instance()->Write(Config::I()->storyboardPath);
 	//std::cin.get();

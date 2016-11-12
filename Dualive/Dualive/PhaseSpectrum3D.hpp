@@ -30,6 +30,7 @@ private:
 			specTri->RotateZ(-rot);
 
 			specTri->Color(Range(startSpec.ms), GetColor[GC::SADNESS], GetColor[GC::SADNESS]);
+			specTri->Fade(Range(startSpec.ms, startSpec.ms + Config::I()->mspb * 4), 0.0f, 1.0f);
 			spectrum.push_back(specTri);
 		}
 	}

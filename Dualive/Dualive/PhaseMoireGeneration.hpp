@@ -96,19 +96,20 @@ private:
 				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f, Easing::CubicIn);
 				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
 				bgTri->Fade(endSpectrum.ms - Config::I()->offset, endSpectrum.ms, 1.0f, 0.0f);
-				bgTri->Color(i, endThirdSpeedup.ms, patternColor, patternColor);
-				bgTri->Color(endThirdSpeedup.ms, endSpectrum.ms, bgTri->color, patternColor);
+
+				if (i < startSpeedup.ms)
+					bgTri->Color(0, 0, GetColor[GC::PINK], GetColor[GC::PINK]);
+				if (i < Time("00:15:650").ms)
+					bgTri->Color(startSpeedup.ms - Config::I()->mspb, startSpeedup.ms, bgTri->color, GetColor[GC::ORANGE], Easing::CubicIn);
+				if (i < secondSpeedup.ms)
+					bgTri->Color(Time("00:15:650").ms - Config::I()->mspb, Time("00:15:650").ms, bgTri->color, GetColor[GC::NAVY], Easing::CubicIn);
+				if (i < thirdSpeedup.ms)
+					Config::I()->SwitchSpriteColor(bgTri, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::GREEN], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
+				Config::I()->SwitchSpriteColor(bgTri, thirdSpeedup.ms, Time("00:21:966").ms, GetColor[GC::YELLOW], GetColor[GC::PURPLE], Config::I()->mspb / 8, Config::I()->mspb / 8);
 
 				// Reappear and drop off
-				bgTri->Fade(endSpin.ms, startTunnel.ms, 0.0f, 1.0f);
-				bgTri->Color(endSpin.ms, startTunnel.ms, GetColor[GC::ICE], GetColor[GC::ICE]);
-
-				// Lyric tunnel
-				// Switch this to normal picture
-				Config::I()->SwitchSpriteColor(bgTri, Time("00:53:545").ms, Time("00:54:493").ms, GetColor[GC::FAKEINDIGO], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
-				Config::I()->SwitchSpriteColor(bgTri, Time("00:54:808").ms, Time("00:55:756").ms, GetColor[GC::FLUFFPINK], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
-				Config::I()->SwitchSpriteColor(bgTri, Time("00:58:598").ms, Time("00:59:545").ms, GetColor[GC::ANGRYBLUE], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
-				Config::I()->SwitchSpriteColor(bgTri, Time("00:59:861").ms, Time("01:00:808").ms, GetColor[GC::WARNING], bgTri->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+				bgTri->Fade(Time("01:01:124").ms, Time("01:01:124").ms + Config::I()->mspb * 8, 0.0f, 1.0f);
+				bgTri->Color(endSpin.ms, startTunnel.ms, GetColor[GC::WARNING], GetColor[GC::WARNING]);
 
 				// Tet spin
 				bgTri->Color(Time("01:06:177").ms - Config::I()->mspb, Time("01:06:177").ms, bgTri->color, GetColor[GC::BABYGREEN]);
@@ -179,8 +180,9 @@ private:
 			float rot = moveRot;
 			triangles[i]->Rotate(startTime.ms, endPause.ms, triangles[i]->rotation, rot);
 			triangles[i]->Color(startTime.ms, endTime.ms, triangles[i]->color, GetColor[GC::SADNESS]);
-			float spectrumFade = (1 - (float)i / triangles.size()) * 0.75 + 0.25;
-			triangles[i]->Fade(startTime.ms, endTime.ms, triangles[i]->fade, spectrumFade);
+			//float spectrumFade = (1 - (float)i / triangles.size()) * 0.75 + 0.25;
+			//triangles[i]->Fade(startTime.ms, endTime.ms, triangles[i]->fade, spectrumFade);
+			triangles[i]->Fade(startTime.ms, endTime.ms, triangles[i]->fade, 0.0f);
 		}
 	}
 

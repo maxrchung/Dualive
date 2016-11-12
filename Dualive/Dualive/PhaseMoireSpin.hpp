@@ -112,16 +112,22 @@ public:
 	PhaseMoireSpin() {
 		Sprite* bg = new Sprite(bgPath, Vector2::Zero, Layer::Background);
 		SetupBackground(bg);
-		bg->Fade(0, endThirdSpeedup.ms, 0.01f, 0.01f);
+		bg->Fade(0, endThirdSpeedup.ms, 0, 0);
 		bg->Fade(endThirdSpeedup.ms, startMoire.ms, bg->fade, 1.0f);
 		// So it'll stay
 		bg->Fade(startMoire.ms, jitteryEnd.ms, 1.0f, 1.0f);
-		bg->Fade(startMoire.ms, startMoire.ms + Config::I()->mspb, bg->fade, 1.0f);
 
+		// Lyrics tunnel for bg color
+		Config::I()->SwitchSpriteColor(bg, Time("00:53:545").ms, Time("00:54:493").ms, GetColor[GC::FAKEINDIGO], bg->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+		Config::I()->SwitchSpriteColor(bg, Time("00:54:808").ms, Time("00:55:756").ms, GetColor[GC::FLUFFPINK], bg->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+		Config::I()->SwitchSpriteColor(bg, Time("00:58:598").ms, Time("00:59:545").ms, GetColor[GC::ANGRYBLUE], bg->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+		Config::I()->SwitchSpriteColor(bg, Time("00:59:861").ms, Time("01:00:808").ms, GetColor[GC::WARNING], bg->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
+		// Fadeout
+		bg->Fade(Time("01:01:124").ms, Time("01:01:124").ms + Config::I()->mspb * 8, bg->fade, 1.0f);
 
 		Sprite* pattern = new Sprite(bgPathSpacing, Vector2::Zero - moveOffset, Layer::Background);
 	 	SetupBackground(pattern);
-		pattern->Fade(0, endThirdSpeedup.ms, 0.01f, 0.01f);
+		pattern->Fade(0, endThirdSpeedup.ms, 0, 0);
 		pattern->Fade(startMoire.ms, startMoire.ms + Config::I()->mspb, pattern->fade, 1.0f);
 
 		// muh cubic
@@ -139,9 +145,9 @@ public:
 			}
 		}
 		pattern->Rotate(jitteryEnd.ms, endMoire.ms, pattern->rotation, pattern->rotation + finalRotAmount, Easing::SineOut);
+		pattern->Fade(Time("00:43:440").ms, Time("00:43:440").ms + Config::I()->mspb, pattern->fade, 0.0f);
 
 		Sprite* spotlight = new Sprite(bgFade, Vector2::Zero, Layer::Background);
-		spotlight->Scale(0, 0, 1.0f, 1.0f);
 		spotlight->Fade(0, Time("00:01:756").ms, 0.0f, 0.75f, Easing::CubicIn);
 		spotlight->Fade(endThirdSpeedup.ms, startMoire.ms, spotlight->fade, 1.0f, Easing::CubicIn);
 		spotlight->Fade(jitteryEnd.ms, endMoire.ms, spotlight->fade, 0.75f, Easing::CubicIn);
@@ -150,12 +156,13 @@ public:
 		spotlight->Fade(Time("01:42:177").ms, Config::I()->songEnd.ms, spotlight->fade, 0.75f, Easing::CubicIn);
 		spotlight->Fade(Time("02:05:545").ms, Time("02:06:808").ms, spotlight->fade, 0.0f, Easing::CubicIn);
 
-		Sprite* cover = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Midpoint, Layer::Background);
-		cover->ScaleVector(Config::I()->songStart.ms, Config::I()->songEnd.ms, Vector2::ScreenSize, Vector2::ScreenSize);
+		Sprite* cover = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Zero, Layer::Background);
 		cover->Color(0, 0, Color(0), Color(0));
-		cover->Fade(jitteryEnd.ms, endMoire.ms, 0.0f, 0.88f);
+		float coverFadeMax = 0.88f;
+		cover->Fade(0, Time("00:01:756").ms, 0.0f, coverFadeMax, Easing::CubicOut);
+		cover->Fade(Time("00:01:756").ms, Time("00:21:966").ms, cover->fade, 0.0f, Easing::CubicIn);
+		cover->Fade(jitteryEnd.ms, endMoire.ms, cover->fade, coverFadeMax);
 		cover->Fade(Time("01:03:650 ").ms, Time("01:23:861").ms, cover->fade, 0.0f, Easing::CubicIn);
-		cover->Fade(Time("02:05:545").ms, Time("02:06:808").ms, cover->fade, 0.0f, Easing::CubicIn);
 	}
 };
 
