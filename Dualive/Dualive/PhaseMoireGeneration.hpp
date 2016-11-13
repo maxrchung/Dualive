@@ -22,51 +22,6 @@ private:
 		return randomIndices;
 	}
 
-	std::vector<Vector2> getPositions() {
-		std::string trianglePath(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\Spectrum2D\PatternPiece.png)");
-		Vector2 imageSize(Config::I()->GetImageSize(trianglePath));
-		Vector2 scaledSize(imageSize * Config::I()->patternScale);
-
-		// Ran into some offset problems that I dealt with
-		// (to a good enough degree) with flooring
-
-		// Weirdly enough it's only on the y, maybe it's a discrepancy
-		// between how my utility handles the file and how the GetImageSize
-		// function handles it
-		scaledSize.y = floorf(scaledSize.y);
-
-		Vector2 halfScaledSize = scaledSize / 2;
-		Vector2 bgSize(854.0f, 480.0f);
-		Vector2 halfBgSize = bgSize / 2;
-
-		// Calculate for width
-		// Subtract half of the center triangle
-		float halfWidth = halfBgSize.x - halfScaledSize.x;
-		int numHalfWidth = ceilf(halfWidth / scaledSize.x);
-		// Center + Number of triangles for each side
-		int numWidth = 1 + 2 * numHalfWidth;
-
-		// Repeat for length
-		float halfLength = halfBgSize.y - halfScaledSize.y;
-		int numHalfLength = ceilf(halfLength / scaledSize.y);
-		int numLength = 1 + 2 * numHalfLength;
-
-		int totalTriangles = numWidth * numLength;
-		std::vector<Vector2> positions(totalTriangles);
-		Vector2 startPos(-scaledSize.x * numHalfWidth,
-			-scaledSize.y * numHalfLength);
-
-		for (int i = 0; i < numLength; ++i) {
-			for (int j = 0; j < numWidth; ++j) {
-				int index = i * numWidth + j;
-				Vector2 pos = startPos + Vector2(j * scaledSize.x,
-					i * scaledSize.y);
-				positions[index] = pos;
-			}
-		}
-		return positions;
-	}
-
 	Vector2 switchDirection(Vector2 dir) {
 		if (dir == Vector2(1, 0)) {
 			return Vector2(0, 1);
@@ -193,7 +148,7 @@ private:
 	}
 
 	Color patternColor = GetColor[GC::YELLOW];
-	std::vector<Vector2> positions = getPositions();
+	std::vector<Vector2> positions = Config::I()->GetPositions();
 	std::vector<int> scrambledIndices = scrambleIndices(positions.size());
 	std::string bgTriPath = "Storyboard\\Spectrum2D\\PatternPiece.png";
 	int moveOffset = Config::I()->mspb * 2;

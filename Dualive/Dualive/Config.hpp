@@ -49,6 +49,7 @@ public:
 	void SwitchSpriteColor(Sprite* sprite, int start, int end, Color first, Color second, float offset, float frequency);
 	void AddScaleTimings(ScaleTimings& scaleTimings, Time timeStart, Time timeEnd, float freq, float scaleLarge, float scaleSmall);
 	float GetScale(ScaleTimings& scaleTimings, float time);
+	std::vector<Vector2> GetPositions();
 
 	// Background dimensions
 	Vector2 bgDims = Vector2(853.0f, 480.0f);

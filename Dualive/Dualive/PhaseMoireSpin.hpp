@@ -112,7 +112,7 @@ public:
 	PhaseMoireSpin() {
 		Sprite* bg = new Sprite(bgPath, Vector2::Zero, Layer::Background);
 		SetupBackground(bg);
-		bg->Fade(0, endThirdSpeedup.ms, 0, 0);
+		bg->Fade(0, endThirdSpeedup.ms, 0.01f, 0.01f);
 		bg->Fade(endThirdSpeedup.ms, startMoire.ms, bg->fade, 1.0f);
 		// So it'll stay
 		bg->Fade(startMoire.ms, jitteryEnd.ms, 1.0f, 1.0f);
@@ -127,7 +127,7 @@ public:
 
 		Sprite* pattern = new Sprite(bgPathSpacing, Vector2::Zero - moveOffset, Layer::Background);
 	 	SetupBackground(pattern);
-		pattern->Fade(0, endThirdSpeedup.ms, 0, 0);
+		pattern->Fade(0, endThirdSpeedup.ms, 0.01f, 0.01f);
 		pattern->Fade(startMoire.ms, startMoire.ms + Config::I()->mspb, pattern->fade, 1.0f);
 
 		// muh cubic

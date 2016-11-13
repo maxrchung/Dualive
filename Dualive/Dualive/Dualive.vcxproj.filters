@@ -95,6 +95,9 @@
     <ClInclude Include="GetColor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PhaseLineBackground.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Debug\LyricsTunnel.txt">
