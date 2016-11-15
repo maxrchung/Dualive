@@ -24,7 +24,7 @@ private:
 		std::random_shuffle(positions.begin(), positions.end());
 
 		// Copied from GetPositions()
-		std::string triangleAbsolutePath(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\Spectrum2D\PatternPiece.png)");
+		std::string triangleAbsolutePath(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\474742 Quarks - Dualive\Storyboard\Spectrum2D\PatternPiece.png)");
 		Vector2 imageSize(Config::I()->GetImageSize(triangleAbsolutePath));
 		Vector2 scaledSize(imageSize * Config::I()->patternScale);
 		
@@ -37,7 +37,7 @@ private:
 		spawnTriangles(scaledSize, startSpawn, endSpawn, triPerSpawn, frequency);
 	}
 
-	std::string linePath = "Storyboard\\3D\\line.png";
+	std::string linePath = "Storyboard\\3D\\Line.png";
 	float farDistance = 500.0f;
 	void spawnTriangles(Vector2 scaledSize, int startTime, int endTime, int numTri, int frequency) {
 		for (int i = startTime; i < endTime; i += frequency) {

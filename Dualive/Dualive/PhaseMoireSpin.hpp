@@ -148,19 +148,17 @@ public:
 		pattern->Fade(Time("00:43:440").ms, Time("00:43:440").ms + Config::I()->mspb, pattern->fade, 0.0f);
 
 		Sprite* spotlight = new Sprite(bgFade, Vector2::Zero, Layer::Background);
-		spotlight->Fade(0, Time("00:01:756").ms, 0.0f, 0.75f, Easing::CubicIn);
-		spotlight->Fade(endThirdSpeedup.ms, startMoire.ms, spotlight->fade, 1.0f, Easing::CubicIn);
+		spotlight->Fade(endThirdSpeedup.ms, startMoire.ms, 0.0f, 1.0f, Easing::CubicIn);
 		spotlight->Fade(jitteryEnd.ms, endMoire.ms, spotlight->fade, 0.75f, Easing::CubicIn);
 		spotlight->Fade(Time("01:22:598").ms, Time("01:21:966").ms, spotlight->fade, 1.0f, Easing::CubicIn);
-		spotlight->Fade(Time("01:42:177").ms, Time("01:43:440").ms, spotlight->fade, 0.75f, Easing::CubicIn);
-		spotlight->Fade(Time("01:42:177").ms, Config::I()->songEnd.ms, spotlight->fade, 0.75f, Easing::CubicIn);
+		spotlight->Fade(Time("01:21:966").ms, Time("02:05:545").ms, spotlight->fade, spotlight->fade, Easing::CubicIn);
 		spotlight->Fade(Time("02:05:545").ms, Time("02:06:808").ms, spotlight->fade, 0.0f, Easing::CubicIn);
 
 		Sprite* cover = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Zero, Layer::Background);
 		cover->Color(0, 0, Color(0), Color(0));
 		float coverFadeMax = 0.88f;
 		cover->Fade(0, Time("00:01:756").ms, 0.0f, coverFadeMax, Easing::CubicOut);
-		cover->Fade(Time("00:01:756").ms, Time("00:23:229").ms, cover->fade, 0.0f, Easing::CubicIn);
+		cover->Fade(Time("00:01:756").ms, Time("00:21:966").ms, cover->fade, 0.0f, Easing::CubicIn);
 		cover->Fade(jitteryEnd.ms, endMoire.ms, cover->fade, coverFadeMax);
 		cover->Fade(Time("01:03:650 ").ms, Time("01:23:861").ms, cover->fade, 0.0f, Easing::CubicIn);
 	}

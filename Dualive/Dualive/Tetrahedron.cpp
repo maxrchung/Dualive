@@ -3,7 +3,7 @@
 #include "TetPoints.hpp"
 #include "Tetrahedron.hpp"
 
-std::string Tetrahedron::linePath = R"(Storyboard\3D\line.png)";
+std::string Tetrahedron::linePath = R"(Storyboard\3D\Line.png)";
 
 Tetrahedron::Tetrahedron(float radius, Vector3 midpoint)
 	: radius(radius),

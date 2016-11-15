@@ -47,6 +47,7 @@ private:
 				Vector2 pos = positions[scrambledIndices.back()];
 				scrambledIndices.pop_back();
 				bgTri->Move(i, i + moveOffset, bgTri->position, pos);
+				bgTri->Rotate(i, i + moveOffset, bgTri->rotation, M_PI * 2, Easing::CubicIn);
 				bgTri->Scale(i, i, Config::I()->patternScale, Config::I()->patternScale);
 				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f, Easing::CubicIn);
 				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
@@ -60,7 +61,7 @@ private:
 					bgTri->Color(Time("00:15:650").ms - Config::I()->mspb, Time("00:15:650").ms, GetColor[GC::ORANGE], GetColor[GC::NAVY], Easing::CubicIn);
 				if (i < thirdSpeedup.ms)
 					Config::I()->SwitchSpriteColor(bgTri, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::GREEN], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
-				Config::I()->SwitchSpriteColor(bgTri, thirdSpeedup.ms, Time("00:21:966").ms, GetColor[GC::YELLOW], GetColor[GC::PURPLE], Config::I()->mspb / 8, Config::I()->mspb / 8);
+				Config::I()->SwitchSpriteColor(bgTri, thirdSpeedup.ms, Time("00:21:966").ms, GetColor[GC::YELLOW], GetColor[GC::PURPLE], Config::I()->mspb / 4, Config::I()->mspb / 4);
 
 				// Reappear and drop off
 				bgTri->Fade(Time("01:01:124").ms, Time("01:01:124").ms + Config::I()->mspb * 8, 0.0f, 1.0f);
@@ -92,6 +93,8 @@ private:
 
 				// Get last
 				Sprite* tri = triangles.back();
+				tri->Fade(i, i + Config::I()->mspb * 4, 1.0f, 0.0f, Easing::CubicIn);
+				tri->Rotate(i, i + Config::I()->mspb * 4, tri->rotation, tri->rotation + 4 * M_PI, Easing::CubicIn);
 				tri->Scale(i, i + Config::I()->mspb * 4, tri->scale, 0.0f, Easing::CubicIn);
 				tri->Move(i, i + Config::I()->mspb * 4, tri->position, tri->position + Vector2(0, -1000), Easing::CubicIn);
 

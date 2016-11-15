@@ -49,8 +49,13 @@ void Config::SwitchSpriteColor(Sprite* sprite, int start, int end, Color first, 
 	int numFreqs = totalTime / loopTime;
 	sprite->Loop(start, numFreqs, loopCommands);
 
+	int cycles = 0;
+	for (int time = start + frequency; time <= end; time += frequency) {
+		++cycles;
+	}
+
 	// If the number of cycles is odd, then we need to perform one more color switch
-	if (int(end - (start + frequency) / frequency) % 2 == 1) {
+	if (cycles % 2 == 1) {
 		sprite->Color(end - offset, end, first, second);
 	}
 }
@@ -88,7 +93,7 @@ float Config::GetScale(ScaleTimings& scaleTimings, float time) {
 }
 
 std::vector<Vector2> Config::GetPositions() {
-	std::string trianglePath(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\Spectrum2D\PatternPiece.png)");
+	std::string trianglePath(R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\474742 Quarks - Dualive\Storyboard\Spectrum2D\PatternPiece.png)");
 	Vector2 imageSize(Config::I()->GetImageSize(trianglePath));
 	Vector2 scaledSize(imageSize * Config::I()->patternScale);
 

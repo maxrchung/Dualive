@@ -290,7 +290,7 @@ private:
 
 public:
 	PhaseLyricsTunnel() {
-		std::string lyricsExactDirectory = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\Quarks_Dualive_SDVX_NOFX\Storyboard\LyricsTunnel\)";
+		std::string lyricsExactDirectory = R"(C:\Users\Wax Chug da Gwad\AppData\Local\osu!\Songs\474742 Quarks - Dualive\Storyboard\LyricsTunnel\)";
 		std::string lyricsLocalDirectory = R"(Storyboard\LyricsTunnel\)";
 		std::vector<Sprite*> lyrics = loadLyrics(lyricsExactDirectory, lyricsLocalDirectory);
 		setupLyrics(lyrics);

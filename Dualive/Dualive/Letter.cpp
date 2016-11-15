@@ -84,7 +84,7 @@ LetterMeasurements Letter::calculateMeasurements(VectorMap& vectorMap) {
 	return LetterMeasurements(min, max);
 }
 
-std::string Letter::linePath = std::string(R"(Storyboard\3D\line.png)");
+std::string Letter::linePath = std::string(R"(Storyboard\3D\Line.png)");
 std::vector<std::vector<Sprite*>> Letter::setupSprites(std::vector<std::vector<Pair>>& pairTravel) {
 	std::vector<std::vector<Sprite*>> spriteTravel;
 
