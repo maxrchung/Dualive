@@ -55,9 +55,9 @@ private:
 				if (i < startSpeedup.ms)
 					bgTri->Color(0, 0, GetColor[GC::PINK], GetColor[GC::PINK]);
 				if (i < Time("00:15:650").ms)
-					bgTri->Color(startSpeedup.ms - Config::I()->mspb, startSpeedup.ms, bgTri->color, GetColor[GC::ORANGE], Easing::CubicIn);
+					bgTri->Color(startSpeedup.ms - Config::I()->mspb, startSpeedup.ms, GetColor[GC::PINK], GetColor[GC::ORANGE], Easing::CubicIn);
 				if (i < secondSpeedup.ms)
-					bgTri->Color(Time("00:15:650").ms - Config::I()->mspb, Time("00:15:650").ms, bgTri->color, GetColor[GC::NAVY], Easing::CubicIn);
+					bgTri->Color(Time("00:15:650").ms - Config::I()->mspb, Time("00:15:650").ms, GetColor[GC::ORANGE], GetColor[GC::NAVY], Easing::CubicIn);
 				if (i < thirdSpeedup.ms)
 					Config::I()->SwitchSpriteColor(bgTri, secondSpeedup.ms, thirdSpeedup.ms, GetColor[GC::GREEN], GetColor[GC::BLUE], Config::I()->mspb, Config::I()->mspb);
 				Config::I()->SwitchSpriteColor(bgTri, thirdSpeedup.ms, Time("00:21:966").ms, GetColor[GC::YELLOW], GetColor[GC::PURPLE], Config::I()->mspb / 8, Config::I()->mspb / 8);

@@ -34,15 +34,24 @@ Time Config::GetClosestTime(Time time) {
 
 void Config::SwitchSpriteColor(Sprite* sprite, int start, int end, Color first, Color second, float offset, float frequency) {
 	sprite->Color(start - offset, start, sprite->color, first);
-	bool switchColor = true;
-	for (int time = start + frequency; time <= end; time += frequency) {
-		if (switchColor) {
-			sprite->Color(time - offset, time, first, second);
-		}
-		else {
-			sprite->Color(time - offset, time, second, first);
-		}
-		switchColor = !switchColor;
+	
+	std::ostringstream secondToFirst, firstToSecond;
+	firstToSecond << "__C,0," << int(frequency - offset)     << "," << int(frequency)     << "," << first.r << "," << first.g << "," << first.b << "," << second.r << "," << second.g << "," << second.b;
+	secondToFirst << "__C,0," << int(frequency * 2 - offset) << "," << int(frequency * 2) << "," << second.r << "," << second.g << "," << second.b << "," << first.r << "," << first.g << "," << first.b;
+
+	std::vector<std::string> loopCommands = {
+		firstToSecond.str(),
+		secondToFirst.str()
+	};
+
+	int totalTime = end - start;
+	int loopTime = frequency * 2;
+	int numFreqs = totalTime / loopTime;
+	sprite->Loop(start, numFreqs, loopCommands);
+
+	// If the number of cycles is odd, then we need to perform one more color switch
+	if (int(end - (start + frequency) / frequency) % 2 == 1) {
+		sprite->Color(end - offset, end, first, second);
 	}
 }
 

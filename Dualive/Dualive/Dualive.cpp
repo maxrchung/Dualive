@@ -62,12 +62,11 @@ int main() {
 		backgroundColor += 2;
 	}
 
-
 	bg->Fade(Time("02:05:545").ms, Time("02:06:808").ms, bg->fade, 0.0f, Easing::CubicIn);
 
-	//std::cout << "PhaseSpectrum2D..." << std::endl; PhaseSpectrum2D phaseSpectrum2D;
-	//std::cout << "PhaseMoireGeneration..." << std::endl; PhaseMoireGeneration phaseMoireGeneration;
-	std::cout << "PhaseLineBackground..." << std::endl; PhaseLineBackground phaseLineBackground;
+	std::cout << "PhaseSpectrum2D..." << std::endl; PhaseSpectrum2D phaseSpectrum2D;
+	std::cout << "PhaseMoireGeneration..." << std::endl; PhaseMoireGeneration phaseMoireGeneration;
+	//std::cout << "PhaseLineBackground..." << std::endl; PhaseLineBackground phaseLineBackground;
 	//std::cout << "PhaseMoireSpin..." << std::endl; PhaseMoireSpin phaseMoireSpin;
 	//std::cout << "PhaseLyricsTunnel..." << std::endl; PhaseLyricsTunnel phaseLyricsTunnel;
 	//std::cout << "PhaseTetrahedronSpin..." << std::endl; PhaseTetrahedronSpin phaseTetrahedronSpin;
