@@ -19,6 +19,7 @@ int main() {
 	Sprite* triangle = new Sprite("triangle.png", Vector2::Zero, Layer::Background);
 	triangle->Scale(0, 0, 2.7428f, 2.7428f);
 	triangle->Fade(0, Time("00:01:756").ms, 1.0f, 1.0f);
+	triangle->Fade(Time("00:01:756").ms, Time("00:01:756").ms, 0.0f, 0.0f);
 	triangle->Fade(Time("02:05:545").ms, Time("02:07:988").ms, 1.0f, 1.0f);
 
 	Sprite* bg = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Zero, Layer::Background);
@@ -69,13 +70,13 @@ int main() {
 
 	bg->Fade(Time("02:05:545").ms, Time("02:06:808").ms, bg->fade, 0.0f, Easing::CubicIn);
 
-	std::cout << "PhaseSpectrum2D..." << std::endl; PhaseSpectrum2D phaseSpectrum2D;
-	std::cout << "PhaseMoireGeneration..." << std::endl; PhaseMoireGeneration phaseMoireGeneration;
-	std::cout << "PhaseLineBackground..." << std::endl; PhaseLineBackground phaseLineBackground; 
+	//std::cout << "PhaseSpectrum2D..." << std::endl; PhaseSpectrum2D phaseSpectrum2D;
+	//std::cout << "PhaseMoireGeneration..." << std::endl; PhaseMoireGeneration phaseMoireGeneration;
+	//std::cout << "PhaseLineBackground..." << std::endl; PhaseLineBackground phaseLineBackground; 
 	std::cout << "PhaseMoireSpin..." << std::endl; PhaseMoireSpin phaseMoireSpin;
-	std::cout << "PhaseLyricsTunnel..." << std::endl; PhaseLyricsTunnel phaseLyricsTunnel;
-	std::cout << "PhaseTetrahedronSpin..." << std::endl; PhaseTetrahedronSpin phaseTetrahedronSpin;
-	std::cout << "PhaseSpectrum3D..." << std::endl; PhaseSpectrum3D phaseSpectrum3D;
+	//std::cout << "PhaseLyricsTunnel..." << std::endl; PhaseLyricsTunnel phaseLyricsTunnel;
+	//std::cout << "PhaseTetrahedronSpin..." << std::endl; PhaseTetrahedronSpin phaseTetrahedronSpin;
+	//std::cout << "PhaseSpectrum3D..." << std::endl; PhaseSpectrum3D phaseSpectrum3D;
 	std::cout << "PhaseTextGeneration..." << std::endl; PhaseTextGeneration phaseTextGeneration;
 
 	Storyboard::Instance()->Write(Config::I()->storyboardPath);
