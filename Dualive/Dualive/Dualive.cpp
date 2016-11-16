@@ -70,16 +70,31 @@ int main() {
 
 	bg->Fade(Time("02:05:545").ms, Time("02:06:808").ms, bg->fade, 0.0f, Easing::CubicIn);
 
-	//std::cout << "PhaseSpectrum2D..." << std::endl; PhaseSpectrum2D phaseSpectrum2D;
-	//std::cout << "PhaseMoireGeneration..." << std::endl; PhaseMoireGeneration phaseMoireGeneration;
-	//std::cout << "PhaseLineBackground..." << std::endl; PhaseLineBackground phaseLineBackground; 
+	std::cout << "PhaseSpectrum2D..." << std::endl; PhaseSpectrum2D phaseSpectrum2D;
+	std::cout << "PhaseMoireGeneration..." << std::endl; PhaseMoireGeneration phaseMoireGeneration;
+	std::cout << "PhaseLineBackground..." << std::endl; PhaseLineBackground phaseLineBackground; 
 	std::cout << "PhaseMoireSpin..." << std::endl; PhaseMoireSpin phaseMoireSpin;
-	//std::cout << "PhaseLyricsTunnel..." << std::endl; PhaseLyricsTunnel phaseLyricsTunnel;
-	//std::cout << "PhaseTetrahedronSpin..." << std::endl; PhaseTetrahedronSpin phaseTetrahedronSpin;
-	//std::cout << "PhaseSpectrum3D..." << std::endl; PhaseSpectrum3D phaseSpectrum3D;
+
+	Sprite* spotlight = new Sprite("Storyboard\\Background\\Fade.png", Vector2::Zero, Layer::Background);
+	spotlight->Scale(Time("01:22:598").ms, Time("01:22:598").ms, Config::I()->patternScale, Config::I()->patternScale);
+	spotlight->Fade(Time("01:22:598").ms, Time("01:22:598").ms, 0.0f, 1.0f);
+	spotlight->Fade(Time("01:22:598").ms, Time("01:23:861").ms, 0.75f, 1.0f, Easing::CubicIn);
+	spotlight->Fade(Time("02:05:545").ms, Time("02:06:808").ms, spotlight->fade, 0.0f, Easing::CubicIn);
+
+	Sprite* cover = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Zero, Layer::Background);
+	cover->Color(0, 0, Color(0), Color(0));
+	float coverFadeMax = 1.0f;
+	cover->Fade(0, Time("00:01:756").ms, 0.0f, 0.88f, Easing::CubicOut);
+	cover->Fade(Time("00:01:756").ms, Time("00:21:966").ms, cover->fade, 0.0f, Easing::CubicIn);
+	cover->Fade(Time("00:43:440").ms, Time("01:03:650").ms, 0.0f, coverFadeMax);
+	cover->Fade(Time("01:03:650").ms, Time("01:23:861").ms, cover->fade, 0.0f);
+
+	std::cout << "PhaseLyricsTunnel..." << std::endl; PhaseLyricsTunnel phaseLyricsTunnel;
+	std::cout << "PhaseTetrahedronSpin..." << std::endl; PhaseTetrahedronSpin phaseTetrahedronSpin;
+	std::cout << "PhaseSpectrum3D..." << std::endl; PhaseSpectrum3D phaseSpectrum3D;
 	std::cout << "PhaseTextGeneration..." << std::endl; PhaseTextGeneration phaseTextGeneration;
 
 	Storyboard::Instance()->Write(Config::I()->storyboardPath);
 	//std::cin.get();
 	return 0;
-}
+} 

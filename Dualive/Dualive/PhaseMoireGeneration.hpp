@@ -51,7 +51,7 @@ private:
 				bgTri->Scale(i, i, Config::I()->patternScale, Config::I()->patternScale);
 				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f, Easing::CubicIn);
 				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
-				bgTri->Fade(endSpectrum.ms - Config::I()->offset, endSpectrum.ms, 1.0f, 0.0f);
+				bgTri->Fade(Time("00:21:966").ms, Time("00:21:966").ms, 0.0f, 0.0f);
 
 				if (i < startSpeedup.ms)
 					bgTri->Color(0, 0, GetColor[GC::PINK], GetColor[GC::PINK]);
@@ -64,7 +64,7 @@ private:
 				Config::I()->SwitchSpriteColor(bgTri, thirdSpeedup.ms, Time("00:21:966").ms, GetColor[GC::YELLOW], GetColor[GC::PURPLE], Config::I()->mspb / 4, Config::I()->mspb / 4);
 
 				// Reappear and drop off
-				bgTri->Fade(Time("01:01:124").ms, Time("01:01:124").ms + Config::I()->mspb * 8, 0.0f, 1.0f);
+				bgTri->Fade(Time("01:03:650").ms, Time("01:03:650").ms, 0.0f, 1.0f);
 				bgTri->Color(endSpin.ms, startTunnel.ms, GetColor[GC::WARNING], GetColor[GC::WARNING]);
 
 				// Tet spin

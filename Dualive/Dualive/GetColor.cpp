@@ -25,7 +25,8 @@ std::unordered_map<GC, Color> GetColor = {
 	{ GC::MAROON, Color(122, 0, 91) },
 	{ GC::VOMIT, Color(181, 158, 0) },
 	{ GC::ICE, Color(122, 149, 253) },
-	{ GC::BURGANDY, Color(93, 0, 4) },
+	{ GC::BURGANDY, Color(53, 0, 2) },
+
 	{ GC::LAVENDER, Color(154, 86, 255) },
 	{ GC::NEONGREEN, Color(142, 240, 0) }, 
 	{ GC::SHALLOWSEA, Color(90, 83, 255) },
