@@ -105,7 +105,7 @@ private:
 	Time jitteryEnd = Time("00:42:177");
 	Time endMoire = Time("00:43:440");
 	// Seems good Kappa
-	Vector2 moveOffset = Vector2(0, 14) * Config::I()->patternScale / 2;
+	Vector2 moveOffset = Vector2(0, 7) * Config::I()->patternScale / 2;
 
 public:
 	PhaseMoireSpin() {

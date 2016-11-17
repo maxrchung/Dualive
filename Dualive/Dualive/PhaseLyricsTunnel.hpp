@@ -16,7 +16,7 @@ private:
 			}
 
 			float startFade = 1 - ((i - fadeIndex) / (float)lyricsOnScreen);
-			// Start at 0 afde
+			// Start at 0 fade
 			sprite->Fade(startTunnel.ms - offset, timings[fadeIndex].ms, 0.0f, startFade, Easing::CubicOut);
 
 			// Set start scale
@@ -201,7 +201,7 @@ private:
 
 	int lyricsOnScreen = 4;
 	float fadeIncrement = 1.0f / lyricsOnScreen;
-	float maxLyricScale = 0.7f;
+	float maxLyricScale = 1.4f;
 
 	float baseScale = 0.05f;
 	float longScaleIncrement = 1.3f;

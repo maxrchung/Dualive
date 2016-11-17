@@ -42,7 +42,7 @@ std::unordered_map<GC, Color> GetColor = {
 	{ GC::OPENSIGN, Color(192, 0, 212) },
 	{ GC::FAKEINDIGO, Color(80, 10, 255) },
 	{ GC::RUST, Color(255, 103, 68) },
-	{ GC::FLUFFPINK, Color(255, 114, 160) },
+	{ GC::FLUFFPINK, Color(146, 0, 48) },
 	{ GC::ANGRYBLUE, Color(4, 26, 255) },
 	{ GC::WARNING, Color(228, 57, 15) },
 	{ GC::BABYGREEN, Color(79, 255, 105) },

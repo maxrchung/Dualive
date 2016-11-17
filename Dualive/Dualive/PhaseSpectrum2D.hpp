@@ -105,9 +105,9 @@ private:
 	// Centerpiece setup
 	// Easier access
 	MusicAnalysisData data = Config::I()->data;
-	float cpExpandScale = 0.2f;
-	float cpShrinkScale = 0.085f;
-	float cpMiniScale = 0.06f;
+	float cpExpandScale = 0.2f * 2;
+	float cpShrinkScale = 0.085f * 2;
+	float cpMiniScale = 0.06f * 2;
 	float rotAmount = 2 * M_PI;
 	// Not actually 4 times faster because of period lengths
 	float rotSpeedupAmount = 4 * M_PI;
@@ -130,8 +130,8 @@ private:
 
 	// Distance away from center
 	float spectrumSpacing = 75.0f;
-	float barWidthScale = 0.016f;
-	float barLengthScale = 0.0023f;
+	float barWidthScale = 0.016f * 2;
+	float barLengthScale = 0.0023f * 2;
 	Vector2 startPoint = Vector2(0, spectrumSpacing);
 	std::string barPath = "Storyboard\\Spectrum2D\\CenterpieceNoSpacing.png";
 

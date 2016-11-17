@@ -23,6 +23,7 @@ int main() {
 	triangle->Fade(Time("02:05:545").ms, Time("02:07:988").ms, 1.0f, 1.0f);
 
 	Sprite* bg = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Zero, Layer::Background);
+	bg->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize);
 	bg->Color(0, 0, GetColor[GC::CYAN], GetColor[GC::CYAN]);
 	bg->Fade(0, Time("00:01:756").ms, 0.0f, 1.0f, Easing::CubicIn);
 	Config::I()->SwitchSpriteColor(bg, Time("00:27:019").ms, Time("00:28:282").ms, GetColor[GC::MUSTARD], GetColor[GC::CYAN], Config::I()->mspb, Config::I()->mspb);
@@ -72,16 +73,17 @@ int main() {
 
 	std::cout << "PhaseSpectrum2D..." << std::endl; PhaseSpectrum2D phaseSpectrum2D;
 	std::cout << "PhaseMoireGeneration..." << std::endl; PhaseMoireGeneration phaseMoireGeneration;
-	std::cout << "PhaseLineBackground..." << std::endl; PhaseLineBackground phaseLineBackground; 
+	std::cout << "PhaseLineBackground..." << std::endl; PhaseLineBackground phaseLineBackground;
 	std::cout << "PhaseMoireSpin..." << std::endl; PhaseMoireSpin phaseMoireSpin;
 
 	Sprite* spotlight = new Sprite("Storyboard\\Background\\Fade.png", Vector2::Zero, Layer::Background);
-	spotlight->Scale(Time("01:22:598").ms, Time("01:22:598").ms, Config::I()->patternScale, Config::I()->patternScale);
+	spotlight->Scale(Time("01:22:598").ms, Time("01:22:598").ms, 0.45f, 0.45f);
 	spotlight->Fade(Time("01:22:598").ms, Time("01:22:598").ms, 0.0f, 1.0f);
 	spotlight->Fade(Time("01:22:598").ms, Time("01:23:861").ms, 0.75f, 1.0f, Easing::CubicIn);
 	spotlight->Fade(Time("02:05:545").ms, Time("02:06:808").ms, spotlight->fade, 0.0f, Easing::CubicIn);
 
 	Sprite* cover = new Sprite("Storyboard\\Background\\Blank.png", Vector2::Zero, Layer::Background);
+	cover->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize);
 	cover->Color(0, 0, Color(0), Color(0));
 	float coverFadeMax = 1.0f;
 	cover->Fade(0, Time("00:01:756").ms, 0.0f, 0.88f, Easing::CubicOut);

@@ -71,7 +71,7 @@ public:
 	float projectionDistance = 400.0f;
 
 	// Scaling
-	float patternScale = 0.35f;
+	float patternScale = 0.35f * 2; // Halved size of pictures
 	float lineWidth = 1000.0f;
 	float lineScaleHeight = 0.1f;
 

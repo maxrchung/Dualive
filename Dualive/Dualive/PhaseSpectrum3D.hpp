@@ -30,7 +30,10 @@ private:
 			specTri->RotateZ(-rot);
 
 			specTri->Color(Range(startSpec.ms), GetColor[GC::SADNESS], GetColor[GC::SADNESS]);
-			specTri->Fade(Range(startSpec.ms, startSpec.ms + Config::I()->mspb * 4), 0.0f, 1.0f);
+
+			float startFade = (1 - (float)i / numSpec) * 0.75 + 0.25;
+			specTri->Fade(Range(startSpec.ms, startSpec.ms + Config::I()->mspb * 4), 0.0f, startFade);
+
 			spectrum.push_back(specTri);
 		}
 	}
@@ -65,8 +68,6 @@ private:
 				else {
 					spectrum[i]->RepositionLines(reposition);
 				}
-				float startFade = (1 - (float)i / spectrum.size()) * 0.75 + 0.25;
-				spectrum[i]->Fade(Range(startSpec.ms), startFade, startFade);
 			}
 		}
 	}

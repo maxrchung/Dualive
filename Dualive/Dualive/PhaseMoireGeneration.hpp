@@ -43,12 +43,13 @@ private:
 				if (scrambledIndices.empty()) {
 					return;
 				}
-				Sprite* bgTri = new Sprite(bgTriPath, Vector2::Zero, Layer::Background);
+				// Using larger image path so there is less blurriness in image when scaling down
+				Sprite* bgTri = new Sprite(bgTriLargePath, Vector2::Zero, Layer::Background);
 				Vector2 pos = positions[scrambledIndices.back()];
 				scrambledIndices.pop_back();
 				bgTri->Move(i, i + moveOffset, bgTri->position, pos);
 				bgTri->Rotate(i, i + moveOffset, bgTri->rotation, M_PI * 2, Easing::CubicIn);
-				bgTri->Scale(i, i, Config::I()->patternScale, Config::I()->patternScale);
+				bgTri->Scale(i, i, Config::I()->patternScale / 2, Config::I()->patternScale / 2);
 				bgTri->Fade(i, i + moveOffset, 0.0f, 1.0f, Easing::CubicIn);
 				bgTri->Fade(i + moveOffset, endThirdSpeedup.ms, 1.0f, 1.0f);
 				bgTri->Fade(Time("00:21:966").ms, Time("00:21:966").ms, 0.0f, 0.0f);
@@ -153,7 +154,7 @@ private:
 	Color patternColor = GetColor[GC::YELLOW];
 	std::vector<Vector2> positions = Config::I()->GetPositions();
 	std::vector<int> scrambledIndices = scrambleIndices(positions.size());
-	std::string bgTriPath = "Storyboard\\Spectrum2D\\PatternPiece.png";
+	std::string bgTriLargePath = "Storyboard\\Spectrum2D\\PatternPieceLarge.png";
 	int moveOffset = Config::I()->mspb * 2;
 	float bgFade = 0.5f;
 	Time startSpectrum = Time("00:03:019");
