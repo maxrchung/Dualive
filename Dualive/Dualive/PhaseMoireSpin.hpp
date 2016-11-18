@@ -109,7 +109,7 @@ private:
 
 public:
 	PhaseMoireSpin() {
-		Sprite* bg = new Sprite(bgPath, Vector2::Zero, Layer::Background);
+		Sprite* bg = new Sprite(bgPathSpacing, Vector2::Zero - moveOffset, Layer::Background);
 		SetupBackground(bg);
 		bg->Fade(endThirdSpeedup.ms, endThirdSpeedup.ms, 0.0f, 1.0f, Easing::CubicIn);
 		bg->Fade(Time("00:42:177").ms, Time("00:43:440").ms, 1.0f, 0.05f, Easing::CubicOut);
@@ -122,6 +122,10 @@ public:
 		Config::I()->SwitchSpriteColor(bg, Time("00:58:598").ms, Time("00:59:545").ms, GetColor[GC::ANGRYBLUE], bg->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
 		Config::I()->SwitchSpriteColor(bg, Time("00:59:861").ms, Time("01:00:808").ms, GetColor[GC::WARNING], bg->color, Config::I()->mspb / 2, Config::I()->mspb / 2);
 
+		// Note we need the moveOffset... I think(?).
+		// I think what's going on is that because the midpoint of an equilateral triangle is not
+		// its rotational center, we have to do some minor hacks like this in order to get rotation
+		// correct.
 		Sprite* pattern = new Sprite(bgPathSpacing, Vector2::Zero - moveOffset, Layer::Background);
 	 	SetupBackground(pattern);
 		pattern->Fade(Time("00:21:966").ms, Time("00:23:229").ms, 0.0f, 1.0f);
