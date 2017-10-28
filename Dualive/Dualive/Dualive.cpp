@@ -27,14 +27,12 @@ int main() {
 	bg->Color(0, 0, GetColor[GC::CYAN], GetColor[GC::CYAN]);
 	bg->Fade(0, Time("00:01:756").ms, 0.0f, 1.0f, Easing::CubicIn);
 	Config::I()->SwitchSpriteColor(bg, Time("00:27:019").ms, Time("00:28:282").ms, GetColor[GC::MUSTARD], GetColor[GC::CYAN], Config::I()->mspb, Config::I()->mspb);
-	Config::I()->SwitchSpriteColor(bg, Time("00:30:177").ms, Time("00:30:808").ms, GetColor[GC::CHEWEDBUBBLEGUM], GetColor[GC::MUSTARD], Config::I()->mspb / 4, Config::I()->mspb / 4);
-	Config::I()->SwitchSpriteColor(bg, Time("00:30:808").ms + Config::I()->mspb, Time("00:33:335").ms, GetColor[GC::MUSTARD], GetColor[GC::CHEWEDBUBBLEGUM], Config::I()->mspb, Config::I()->mspb);
-	Config::I()->SwitchSpriteColor(bg, Time("00:33:650").ms, Time("00:33:966").ms, GetColor[GC::LEMONGRASS], GetColor[GC::CHEWEDBUBBLEGUM], Config::I()->mspb / 4, Config::I()->mspb / 4);
-	Config::I()->SwitchSpriteColor(bg, Time("00:34:914").ms, Time("00:35:229").ms, GetColor[GC::TURQUOISE], GetColor[GC::LEMONGRASS], Config::I()->mspb / 4, Config::I()->mspb / 4);
-	Config::I()->SwitchSpriteColor(bg, Time("00:36:177").ms, Time("00:36:493").ms, GetColor[GC::SPIDERMANRED], GetColor[GC::TURQUOISE], Config::I()->mspb / 4, Config::I()->mspb / 4);
-	Config::I()->SwitchSpriteColor(bg, Time("00:37:124").ms, Time("00:38:387").ms, GetColor[GC::PEACH], GetColor[GC::SPIDERMANRED], Config::I()->mspb / 2, Config::I()->mspb / 2);
-	Config::I()->SwitchSpriteColor(bg, Time("00:39:966").ms, Time("00:40:598").ms, GetColor[GC::MUSTARD], GetColor[GC::PEACH], Config::I()->mspb / 4, Config::I()->mspb / 4);
-	Config::I()->SwitchSpriteColor(bg, Time("00:40:914").ms, Time("00:42:177").ms, GetColor[GC::BURGANDY], GetColor[GC::MUSTARD], Config::I()->mspb / 2, Config::I()->mspb / 2);
+	Config::I()->SwitchSpriteColor(bg, Time("00:30:808").ms, Time("00:33:335").ms, GetColor[GC::CHEWEDBUBBLEGUM], GetColor[GC::MUSTARD], Config::I()->mspb, Config::I()->mspb);
+	bg->Color(Time("00:34:282").ms, Time("00:34:598").ms, GetColor[GC::CHEWEDBUBBLEGUM], GetColor[GC::LEMONGRASS]);
+	bg->Color(Time("00:35:545").ms, Time("00:35:861").ms, GetColor[GC::LEMONGRASS], GetColor[GC::TURQUOISE]);
+	Config::I()->SwitchSpriteColor(bg, Time("00:37:124").ms, Time("00:38:387").ms, GetColor[GC::PEACH], GetColor[GC::SPIDERMANRED], Config::I()->mspb, Config::I()->mspb);
+	bg->Color(Time("00:39:335").ms, Time("00:39:650").ms, GetColor[GC::PEACH], GetColor[GC::MUSTARD]);
+	Config::I()->SwitchSpriteColor(bg, Time("00:40:914").ms, Time("00:42:177").ms, GetColor[GC::BURGANDY], GetColor[GC::MUSTARD], Config::I()->mspb, Config::I()->mspb);
 	bg->Color(Time("01:22:598").ms, Time("01:23:861").ms, bg->color, GetColor[GC::HAPPYNESS]);
 
 	bg->Color(Time("01:23:861").ms, Time("01:26:387").ms, bg->color, GetColor[GC::AQUAMARINE]);

@@ -8,16 +8,13 @@ private:
 	void SetupBackground(Sprite* bg) {
 		bg->Scale(startMoire.ms, endMoire.ms, Config::I()->patternScale, Config::I()->patternScale);
 		bg->Color(0, 0, GetColor[GC::YELLOW], GetColor[GC::YELLOW]);
-		 
 		Config::I()->SwitchSpriteColor(bg, Time("00:27:019").ms, Time("00:28:282").ms, GetColor[GC::TOMATOSAUCE], GetColor[GC::YELLOW], Config::I()->mspb, Config::I()->mspb);
-		Config::I()->SwitchSpriteColor(bg, Time("00:30:177").ms, Time("00:30:808").ms, GetColor[GC::BUBBLEGUM], GetColor[GC::TOMATOSAUCE], Config::I()->mspb / 4, Config::I()->mspb / 4);
-		Config::I()->SwitchSpriteColor(bg, Time("00:30:808").ms + Config::I()->mspb, Time("00:33:335").ms, GetColor[GC::TOMATOSAUCE], GetColor[GC::BUBBLEGUM], Config::I()->mspb, Config::I()->mspb);
-		Config::I()->SwitchSpriteColor(bg, Time("00:33:650").ms, Time("00:33:966").ms, GetColor[GC::INDIGOPRIDE], GetColor[GC::BUBBLEGUM], Config::I()->mspb / 4, Config::I()->mspb / 4);
-		Config::I()->SwitchSpriteColor(bg, Time("00:34:914").ms, Time("00:35:229").ms, GetColor[GC::FOREST], GetColor[GC::INDIGOPRIDE], Config::I()->mspb / 4, Config::I()->mspb / 4);
-		Config::I()->SwitchSpriteColor(bg, Time("00:36:177").ms, Time("00:36:493").ms, GetColor[GC::SPIDERMANBLUE], GetColor[GC::FOREST], Config::I()->mspb / 4, Config::I()->mspb / 4);
-		Config::I()->SwitchSpriteColor(bg, Time("00:37:124").ms, Time("00:38:387").ms, GetColor[GC::CLOUD], GetColor[GC::SPIDERMANBLUE], Config::I()->mspb / 2, Config::I()->mspb / 2);
-		Config::I()->SwitchSpriteColor(bg, Time("00:39:966").ms, Time("00:40:598").ms, GetColor[GC::MAROON], GetColor[GC::CLOUD], Config::I()->mspb / 4, Config::I()->mspb / 4);
-		Config::I()->SwitchSpriteColor(bg, Time("00:40:914").ms, Time("00:42:177").ms, GetColor[GC::ICE], GetColor[GC::MAROON], Config::I()->mspb / 2, Config::I()->mspb / 2);
+		Config::I()->SwitchSpriteColor(bg, Time("00:30:808").ms, Time("00:33:335").ms, GetColor[GC::BUBBLEGUM], GetColor[GC::TOMATOSAUCE], Config::I()->mspb, Config::I()->mspb);
+		bg->Color(Time("00:34:282").ms, Time("00:34:598").ms, GetColor[GC::BUBBLEGUM], GetColor[GC::INDIGOPRIDE]);
+		bg->Color(Time("00:35:545").ms, Time("00:35:861").ms, GetColor[GC::INDIGOPRIDE], GetColor[GC::FOREST]);
+		Config::I()->SwitchSpriteColor(bg, Time("00:37:124").ms, Time("00:38:387").ms, GetColor[GC::CLOUD], GetColor[GC::SPIDERMANBLUE], Config::I()->mspb, Config::I()->mspb);
+		bg->Color(Time("00:39:335").ms, Time("00:39:650").ms, GetColor[GC::CLOUD], GetColor[GC::MAROON]);
+		Config::I()->SwitchSpriteColor(bg, Time("00:40:914").ms, Time("00:42:177").ms, GetColor[GC::ICE], GetColor[GC::MAROON], Config::I()->mspb, Config::I()->mspb);
 	}
 
 	std::vector<Time> jitteries = std::vector<Time>({
