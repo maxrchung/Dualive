@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dualive", "Dualive\Dualive.vcxproj", "{B499BF8A-D418-46C9-BCBF-50154A097BBA}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GlyphAnalysis", "GlyphAnaly
 	ProjectSection(ProjectDependencies) = postProject
 		{1441267D-3F87-43FD-BF1E-1B5A7919410D} = {1441267D-3F87-43FD-BF1E-1B5A7919410D}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Background", "Background\Background.vcxproj", "{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,7 +131,6 @@ Global
 		{82E72018-7534-4664-967A-B95CB1AB37A7}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{82E72018-7534-4664-967A-B95CB1AB37A7}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{82E72018-7534-4664-967A-B95CB1AB37A7}.Debug|Win32.ActiveCfg = Debug|Win32
-		{82E72018-7534-4664-967A-B95CB1AB37A7}.Debug|Win32.Build.0 = Debug|Win32
 		{82E72018-7534-4664-967A-B95CB1AB37A7}.Debug|x64.ActiveCfg = Debug|Win32
 		{82E72018-7534-4664-967A-B95CB1AB37A7}.Release|Any CPU.ActiveCfg = Release|Win32
 		{82E72018-7534-4664-967A-B95CB1AB37A7}.Release|ARM.ActiveCfg = Release|Win32
@@ -138,8 +139,27 @@ Global
 		{82E72018-7534-4664-967A-B95CB1AB37A7}.Release|Win32.ActiveCfg = Release|Win32
 		{82E72018-7534-4664-967A-B95CB1AB37A7}.Release|Win32.Build.0 = Release|Win32
 		{82E72018-7534-4664-967A-B95CB1AB37A7}.Release|x64.ActiveCfg = Release|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Debug|ARM.ActiveCfg = Debug|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Debug|Win32.Build.0 = Debug|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Debug|x64.ActiveCfg = Debug|x64
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Debug|x64.Build.0 = Debug|x64
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Release|Any CPU.ActiveCfg = Release|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Release|ARM.ActiveCfg = Release|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Release|Win32.ActiveCfg = Release|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Release|Win32.Build.0 = Release|Win32
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Release|x64.ActiveCfg = Release|x64
+		{BAD622EB-3D4F-4BCB-9EC3-41BB54412DD5}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D96FC0E-331F-4532-9406-F1BF64D9F0AB}
 	EndGlobalSection
 EndGlobal
