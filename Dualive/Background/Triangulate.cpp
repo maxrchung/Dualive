@@ -5,7 +5,7 @@
 #include <png.h>
 
 Triangulate::Triangulate() {
-	auto bg = PNGWrapper("shelter.png");
+	auto bg = PNGWrapper("background.png");
 	
 	Time start("00:00:000");
 	Time end("01:00:000");
