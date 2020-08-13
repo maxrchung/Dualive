@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace UpdateFilePaths {
     class Program {
@@ -24,7 +26,7 @@ namespace UpdateFilePaths {
 
             var osbPath = @"C:\Users\Wax Chug da Gwad\Documents\Dualive File Path Updates\Quarks (kradness x Camellia) - Dualive (Haruto).osb";
             // open OSB
-            var osb = File.ReadAllText(osbPath);
+            var lines = File.ReadAllLines(osbPath);
 
             // update enums
             Commas(mappings, "TopLeft", "0");
@@ -46,12 +48,42 @@ namespace UpdateFilePaths {
             Commas(mappings, "Video", "5");
 
             mappings.Add("Sprite,", "4,");
+            mappings.Add(",0.", ",.");
 
-            // update file paths
-            foreach (var mapping in mappings) {
-                osb = osb.Replace(mapping.Key, mapping.Value);
+            var builder = new StringBuilder();
+            foreach (var line in lines) {
+                var optimized = line;
+                // update file paths
+                foreach (var mapping in mappings) {
+                    optimized = optimized.Replace(mapping.Key, mapping.Value);
+                }
+
+                if (optimized[0] == ' ') {
+                    var split = optimized.Split(",");
+                    if (split.Length > 1) {
+                        for (var i = 0; i < split.Length; ++i) {
+                            if (split[i].Contains(".")) {
+                                var value = double.Parse(split[i]);
+                                if (split[0].Trim() == "M") {
+                                    var round = Math.Round(value);
+                                    split[i] = round.ToString();
+                                } else {
+                                    var parts = split[i].Split(".");
+                                    if (parts[1].Length > 3) {
+                                        var dropDecimals = value.ToString("0.###");
+                                        split[i] = dropDecimals;
+                                    }
+                                }
+                            }
+                        }
+                        optimized = string.Join(',', split);
+                    }
+                }
+
+                builder.AppendLine(optimized);
             }
 
+            var osb = builder.ToString();
             // write to output
             var outputPath = @"X:\osu!\Songs\Quarks_kradness_x_Camellia_-_Dualive\Quarks (kradness x Camellia) - Dualive (Haruto).osb";
             File.WriteAllText(outputPath, osb);
